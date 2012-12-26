@@ -1,0 +1,32 @@
+strategy,
+  single_method
+  graphics,tabular_graphics_data
+
+method,
+  dot_mmfd,
+  max_iterations = 20,
+  convergence_tolerance = 1e-4
+
+variables,
+  continuous_design = 1
+  initial_point 0.41
+  upper_bounds 0.6
+  lower_bounds 0.3
+  max_step 0.01
+  descriptors 'epsilon'
+
+interface,
+  fork
+  results_file = 'results.in'
+  input_filter = 'readResultsFile.py'
+  analysis_driver = 'intelScript.py'
+  output_filter = 'writeParametersFile.py'
+  parameters_file = 'parameters.in'
+
+responses,
+  objective_functions = 1
+  numerical_gradients
+  method_source dakota
+  interval_type central
+  fd_gradient_step_size = 1.e-4
+  no_hessians

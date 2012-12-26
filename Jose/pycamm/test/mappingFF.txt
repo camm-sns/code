@@ -1,0 +1,17 @@
+!FFPARAMS
+#Force Field Parameters
+FF1  # partial charge at oxygen atom in water molecule
+FF2  # partial charge at hydrogen atom in water molecule
+
+!FREEPARAMS
+#Dakota Parameters
+FF2
+
+!CONSTRAINTS
+#Constraints in explicit form for each non-free parameter
+FF1=-2*FF2 # each water molecule is electrically neutral
+
+!FFFORMAT
+#Format Force Field Parameters (in C's printf style)
+%9.3f
+%9.3f

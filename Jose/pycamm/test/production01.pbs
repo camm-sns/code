@@ -1,0 +1,10 @@
+#PBS -S /bin/bash
+#PBS -j oe
+#PBS -V
+#PBS -l walltime=0:59:00,mppwidth=48
+
+#submit simulations
+cd /tmp
+aprun -n 48 namd2 production01.conf > production01.out # & only one job, no need to send it to the background
+#wait  #required when submitting jobs with '&'
+
