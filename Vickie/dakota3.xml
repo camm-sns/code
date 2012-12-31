@@ -75,7 +75,7 @@
         <property name="derivedFrom" class="org.kepler.moml.NamedObjIdReferralList" value="urn:lsid:kepler-project.org:actor:420:1">
         </property>
     </property>
-    <property name="SimulationBatchScript" class="ptolemy.data.expr.FileParameter" value="/home/vel/camm/Vickie/chadwick3.batch">
+    <property name="SimulationBatchScript" class="ptolemy.data.expr.FileParameter" value="/home/vel/camm-sns/code/Vickie/chadwick3.batch">
 <property name="KeplerDocumentation" class="ptolemy.vergil.basic.KeplerDocumentationAttribute">
 <property name="description" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>none</configure></property>
 <property name="author" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>yang zhao, edward lee</configure></property>
@@ -120,7 +120,7 @@
     </property>
     <property name="_vergilCenter" class="ptolemy.data.expr.ExpertParameter" value="{1118.0, 683.0}">
     </property>
-    <property name="LocalWorkingDirectory" class="ptolemy.data.expr.Parameter" value="&quot;/home/vel/camm/Vickie&quot;">
+    <property name="LocalWorkingDirectory" class="ptolemy.data.expr.Parameter" value="&quot;/home/vel/camm-sns/code/Vickie&quot;">
 <property name="KeplerDocumentation" class="ptolemy.vergil.basic.KeplerDocumentationAttribute">
 <property name="description" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>null</configure></property>
 <property name="author" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>null</configure></property>
