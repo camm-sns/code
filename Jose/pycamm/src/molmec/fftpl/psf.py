@@ -5,7 +5,7 @@ psf topology file.
 Substitute charges with keywords
 
 '''
-from pdb import set_trace as trace  # only for interactive debugging purposes
+#from pdb import set_trace as trace  # only for interactive debugging purposes
 import logging
 logger = logging.getLogger("Molmec.fftpl.PSF")
 
@@ -42,6 +42,15 @@ class FFParam(object):
     else:
       self.__dict__[key]=val
   
+  def resolveConstraint(self,free_params):
+    """ Assign value based on the constraint expression """
+    if not self.isFree():
+      constraint=self._constraint
+      for param in free_params:
+        constraint=constraint.replace(param._name,str(param._value))
+      self._value=eval(constraint)
+    return self._value
+
   def toElementTreeElement(self):
     """save as xml.ElementTree.Element object"""
     from xml.etree.ElementTree import Element
@@ -172,9 +181,9 @@ def insertFFParmName(line,name,psf_format):
     items[6]='_%s_'%name+'(%f)'
     return ' '.join(items)
   elif psf_format=='EXTENDED':
-    return line[0:52]+'_%s_'%name+'(%-12.3f)'+line[66:]
+    return line[0:52]+'_%s_'%name+'(%-14.6f)'+line[66:]
   else:
-    return line[0:34]+'_%s_'%name+'(%-12.3f)'+line[48:]
+    return line[0:34]+'_%s_'%name+'(%-14.6f)'+line[48:]
   pass
 
 def insertFFParamsNames(atom_lines,atom_list,seed_list,psf_format='STANDARD'):
