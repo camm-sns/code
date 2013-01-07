@@ -1,13 +1,15 @@
 # DAKOTA INPUT FILE: dakota_pstudy.in for parallel Case 1
 
 method,
-        optpp_cg
-          max_iterations = 2000
-            convergence_tolerance = 1e-4
+        nl2sol
+          max_iterations = 100
+          convergence_tolerance = 1e-3
 
 variables,
 	continuous_design = 3
 	  cdv_initial_point    1.1   2.1   3.1
+	  upper_bounds    1.2   2.2   3.2
+	  lower_bounds    0.8   1.8   2.8
           cdv_descriptor 'a' 'b' 'c'
 
 # Case 1: Run DAKOTA in parallel and launch M-1 serial analysis jobs at once
@@ -30,6 +32,9 @@ interface,
 	    file_save
 
 responses,
-	num_objective_functions = 1
+	calibration_terms = 1
 	numerical_gradients
-	numerical_hessians
+		method_source dakota
+		interval_type forward
+		fd_gradient_step_size = 1.e-5
+	no_hessians
