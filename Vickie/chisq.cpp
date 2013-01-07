@@ -1,4 +1,4 @@
-#include <iostream>
+ #include <iostream>
 #include <fstream>
 #include <string>
 #include <vector>
@@ -21,11 +21,14 @@ int main (int argc, char *argv[]) {
     }
     myfile.close();
   }
-  else cout << "Unable to open file"; 
+  else cout << "Unable to open file";
   chisq = 0.0;
   for (int i=0; i<n; i++)
   {
-    chisq += pow(par[i]-double(i+1),2);
+    double pt = double(i);
+    double quad = 1.0 + 2.0 * pt + 3.0 *pt*pt;
+    double fit = par[0] + par[1] * pt + par[2] *pt*pt;
+    chisq += pow(quad - fit,2);
   }
   ofstream outfile;
   outfile.open(argv[2]);
@@ -34,3 +37,4 @@ int main (int argc, char *argv[]) {
 
   return 0;
 }
+
