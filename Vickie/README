@@ -2,4 +2,4 @@ Submit 2 jobs in same directory to communicate by files:
 For kepler to run workflow for all dakota input files:
 nohup /home/vel/kepler-2.3/kepler.sh -runwf /home/vel/camm-sns/code/Vickie/dakota3.xml &
 For dakota to wait for kepler workflows:
-mpirun -np 8 dakota dakota_pstudy.in
+mpirun -np 4 dakota dakota_pstudy.in
