@@ -4,6 +4,9 @@ method,
         nl2sol
           max_iterations = 100
           convergence_tolerance = 1e-3
+          absolute_conv_tol = 1e-3
+          x_conv_tol = 1e-3
+          function_precision = 1e-3
 
 variables,
 	continuous_design = 3
