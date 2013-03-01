@@ -40,10 +40,17 @@ In this example, the client listens to messages from the `params_ready_queue`.
 Upon receiving such a message, it resends it after having added an entry
 with the evaluated cost function for the input parameters.
 
+To start the Kepler client, just type `kepler_client`
+
 ## Using the Dakota Client
 The `dakota/examples` directory contains the `python_driver_example.in` Dakota file.
 It uses an `opt_driver` that simply executes the `optimization_driver.py` script,
 which sends an ActiveMQ message announcing new parameters and waits for a
 message announcing that results are ready.
+
+To start the Dakota example and have it communicate with Kepler, just do the
+following after having started the Kepler client:
+
+	`dakota.sh -i python_driver_example.in`
 
 
