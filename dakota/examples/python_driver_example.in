@@ -1,0 +1,34 @@
+# Dakota Input File: python_driver_example.in
+# Usage:
+#   dakota -i python_driver_example.in
+strategy
+  graphics
+  tabular_graphics_data
+    tabular_graphics_file = 'rosen_multidim.dat'
+  single_method
+
+method
+  multidim_parameter_study
+    partitions = 8 8
+
+model
+  single
+
+variables
+  continuous_design = 2
+    lower_bounds     -2.0     -2.0
+    upper_bounds      2.0      2.0
+    descriptors       'x1'     "x2"
+
+interface
+  analysis_driver = 'opt_driver'
+        fork
+            parameters_file 'inputs/params.in'
+            results_file 'results/results.out'
+            file_tag
+            file_save
+
+responses
+  response_functions = 1
+  no_gradients
+  no_hessians

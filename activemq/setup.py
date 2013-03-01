@@ -17,5 +17,6 @@ setup(
     author       = "Oak Ridge National Laboratory",
     package_dir  = {'amq_kepler': '.'},
     packages     = ['amq_kepler'],
-    entry_points = {'console_scripts':["kepler_consumer = amq_kepler.kepler_consumer:run",]},
+    entry_points = {'console_scripts':["kepler_client = amq_kepler.kepler_client:run",
+                                       "dakota_client = amq_kepler.dakota_client:run",]},
     )   

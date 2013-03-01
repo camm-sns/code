@@ -1,0 +1,197 @@
+"""
+    Base ActiveMQ consumer class
+"""
+import time
+import stomp
+import logging
+import json
+import os
+import threading
+
+class Listener(stomp.ConnectionListener):
+   
+    PARAMS_READY_QUEUE = "PARAMS.READY"
+    RESULTS_READY_QUEUE = "RESULTS.READY"
+ 
+    def __init__(self, configuration=None, connection=None):
+        """
+            @param configuration: Configuration object
+            @param connection: Connection object
+        """
+        if configuration is not None:
+            self.PARAMS_READY_QUEUE = configuration.params_ready_queue
+            self.RESULTS_READY_QUEUE = configuration.results_ready_queue
+            
+        self.configuration = configuration
+        self.connection = connection
+
+    def on_message(self, headers, message):
+        """
+            Process a message.
+            @param headers: message headers
+            @param message: JSON-encoded message content
+        """
+        print message
+                
+        
+class Client(object):
+    """
+        ActiveMQ client
+    """
+    
+    def __init__(self, brokers, user, passcode, 
+                 queues=None, consumer_name="amq_consumer"):
+        """ 
+            @param brokers: list of brokers we can connect to
+            @param user: activemq user
+            @param passcode: passcode for activemq user
+            @param queues: list of queues to listen to
+            @param consumer_name: name of the AMQ listener
+        """
+        self._brokers = brokers
+        self._user = user
+        self._passcode = passcode
+        self._connection = None
+        self._connected = False        
+        self._queues = queues
+        self._consumer_name = consumer_name
+        self._listener = None
+        
+    def set_listener(self, listener):
+        """
+            Set the listener object that will process each
+            incoming message.
+            @param listener: listener object
+        """
+        self._listener = listener
+        
+    def get_connection(self, listener=None):
+        """
+            Establish and return a connection to ActiveMQ
+            @param listener: listener object
+        """
+        if listener is None:
+            if self._listener is None:
+                listener = Listener()
+            else:
+                listener = self._listener
+
+        logging.info("[%s] Attempting to connect to ActiveMQ broker" % self._consumer_name)
+        conn = stomp.Connection(host_and_ports=self._brokers, 
+                                user=self._user,
+                                passcode=self._passcode, 
+                                wait_on_receipt=True)
+        conn.set_listener(self._consumer_name, listener)
+        conn.start()
+        conn.connect()        
+        return conn
+            
+    def connect(self):
+        """
+            Connect to a broker
+        """
+        if self._connection is None or not self._connection.is_connected():
+            self._disconnect()
+            self._connection = self.get_connection()
+        
+        logging.info("[%s] Subscribing to %s" % (self._consumer_name,
+                                                 str(self._queues)))
+        for q in self._queues:
+            self._connection.subscribe(destination=q, ack='auto', persistent='true')
+        self._connected = True
+    
+    def _disconnect(self):
+        """
+            Clean disconnect
+        """
+        if self._connection is not None and self._connection.is_connected():
+            self._connection.disconnect()
+        self._connection = None
+        
+    def stop(self):
+        """
+            Disconnect and stop the client
+        """
+        self._disconnect()
+        if self._connection is not None:
+            self._connection.stop()
+        self._connection = None
+        self._connected = False
+        
+    def listen_and_wait(self, waiting_period=1.0):
+        """
+            Listen for the next message from the brokers.
+            This method will simply return once the connection is
+            terminated.
+            @param waiting_period: sleep time between connection to a broker
+        """
+        self.connect()
+        while(self._connected):
+            if threading.active_count()==1:
+                self._connection.stop()
+            time.sleep(waiting_period)
+            
+    def send(self, destination, message, persistent='true'):
+        """
+            Send a message to a queue
+            @param destination: name of the queue
+            @param message: message content
+        """
+        if self._connection is None or not self._connection.is_connected():
+            self._disconnect()
+            self._connection = self.get_connection()
+        self._connection.send(destination=destination, message=message, persistent=persistent)
+
+
+class Configuration(object):
+    # Dummy ActiveMQ settings for testing
+    amq_user = 'icat'
+    amq_pwd  = 'icat'
+    brokers  = [('localhost', 61613)] 
+    queues   = ['foo.bar']
+    params_ready_queue = 'PARAMS.READY'
+    results_ready_queue = 'RESULTS.READY'
+
+    def __init__(self, config_file=None):
+        # Look for configuration
+        if config_file is not None and os.path.exists(config_file):
+            logging.info("Found configuration: %s" % config_file)
+            cfg = open(config_file, 'r')
+            json_encoded = cfg.read()
+            try:
+                config = json.loads(json_encoded)
+            
+                if type(config)==dict:
+                    
+                    if config.has_key('amq_user'):
+                        amq_user = config['amq_user']
+                        
+                    if config.has_key('amq_pwd'):
+                        amq_pwd = config['amq_pwd']
+                    
+                    if config.has_key('brokers'):
+                        b_str = config['brokers']
+                    
+                    if config.has_key('queues'):
+                        q_str = config['queues']
+                        q_list = q_str.split(',')
+                        queues = [q.strip() for q in q_list]
+                        
+                    if config.has_key('params_ready_queue'):
+                        params_ready_queue = config[params_ready_queue]
+                        
+                    if config.has_key('results_ready_queue'):
+                        params_ready_queue = config[params_ready_queue]
+            except:
+                logging.error("Could not read configuration file:\n  %s" % str(sys.exc_value))
+        elif config_file is not None:
+            logging.error("Could not find configuration: %s" % config_file)
+
+    def get_client(self, client_name='bare_client', queues=[]):
+        """
+            Return a configured ActiveMQ client
+            @param client_name: name of the client
+            @param queues: list of queues to be added to default list of queues
+        """
+        return Client(self.brokers, self.amq_user, self.amq_pwd, queues, client_name)
+    
