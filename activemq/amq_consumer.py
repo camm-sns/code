@@ -6,6 +6,7 @@ import stomp
 import logging
 import json
 import os
+import sys
 import threading
 
 class Listener(stomp.ConnectionListener):
@@ -13,14 +14,19 @@ class Listener(stomp.ConnectionListener):
     PARAMS_READY_QUEUE = "PARAMS.READY"
     RESULTS_READY_QUEUE = "RESULTS.READY"
  
-    def __init__(self, configuration=None, connection=None):
+    def __init__(self, configuration=None, connection=None,
+                 results_ready_queue=None):
         """
             @param configuration: Configuration object
             @param connection: Connection object
+            @param results_ready_queue: Overwrite the name of the results-ready queue
         """
         if configuration is not None:
             self.PARAMS_READY_QUEUE = configuration.params_ready_queue
             self.RESULTS_READY_QUEUE = configuration.results_ready_queue
+            
+        if results_ready_queue is not None:
+            self.RESULTS_READY_QUEUE = results_ready_queue
             
         self.configuration = configuration
         self.connection = connection
@@ -160,28 +166,27 @@ class Configuration(object):
             json_encoded = cfg.read()
             try:
                 config = json.loads(json_encoded)
+                print config
             
                 if type(config)==dict:
                     
                     if config.has_key('amq_user'):
-                        amq_user = config['amq_user']
+                        self.amq_user = config['amq_user']
                         
                     if config.has_key('amq_pwd'):
-                        amq_pwd = config['amq_pwd']
+                        self.amq_pwd = config['amq_pwd']
                     
                     if config.has_key('brokers'):
-                        b_str = config['brokers']
+                        self.brokers = config['brokers']
                     
                     if config.has_key('queues'):
-                        q_str = config['queues']
-                        q_list = q_str.split(',')
-                        queues = [q.strip() for q in q_list]
+                        self.queues = config['queues']
                         
                     if config.has_key('params_ready_queue'):
-                        params_ready_queue = config[params_ready_queue]
+                        self.params_ready_queue = config['params_ready_queue']
                         
                     if config.has_key('results_ready_queue'):
-                        params_ready_queue = config[params_ready_queue]
+                        self.results_ready_queue = config['results_ready_queue']
             except:
                 logging.error("Could not read configuration file:\n  %s" % str(sys.exc_value))
         elif config_file is not None:

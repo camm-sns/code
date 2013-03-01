@@ -44,7 +44,14 @@ class DakotaClient(Client):
         starts the listening thread.
     """
     PARAMS_READY_QUEUE = "PARAMS.READY"
+    RESULTS_READY_QUEUE = "RESULTS.READY"
     
+    def set_results_ready_queue(self, queue):
+        self.RESULTS_READY_QUEUE = queue
+        
+    def set_params_ready_queue(self, queue):
+        self.PARAMS_READY_QUEUE = queue
+        
     def params_ready(self, input_file, output_file):
         """
             Send an ActiveMQ message announcing new
@@ -57,7 +64,9 @@ class DakotaClient(Client):
                 fd = open(input_file, 'r')
                 params = fd.read()
                 message = {'params': params,
-                           'output_file': output_file}
+                           'output_file': output_file,
+                           'amq_results_queue': self.RESULTS_READY_QUEUE,
+                           }
                 json_message = json.dumps(message)
                 self.send(self.PARAMS_READY_QUEUE, json_message)
             except:
@@ -66,17 +75,23 @@ class DakotaClient(Client):
             logging.error("Parameter file %s does not exist" % input_file)
 
 
-def setup_client():
+def setup_client(instance_number=None):
     """
         Create an instance of the Dakota ActiveMQ consumer
     """
+    # Make sure we have an instance number
+    if instance_number is None:
+        instance_number = os.getppid()
     # Look for configuration
     conf = Configuration('/etc/kepler_consumer.conf')
 
-    queues = [conf.results_ready_queue]
+    results_queue = "%s.%s" % (conf.results_ready_queue, str(instance_number))
+    queues = [results_queue]
     c = DakotaClient(conf.brokers, conf.amq_user, conf.amq_pwd, 
-                     queues, "Dakota_consumer")    
-    c.set_listener(DakotaListener(conf, c))
+                     queues, "dakota_consumer")
+    c.set_params_ready_queue(conf.params_ready_queue)
+    c.set_results_ready_queue(results_queue)
+    c.set_listener(DakotaListener(conf, c, results_ready_queue=results_queue))
     return c
     
     

@@ -21,6 +21,8 @@ logging.getLogger().addHandler(fh)
 
 class KeplerListener(Listener):
         
+    _send_connection = None
+    
     def on_message(self, headers, message):
         """
             Process a message.
@@ -41,9 +43,11 @@ class KeplerListener(Listener):
             try:                        
                 data_dict['cost_function'] = 124.0
                 json_message = json.dumps(data_dict)
-                c = self.configuration.get_client('keplerlistener')
-                c.send(self.RESULTS_READY_QUEUE, json_message)
-                logging.info("Sending to %s" % self.PARAMS_READY_QUEUE)
+                
+                # Establish an AMQ connection as needed before sending message
+                if self._send_connection is None:
+                    self._send_connection = self.configuration.get_client('keplerlistener')
+                self._send_connection.send(data_dict['amq_results_queue'], json_message)                
             except:
                 logging.error("Could not report back results")
                 logging.error(str(sys.exc_value))                
