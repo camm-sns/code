@@ -10,7 +10,13 @@ import sys
 import threading
 
 class Listener(stomp.ConnectionListener):
-   
+    """
+        Base listener class for an ActiveMQ client
+
+        A fully implemented class should overload
+        the on_message() method to process incoming
+        messages.
+    """
     PARAMS_READY_QUEUE = "PARAMS.READY"
     RESULTS_READY_QUEUE = "RESULTS.READY"
  
@@ -43,6 +49,7 @@ class Listener(stomp.ConnectionListener):
 class Client(object):
     """
         ActiveMQ client
+        Holds the connection to a broker
     """
     
     def __init__(self, brokers, user, passcode, 
@@ -150,6 +157,10 @@ class Client(object):
 
 
 class Configuration(object):
+    """
+        Read and process configuration file and provide
+        an easy way to create a configured Client object
+    """
     # Dummy ActiveMQ settings for testing
     amq_user = 'icat'
     amq_pwd  = 'icat'

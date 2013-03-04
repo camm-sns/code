@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 """
-    Start an ActiveMQ consumer for Kepler
+    ActiveMQ client for Kepler
 """
 import os
 import sys
@@ -20,7 +20,10 @@ logging.getLogger().addHandler(fh)
 
 
 class KeplerListener(Listener):
-        
+    """
+        ActiveMQ listener implementation for a Kepler client.
+    """
+    ## Connection used for sending messages
     _send_connection = None
     
     def on_message(self, headers, message):

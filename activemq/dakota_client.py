@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 """
-    Start an ActiveMQ consumer for Dakota
+    ActiveMQ client for Dakota
 """
 import os
 import sys
@@ -43,13 +43,25 @@ class DakotaClient(Client):
         This class hold the connection to ActiveMQ and 
         starts the listening thread.
     """
+    ## Input queue used to trigger a new calculation
     PARAMS_READY_QUEUE = "PARAMS.READY"
+    ## Output queue to announce results
     RESULTS_READY_QUEUE = "RESULTS.READY"
     
     def set_results_ready_queue(self, queue):
+        """ 
+            Set the name of the queue to be used to 
+            announce new results
+            @param queue: name of an ActiveMQ queue
+        """
         self.RESULTS_READY_QUEUE = queue
         
     def set_params_ready_queue(self, queue):
+        """ 
+            Set the name of the queue to be used to 
+            request new calculations/simulations
+            @param queue: name of an ActiveMQ queue
+        """
         self.PARAMS_READY_QUEUE = queue
         
     def params_ready(self, input_file, output_file):
@@ -78,6 +90,8 @@ class DakotaClient(Client):
 def setup_client(instance_number=None):
     """
         Create an instance of the Dakota ActiveMQ consumer
+        @param instance_number: instance number to use for 
+                                transient process communication
     """
     # Make sure we have an instance number
     if instance_number is None:
