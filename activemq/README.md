@@ -81,9 +81,9 @@ following parameters
             "brokers": [["localhost", 61613]],  
             "amq_queues": ["foo.bar"],   
             "amq_user": "icat",  
-            "amq_pwd": "icat" 
+            "amq_pwd": "icat",
             "params_ready_queue": "MY_DAKOTA_PARAMS_READY_QUEUE",
-            "results_ready_queue": "MY_DAKOTA_RESULTS_READY_QUEUE",
+            "results_ready_queue": "MY_DAKOTA_RESULTS_READY_QUEUE"
         }
     
  

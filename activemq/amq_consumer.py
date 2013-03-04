@@ -166,7 +166,6 @@ class Configuration(object):
             json_encoded = cfg.read()
             try:
                 config = json.loads(json_encoded)
-                print config
             
                 if type(config)==dict:
                     
@@ -177,7 +176,10 @@ class Configuration(object):
                         self.amq_pwd = config['amq_pwd']
                     
                     if config.has_key('brokers'):
-                        self.brokers = config['brokers']
+                        brokers = config['brokers']
+                        self.brokers = []
+                        for b in brokers:
+                            self.brokers.append( (b[0], b[1]) )
                     
                     if config.has_key('queues'):
                         self.queues = config['queues']
