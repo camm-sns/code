@@ -3,7 +3,7 @@ Created on Dec 26, 2012
 
 Generate the initial Dakota input file 
 '''
-from pdb import set_trace as trace
+#from pdb import set_trace as trace # only for purposes of debugging 
 
 def populate_variables(template,free_params):
   """Use the list of free parameters to substitute in the
