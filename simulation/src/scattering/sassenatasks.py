@@ -3,8 +3,23 @@ Created on Mar 8, 2013
 
 @author: jmborr
 '''
+import h5py 
 
-from pdb import set_trace as trace # uncomment only for debugging purposes
+#from pdb import set_trace as trace # uncomment only for debugging purposes
+
+def hasVersion(filename):                                                                                                       
+  """Check filename as sassena version"""                                                                                       
+  f = h5py.File(filename,'r')                                                                                                   
+  value=False                                                                                                                   
+  if 'sassena_version' in f.attrs.keys(): value=True                                                                            
+  f.close()                                                                                                                     
+  return value                                                                                                                  
+
+def addVersionStamp(filename,stamp):                                                                                            
+  """ Insert stamp as version attribute in and HDF5 file. """                                                                   
+  f = h5py.File(filename,'r+')                                                                                                  
+  f.attrs['sassena_version']=stamp                                                                                              
+  f.close()                                                                                                                     
 
 def genSQE(hdfname,nxsname,wsname=None,**kwargs):
   """ Generate S(Q,E)
@@ -43,7 +58,6 @@ def genSQE(hdfname,nxsname,wsname=None,**kwargs):
 
   from os.path import basename,splitext
   from mantid.simpleapi import (LoadSassena, SortByQVectors, SassenaFFT, SaveNexus)
-  from mysassena.version import hasVersion,addVersionStamp
   if not hasVersion(hdfname): addVersionStamp(hdfname,'1.4.1')
   wsname=wsname or splitext(basename(nxsname))[0]
   algs_opt=locals()['kwargs']
