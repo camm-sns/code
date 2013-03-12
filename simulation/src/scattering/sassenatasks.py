@@ -3,23 +3,24 @@ Created on Mar 8, 2013
 
 @author: jmborr
 '''
-import h5py 
 
-#from pdb import set_trace as trace # uncomment only for debugging purposes
+from pdb import set_trace as trace # uncomment only for debugging purposes
 
-def hasVersion(filename):                                                                                                       
-  """Check filename as sassena version"""                                                                                       
-  f = h5py.File(filename,'r')                                                                                                   
-  value=False                                                                                                                   
-  if 'sassena_version' in f.attrs.keys(): value=True                                                                            
-  f.close()                                                                                                                     
-  return value                                                                                                                  
+def hasVersion(filename):
+  """Check filename as sassena version"""
+  from h5py import File
+  f = File(filename,'r')
+  value=False
+  if 'sassena_version' in f.attrs.keys(): value=True
+  f.close()
+  return value
 
-def addVersionStamp(filename,stamp):                                                                                            
-  """ Insert stamp as version attribute in and HDF5 file. """                                                                   
-  f = h5py.File(filename,'r+')                                                                                                  
-  f.attrs['sassena_version']=stamp                                                                                              
-  f.close()                                                                                                                     
+def addVersionStamp(filename,stamp):
+  """ Insert stamp as version attribute in and HDF5 file. """
+  from h5py import File
+  f =File(filename,'r+')
+  f.attrs['sassena_version']=stamp
+  f.close()
 
 def genSQE(hdfname,nxsname,wsname=None,**kwargs):
   """ Generate S(Q,E)
@@ -73,6 +74,7 @@ if __name__ == '__main__':
   import sys
   from mantidhelper.algorithm import getDictFromArgparse
   from sets import Set
+  trace()
   p=argparse.ArgumentParser(description='Provider for services involving Sassena IO. Available services are: genSQE, ')
   p.add_argument('service', help='name of the function in this module to call')
   p.add_argument('-explain', action='store_true', help='print message explaining the arguments to pass for the particular service')
