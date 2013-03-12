@@ -7,8 +7,8 @@ FF2  # partial charge at hydrogen atom in water molecule
 #Dakota Parameters
 FF2
 
-!CONSTRAINTS
-#Constraints in explicit form for each non-free parameter
+!TIES
+#Ties in explicit form for each non-free parameter
 FF1=-2*FF2 # each water molecule is electrically neutral
 
 !FFFORMAT
