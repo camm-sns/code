@@ -18,7 +18,7 @@ class FFParam(object):
   def __init__(self,name=None):
     self._name=None
     if name: self._name=name
-    self._constraint=None #initialized as free parameter
+    self._tie=None #initialized as free parameter
     self._value=None
     self._init=None
     self._minimum=None
@@ -30,7 +30,7 @@ class FFParam(object):
     self._value=value
 
   def isFree(self):
-    if self._constraint:
+    if self._tie:
       return False
     return True
 
@@ -42,13 +42,13 @@ class FFParam(object):
     else:
       self.__dict__[key]=val
   
-  def resolveConstraint(self,free_params):
-    """ Assign value based on the constraint expression """
+  def resolveTie(self,free_params):
+    """ Assign value based on the tie expression """
     if not self.isFree():
-      constraint=self._constraint
+      tie=self._tie
       for param in free_params:
-        constraint=constraint.replace(param._name,str(param._value))
-      self._value=eval(constraint)
+        tie=tie.replace(param._name,str(param._value))
+      self._value=eval(tie)
     return self._value
 
   def toElementTreeElement(self):
@@ -77,13 +77,13 @@ def initFFParams(conf_file):
   parameters to be fit
   
   Example configuration file:
-  #name, constraint, iatom, extend, minimum, init, maximum, tolerance
+  #name, tie, iatom, extend, minimum, init, maximum, tolerance
   FF1, , 930, 1, 0.30, 0.45, 0.60, 0.01
   FF2, 2*FF1, 931, 1
   
-  FF1 is a free parameter, thus it has no constraint.
+  FF1 is a free parameter, thus it has no tie.
   FF2 is a non-free parameter, since is twice FF1. Thus, the minimum, init,
-  maximum, and tolerance values are defined by the constraint and there is no
+  maximum, and tolerance values are defined by the tie and there is no
   need to specify those in the configuration file.
   
   FF1 is applicable to atom iatom=930. Furthermore, FF1 is applicable to atoms
@@ -94,17 +94,17 @@ def initFFParams(conf_file):
   params={}
   for line in cfile.readlines():
     fields=[x.strip() for x in line.split(',')]
-    name,constraint=fields[0:2]
+    name,tie=fields[0:2]
     if name not in params.keys():
       p=FFParam(name)
-      if not constraint: #free parameter
+      if not tie: #free parameter
         minimum,init,maximum,tolerance=[float(x) for x in fields[4:9]]
         p._minimum=minimum
         p._init=init
         p._maximum=maximum
         p._tolerance=tolerance
       else:
-        p._constraint=constraint
+        p._tie=tie
       params[name]=p
   return params
 

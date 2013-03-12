@@ -59,7 +59,7 @@ if __name__ == "__main__":
   free_params=[param for param in params if param.isFree()]
   for param in free_params: param._value=dakota_vals[param._name] # Update free param values
   for param in params:
-    if not param.isFree(): param.resolveConstraint(free_params) # Update non-free param values
+    if not param.isFree(): param.resolveTie(free_params) # Update non-free param values
   template=updateTemplate(template,params)
   open(args.ffout,'w').write(template)
   sys.exit(0)
