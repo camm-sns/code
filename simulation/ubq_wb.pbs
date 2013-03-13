@@ -10,7 +10,7 @@ NAMD=/shared/local/namd/NAMD_2.9_Linux-x86_64-mpi_shared/Linux-x86_64-g++/namd2
 
 cd $PBS_O_WORKDIR
 mkdir toppar
-mv *psf toppar
+mv *psf toppar/Q32.psf
 cp /data/jbq/projects/research/LiCl/watBox30/Hq.II/Q32/toppar/par_all27_prot_lipid.inp toppar
 cp /data/jbq/projects/research/LiCl/watBox30/Hq.II/Q32/toppar/crd.md18_vmd_autopsf.pdb  toppar
 cp /data/jbq/projects/research/LiCl/watBox30/Hq.II/Q32/T290/production/production01.conf .
