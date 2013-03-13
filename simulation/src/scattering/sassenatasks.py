@@ -4,7 +4,7 @@ Created on Mar 8, 2013
 @author: jmborr
 '''
 
-from pdb import set_trace as trace # uncomment only for debugging purposes
+#from pdb import set_trace as trace # uncomment only for debugging purposes
 
 def hasVersion(filename):
   """Check filename as sassena version"""
@@ -59,7 +59,6 @@ def genSQE(hdfname,nxsname,wsname=None,**kwargs):
 
   from os.path import basename,splitext
   from mantid.simpleapi import (LoadSassena, SortByQVectors, SassenaFFT, SaveNexus)
-  if not hasVersion(hdfname): addVersionStamp(hdfname,'1.4.1')
   wsname=wsname or splitext(basename(nxsname))[0]
   algs_opt=locals()['kwargs']
   ws=LoadSassena(Filename=hdfname, OutputWorkspace=wsname, **findopts('LoadSassena',algs_opt))
@@ -74,12 +73,23 @@ if __name__ == '__main__':
   import sys
   from mantidhelper.algorithm import getDictFromArgparse
   from sets import Set
-  trace()
-  p=argparse.ArgumentParser(description='Provider for services involving Sassena IO. Available services are: genSQE, ')
+  #trace()
+  p=argparse.ArgumentParser(description='Provider for services involving Sassena IO. Available services are: genSQE, SassenaVersion ')
   p.add_argument('service', help='name of the function in this module to call')
   p.add_argument('-explain', action='store_true', help='print message explaining the arguments to pass for the particular service')
   if Set(['-h', '-help', '--help']).intersection(Set(sys.argv)): args=p.parse_args() # check if help message is requested
-  if 'genSQE' in sys.argv:
+  if 'SassenaVersion' in sys.argv:
+    p.description='Loads Sassena output (HDF5 file) and adds Sassena Version number.' # update help message
+    for action in p._actions:
+      if action.dest=='service': action.help='substitue SERVICE by SassenaVersion' # update help message
+    p.add_argument('hdfname', help='path to sassena output hdf5 file')
+    # Check if help message is requested
+    if '-explain' in sys.argv:
+      p.parse_args(args=('-h',))
+    else:
+      args=p.parse_args()
+      if not hasVersion(args.hdfname): addVersionStamp(args.hdfname,'1.4.1')
+  elif 'genSQE' in sys.argv:
     p.description='Loads Sassena output (HDF5 file) and generates a Nexus file containing S(Q,E) in a Workspace2D.' # update help message
     for action in p._actions:
       if action.dest=='service': action.help='substitue SERVICE by genSQE' # update help message
