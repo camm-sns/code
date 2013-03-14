@@ -1,5 +1,5 @@
 #!/bin/bash
-#PBS -l nodes=2:ppn=16
+#PBS -l nodes=12:ppn=16
 #PBS -l walltime=59:00
 #PBS -N namdTest
 
@@ -17,4 +17,4 @@ cp /data/jbq/projects/research/LiCl/watBox30/Hq.II/Q32/T290/production/productio
 cp /data/jbq/projects/research/LiCl/watBox30/Hq.II/Q32/T290/production/production00.restart.coor . 
 cp /data/jbq/projects/research/LiCl/watBox30/Hq.II/Q32/T290/production/production00.restart.vel . 
 cp /data/jbq/projects/research/LiCl/watBox30/Hq.II/Q32/T290/production/production00.restart.xsc . 
-$MPIRUN -machinefile $PBS_NODEFILE -np 32 $NAMD production01.conf > production01_eq_32cores.log
+$MPIRUN -machinefile $PBS_NODEFILE -np 192 $NAMD production01.conf > production01_eq_32cores.log
