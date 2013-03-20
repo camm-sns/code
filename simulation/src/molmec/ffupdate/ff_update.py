@@ -3,6 +3,7 @@ from pdb import set_trace as trace  # only for interactive debugging purposes
 import sys
 import re
 import argparse
+import csv
 
 from molmec.fftpl.psf import FFParam
 
@@ -54,6 +55,16 @@ if __name__ == "__main__":
   args = parser.parse_args()
 
   dakota_vals = getParams(args.dak) # read in Dakota params file
+  data = {}
+  r = csv.reader(open("output.csv", 'w+'))
+  for key, val in r:
+    data[key] = val
+    if val == str(dakota_vals["FF1"]):
+      sys.exit(key)
+  data[args.dak.split('in.')[1]] =  dakota_vals["FF1"]
+  w = csv.writer(open("output.csv", "w"))
+  for key, val in data.items():
+    w.writerow([key, val])
   params,template=loadFFtpl(args.fftpl) # read in force field template file
   
   free_params=[param for param in params if param.isFree()]
