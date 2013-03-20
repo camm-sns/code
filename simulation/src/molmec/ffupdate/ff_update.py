@@ -4,6 +4,7 @@ import sys
 import re
 import argparse
 import csv
+import os.path
 
 from molmec.fftpl.psf import FFParam
 
@@ -52,19 +53,22 @@ if __name__ == "__main__":
   parser.add_argument('--dak',help='name of the dakota params file')
   parser.add_argument('--fftpl',help='force field template, Ex: --fftpl=fftpl.xml')
   parser.add_argument('--ffout',help='name of the output force field. Ex: --ffout=ff.psf')
+  parser.add_argument('--pout',help='name of the output parameter file Ex: --pout=output.csv')
   args = parser.parse_args()
 
   dakota_vals = getParams(args.dak) # read in Dakota params file
-  data = {}
-  r = csv.reader(open("output.csv", 'w+'))
-  for key, val in r:
-    data[key] = val
-    if val == str(dakota_vals["FF1"]):
-      sys.exit(key)
-  data[args.dak.split('in.')[1]] =  dakota_vals["FF1"]
-  w = csv.writer(open("output.csv", "w"))
-  for key, val in data.items():
-    w.writerow([key, val])
+  if args.pout is not None:
+    data = {}
+    if os.path.isfile(args.pout):
+      r = csv.reader(open(args.pout))
+      for key, val in r:
+        data[key] = val
+        if val == str(dakota_vals["FF1"]):
+          sys.exit(key)
+    data[args.dak.split('in.')[1]] =  dakota_vals["FF1"]
+    w = csv.writer(open(args.pout, "w"))
+    for key, val in data.items():
+      w.writerow([key, val])
   params,template=loadFFtpl(args.fftpl) # read in force field template file
   
   free_params=[param for param in params if param.isFree()]
