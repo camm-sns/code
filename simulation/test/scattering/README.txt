@@ -1,0 +1,1 @@
+python sassenatasks.py genSQE fqt.hd5 simulated.nxs --wsname simulated --indexes="2 4 6 8" --LoadSassena "TimeUnit:0.1" --SassenaFFT "FFTonlyRealPart:1,DetailedBalance:1,Temp:290" --NormaliseToUnity "RangeLower:-50.0,RangeUpper:50.0"

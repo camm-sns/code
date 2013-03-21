@@ -101,6 +101,7 @@ if __name__ == '__main__':
     p.add_argument('hdfname', help='path to sassena output hdf5 file')
     p.add_argument('nxsname', help='path to output Nexus file')
     p.add_argument('--wsname', help='root name for the GroupWorkspace created when Sassena output is loaded')
+    p.add_argument('--indexes', help='space separated list of workspace indexes to keep. Example: --indexes "2 4 6 8". If not declared, all indexes are kept')
     p.add_argument('--LoadSassena', help='certain arguments for the algorithm. Example --LoadSassena="TimeUnit:0.1"')
     p.add_argument('--SassenaFFT', help='certain arguments for the algorithm. Example: --SassenaFFT="FTTonlyRealPart:True,DetailedBalance:True,Temp:290"')
     p.add_argument('--NormaliseToUnity', help='certain arguments for the algorithm. Example: --NormaliseToUnity="RangeLower:50.0,RangeUpper:50.0"')
@@ -110,7 +111,9 @@ if __name__ == '__main__':
       p.parse_args(args=('-h',))
     else:
       args=p.parse_args()
-      genSQE(args.hdfname, args.nxsname, wsname=args.wsname,
+      indexes=[]
+      if args.indexes: indexes=[int(i) for i in args.indexes.split()]
+      genSQE(args.hdfname, args.nxsname, wsname=args.wsname, indexes=indexes,
              LoadSassena=getDictFromArgparse('LoadSassena',args),
              SassenaFFT=getDictFromArgparse('SassenaFFT',args),
              SaveNexus=getDictFromArgparse('SaveNexus',args)
