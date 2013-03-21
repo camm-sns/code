@@ -104,7 +104,7 @@ if __name__ == '__main__':
     p.add_argument('--indexes', help='space separated list of workspace indexes to keep. Example: --indexes "2 4 6 8". If not declared, all indexes are kept')
     p.add_argument('--LoadSassena', help='certain arguments for the algorithm. Example --LoadSassena="TimeUnit:0.1"')
     p.add_argument('--SassenaFFT', help='certain arguments for the algorithm. Example: --SassenaFFT="FTTonlyRealPart:True,DetailedBalance:True,Temp:290"')
-    p.add_argument('--NormaliseToUnity', help='certain arguments for the algorithm. Example: --NormaliseToUnity="RangeLower:50.0,RangeUpper:50.0"')
+    p.add_argument('--NormaliseToUnity', help='certain arguments for the algorithm. Example: --NormaliseToUnity="RangeLower:-50.0,RangeUpper:50.0"')
     p.add_argument('--SaveNexus', help='certain arguments for the algorithm. Example: --SaveNexus="Title:some title here"')
     # Check if help message is requested
     if '-explain' in sys.argv:
