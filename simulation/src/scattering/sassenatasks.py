@@ -116,5 +116,6 @@ if __name__ == '__main__':
       genSQE(args.hdfname, args.nxsname, wsname=args.wsname, indexes=indexes,
              LoadSassena=getDictFromArgparse('LoadSassena',args),
              SassenaFFT=getDictFromArgparse('SassenaFFT',args),
-             SaveNexus=getDictFromArgparse('SaveNexus',args)
+             SaveNexus=getDictFromArgparse('SaveNexus',args),
+             NormaliseToUnity=getDictFromArgparse('NormaliseToUnity',args)
              )
