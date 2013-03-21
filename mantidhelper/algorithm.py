@@ -5,6 +5,14 @@ Created on Mar 11, 2013
 '''
 #from pdb import set_trace as trace # uncomment only for debugging purposes
 
+# Give correct type to Mantid algorithm arguments:
+correct_type={'LoadSassena':{'TimeUnit':float,},
+              'SassenaFFT':{'FFTonlyRealPart':int,'DetailedBalance':int,'Temp':float},
+              'SaveNexus':{'Title':str},
+              'Fit':{'StartX':float, 'EndX':float},
+              'NormaliseToUnity':{'RangeLower':float, 'RangeUpper':float}
+              }
+
 def toBool(value):
   """ returns False if passes either of the accepted false values. Otherwise returns True
   accepted false values are False', '0', 0, 'None', None, '()', (), '{}', {}
@@ -12,12 +20,6 @@ def toBool(value):
   if value in ('False', '0', 0, 'None', None, '()', (), '{}', {}):
     return False
   return True
-
-# Give correct type to algoritm arguments:
-correct_type={'LoadSassena':{'TimeUnit':float,},
-              'SassenaFFT':{'FTTonlyRealPart':int,'DetailedBalance':int,'Temp':float},
-              'SaveNexus':{'Title':str}
-              }
 
 def correctAlgArgs(algname,thedict):
   """ Given a Mantid algorithm, correct the type of the arguments in 'thedict'
@@ -68,3 +70,9 @@ def getDictFromArgparse(algname,arguments):
   thedict={}
   if thestring: thedict=dict( map( lambda x: x.split(':'), thestring.split(',') ) )
   return correctAlgArgs(algname,thedict)
+
+def findopts(algname,options):
+  """ Find if options were passed for the algorithm algname. """
+  if algname in options.keys():
+    return options[algname]
+  return {}
