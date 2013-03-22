@@ -3,3 +3,7 @@ For kepler to run workflow for all dakota input files:
 nohup /home/vel/kepler-2.3/kepler.sh -runwf /home/vel/camm-sns/code/Vickie/dakota3.xml &
 For dakota to wait for kepler workflows:
 mpirun -np 4 dakota dakota_pstudy.in
+Create S(Q,E) from I(Q,E):
+python /home/vel/camm-sns/code/simulation/src/scattering/sassenatasks.py genSQE fqt_1.hd5 output_1.nxs --wsname simulated --indexes="2 4 6 8" --LoadSassena "TimeUnit:0.1" --SassenaFFT "FFTonlyRealPart:1,DetailedBalance:1,Temp:290" --NormaliseToUnity "RangeLower:-50.0,RangeUpper:50.0"
+Convolution:
+python /home/vel/camm-sns/code/simulation/src/beamline/convolve.py  lowTresolution --model fit_1.txt --simulated output_1.nxs --resolution /home/vel/camm-sns/code/simulation/src/beamline/resolution.nxs --convolved convolved.nxs --Fit="StartX:-50.0,EndX:50.0"

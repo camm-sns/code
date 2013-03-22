@@ -1,0 +1,50 @@
+# DAKOTA INPUT FILE: dakota_pstudy.in for parallel Case 1
+
+method,
+        nl2sol
+          max_iterations = 100
+          convergence_tolerance = 1e-3
+          absolute_conv_tol = 1e-3
+          x_conv_tol = 1e-3
+          function_precision = 1e-3
+
+variables,
+        continuous_state = 1
+          initial_state    0.41
+          upper_bounds    0.5
+          lower_bounds    0.3
+          descriptor 'FF1'
+
+	continuous_design = 3
+	  cdv_initial_point    1.0 1.0 0.001
+	  upper_bounds    2.0  2.0  0.002
+	  lower_bounds    0.0  0.0  0.0 
+          cdv_descriptor 'f0.f1.Scaling' 'f1.Scaling' 'f2.A0'
+
+
+# Case 1: Run DAKOTA in parallel and launch M-1 serial analysis jobs at once
+#         Do not specify any evaluation concurrency (handled by parallel 
+#	  scheduler)
+#         fork interface is recommended
+interface,
+	fork
+# In an M processor allocation, by default DAKOTA will configure with
+# a master scheduler with M-1 slave analysis processes.  Overriding
+# this with static_scheduling will avoid this dedicated master and use
+# all M processors, but then each batch of M analyses will have to
+# complete before the next M are scheduled.  This may be useful if all
+# evaluations are known to take the same processor time:
+	  #evaluation_static_scheduling
+	  analysis_driver = 'opt_driver'
+	    parameters_file = 'params.in'
+	    results_file = 'results.out'
+	    file_tag
+	    file_save
+
+responses,
+	calibration_terms = 1
+	numerical_gradients
+		method_source dakota
+		interval_type forward
+		fd_gradient_step_size = 1.e-5
+	no_hessians
