@@ -6,6 +6,6 @@
     <FFParam init="1.0" maximum="1.1" minimum="0.9" name="f1.Scaling" tolerance="0.01"/>
     <FFParam init="0.001" maximum="0.1" minimum="0.0" name="f2.A0" tolerance="0.01"/>
   </FFParams>
-  <FFTemplate>(composite=Convolution;name=TabulatedFunction,FileName="",Workspace=resolution,Scaling=1,ties=(Scaling=1);name=TabulatedFunction,FileName="",Workspace=simulated,Scaling=_f0.f1.Scaling_(%-14.6e));name=TabulatedFunction,FileName="",Workspace=elastic,Scaling=_f1.Scaling_(%-14.6e);name=FlatBackground,A0=_f2.A0_(%-14.6e),constraints=(0<A0)
+  <FFTemplate>(composite=Convolution;name=TabulatedFunction,FileName="",Workspace=resolution,Scaling=1,ties=(Scaling=1);name=TabulatedFunction,FileName="",Workspace=simulated,Scaling=_f0.f1.Scaling_(%-14.6e));name=TabulatedFunction,FileName="",Workspace=elastic,Scaling=_f1.Scaling_(%-14.6e);name=FlatBackground,A0=_f2.A0_(%-14.6e),constraints=(A0>0)
 </FFTemplate>
 </root>

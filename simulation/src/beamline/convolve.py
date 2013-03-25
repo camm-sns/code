@@ -58,7 +58,7 @@ def lowTResolution(model, simulated, resolution, convolved, expdata=None,
       RenameWorkspace(InputWorkspace='convolved',OutputWorkspace=wsc)
     else:
       AppendSpectra(InputWorkspace1=wsc, InputWorkspace2='convolved', OutputWorkspace=wsc)
-  trace()
+#  trace()
   SaveNexus(InputWorkspace=wsc, Filename=convolved)
   if costfile: open(costfile,'w').write(str(cost)+' obj-fn\n')
   return cost

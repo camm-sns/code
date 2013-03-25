@@ -64,7 +64,7 @@ if __name__ == "__main__":
       for key, val in r:
         data[key] = val
         if val == str(dakota_vals["FF1"]):
-          print key
+          sys.stdout.write(key)
           sys.exit(key)
     data[args.dak.split('in.')[1]] =  dakota_vals["FF1"]
     w = csv.writer(open(args.pout, "w"))
