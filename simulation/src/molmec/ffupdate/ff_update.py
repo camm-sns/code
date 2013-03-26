@@ -60,16 +60,21 @@ if __name__ == "__main__":
   if args.pout is not None:
     data = {}
     if os.path.isfile(args.pout):
-      r = csv.reader(open(args.pout))
+      f = open(args.pout)
+      r = csv.reader(f)
       for key, val in r:
         data[key] = val
         if val == str(dakota_vals["FF1"]):
+          f.close()
           sys.stdout.write(key)
           sys.exit(key)
+      f.close()
     data[args.dak.split('in.')[1]] =  dakota_vals["FF1"]
-    w = csv.writer(open(args.pout, "w"))
+    g = open(args.pout, "w")
+    w = csv.writer(g)
     for key, val in data.items():
       w.writerow([key, val])
+    g.close()
   params,template=loadFFtpl(args.fftpl) # read in force field template file
   
   free_params=[param for param in params if param.isFree()]
@@ -78,5 +83,6 @@ if __name__ == "__main__":
     if not param.isFree(): param.resolveTie(free_params) # Update non-free param values
   template=updateTemplate(template,params)
   open(args.ffout,'w').write(template)
+  sys.stdout.write(str(0))
   sys.exit(0)
 
