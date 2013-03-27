@@ -7,6 +7,41 @@ Created on Mar 19, 2013
 '''
 from pdb import set_trace as trace # uncomment only for debugging purposes
 
+def modelBEC(model, resolution, convolved, qvalues, assembled):
+  """Assemble the Background, Elastic line and Convolution of the resolution with the simulated S(Q,E)
+  This is a hard-coded model consisting of a linear background, and elastic line, and a convolution:
+    b0+b1*E  +  e0*exp(-e1*Q^2)*Elastic(E)  +  c0*Resolution(E)xSimulated(Q,E)
+    We load Resolution(E)xSimulated(Q,E) as Convolved(Q,E)
+    
+  Arguments:
+    model: beamline model file is a single line, e.g,
+           b0=1.3211; b1=0.00 e0=0.99; e1=0.01; c0=2.3
+    resolution: Nexus file containing the resolution. This will be used to produce a elastic line.
+    convolved: Nexus file containing the convolution of the simulated S(Q,E) with the resolution.
+    qvalues: single-column file containing list of Q-values
+    assembled: output Nexus file containing the assembled S(Q,E) of the beamline model and the simulated S(Q,E)
+
+  Returns:
+    workspace containing the assembled S(Q,E)
+  """
+  import numpy
+  from mantid.simpleapi import (LoadNexus, ScaleX, SaveNexus)
+  Q=[float(q) for q in open(qvalues,'r').read().split('\n')]
+  p={}
+  for pair in open(model,'r').readline().split(';'):
+    key,val=pair.split('=')
+    p[key.strip()]=float(val)
+  wsr=LoadNexus(Filename=resolution,OutputWorkspace='resolutions')
+  E=wsr.readX(0)
+  wse=ScaleX(InputWorkspace=wsr, OutputWorkspace='elastics',factor=-1) # elastic line
+  wsc=LoadNexus(Filename=convolved,OutputWorkspace='convolveds')
+  for i in range(wsc.getNumberHistograms()):
+    elastic=wse.readY(i) # elastic spectrum at a given Q
+    convolved=wsc.readY(i) # convolved spectrum at a given Q
+    wsc.setY(i, (p['b0']+p['b1']*E) + (p['e0']*numpy.exp(-p['e1']*Q[i])*elastic) + (p['c1']*convolved) ) # overwrite spectrum
+  SaveNexus(InputWorkspace=wsc, Filename=assembled)
+  return wsc
+
 def lowTResolution(model, simulated, resolution, convolved, expdata=None,
                    costfile=None, **kwargs):
   """Convolve a simulated S(Q,E) with a resolution file
@@ -58,7 +93,6 @@ def lowTResolution(model, simulated, resolution, convolved, expdata=None,
       RenameWorkspace(InputWorkspace='convolved',OutputWorkspace=wsc)
     else:
       AppendSpectra(InputWorkspace1=wsc, InputWorkspace2='convolved', OutputWorkspace=wsc)
-#  trace()
   SaveNexus(InputWorkspace=wsc, Filename=convolved)
   if costfile: open(costfile,'w').write(str(cost)+' obj-fn\n')
   return cost
@@ -92,3 +126,17 @@ if __name__ == "__main__":
                      expdata=args.expdata, costfile=args.costfile,
                      Fit=getDictFromArgparse('Fit',args)
                      )
+  elif 'assemble' in sys.argv:
+    p.description='Assemble the background, elastic line and convolution of the resolution with the simulated S(Q,E). Output to a Nexus file'
+    for action in p._actions:
+      if action.dest=='service': action.help='substitue "service" with "assemble"' # update help message
+    p.add_argument('--model',help='name of the file containing the model beamline string')
+    p.add_argument('--resolution',help='name of the nexus file containing the resolution function. This will be used to produce an elastic line.')
+    p.add_argument('--convolved',help='Nexus file containing the convolution of the simulated S(Q,E) with the resolution.')
+    p.add_argument('--qvalues',help='Single-column file containing list of Q-values.')
+    p.add_argument('--assembled',help='output Nexus file containing the assembled S(Q,E) of the beamline model and the simulated S(Q,E)')
+    if '-explain' in sys.argv:
+      p.parse_args(args=('-h',))
+    else:
+      args=p.parse_args()
+      modelBEC(args.model, args.resolution, args.convolved, args.assembled)
