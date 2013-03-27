@@ -32,16 +32,16 @@ def convolution(simulated, resolution, expdata, convolved):
     wss.setY(i,x)
   wse=LoadNexus(Filename=expdata,OutputWorkspace='expdata')
   width=wse.readX(0)[1]-wse.readX(0)[0] # rebin simulated as expdata
-  Rebin(InputWorkspace='simulated', Params=(wsr.readX(0)[0],width,wsr.readX(0)[-1]), OutputWorkspace='simulated')
+  Rebin(InputWorkspace='simulated', Params=(wse.readX(0)[0],width,wse.readX(0)[-1]), OutputWorkspace='simulated')
   wsc=NormaliseToUnity(InputWorkspace='simulated', OutputWorkspace='convolved')
-  SaveNexus(InputWorkspace='convolved')
+  trace()
+  SaveNexus(InputWorkspace='convolved', Filename=convolved)
   return wsc
 
 if __name__ == "__main__":
   import argparse
   import sys
   from sets import Set
-  from mantidhelper.algorithm import getDictFromArgparse
   p=argparse.ArgumentParser(description='Provider for services involving convolution of simulated S(Q,E) with a model beamline. Available services are: lowTresolution.')
   p.add_argument('service', help='name of the service to invoke')
   p.add_argument('-explain', action='store_true', help='print message explaining the arguments to pass for the particular service')
