@@ -83,6 +83,6 @@ if __name__ == "__main__":
     if not param.isFree(): param.resolveTie(free_params) # Update non-free param values
   template=updateTemplate(template,params)
   open(args.ffout,'w').write(template)
-  sys.stdout.write(str(0))
+  sys.stdout.write(str(args.dak.split('in.')[1]))
   sys.exit(0)
 
