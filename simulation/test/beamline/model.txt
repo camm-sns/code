@@ -1,1 +1,0 @@
-(composite=Convolution;name=TabulatedFunction,FileName="",Workspace=resolution,Scaling=1,ties=(Scaling=1);name=TabulatedFunction,FileName="",Workspace=simulated,Scaling=1.0);name=TabulatedFunction,FileName="",Workspace=elastic,Scaling=1.0;name=FlatBackground,A0=0.001,constraints=(0<A0)
