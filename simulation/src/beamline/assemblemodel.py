@@ -24,13 +24,14 @@ def modelBEC(model, resolution, convolved, qvalues, assembled):
   Returns:
     workspace containing the assembled S(Q,E)
   """
-  import numpyl
+  import numpy
   from mantid.simpleapi import (LoadNexus, ScaleX, SaveNexus)
   Q=[float(q) for q in open(qvalues,'r').read().split('\n')]
   p={}
+  trace()
   for pair in open(model,'r').readline().split(';'):
     key,val=pair.split('=')
-    p[key.strip()]=float(val)
+    p[key.strip()]=float(val.strip())
   wsr=LoadNexus(Filename=resolution,OutputWorkspace='resolutions')
   E=wsr.readX(0)
   wse=ScaleX(InputWorkspace=wsr, OutputWorkspace='elastics',factor=-1) # elastic line
@@ -139,6 +140,6 @@ if __name__ == "__main__":
       p.parse_args(args=('-h',))
     else:
       args=p.parse_args()
-      modelBEC(args.model, args.resolution, args.convolved, args.assembled)
+      modelBEC(args.model, args.resolution, args.convolved, args.qvalues, args.assembled)
   else:
     print 'service not found'
