@@ -15,7 +15,7 @@ def modelBEC(model, resolution, convolved, qvalues, assembled):
     
   Arguments:
     model: beamline model file is a single line, e.g,
-           b0=1.3211; b1=0.00 e0=0.99; e1=0.01; c0=2.3
+           b0=1.3211; b1=0.00 e0=0.99; e1=1.9; c0=2.3
     resolution: Nexus file containing the resolution. This will be used to produce a elastic line.
     convolved: Nexus file containing the convolution of the simulated S(Q,E) with the resolution.
     qvalues: single-column file containing list of Q-values
@@ -25,21 +25,21 @@ def modelBEC(model, resolution, convolved, qvalues, assembled):
     workspace containing the assembled S(Q,E)
   """
   import numpy
-  from mantid.simpleapi import (LoadNexus, ScaleX, SaveNexus)
+  from mantid.simpleapi import (LoadNexus, ScaleX, ConvertToPointData, SaveNexus)
   Q=[float(q) for q in open(qvalues,'r').read().split('\n')]
   p={}
-  trace()
   for pair in open(model,'r').readline().split(';'):
     key,val=pair.split('=')
     p[key.strip()]=float(val.strip())
-  wsr=LoadNexus(Filename=resolution,OutputWorkspace='resolutions')
+  wsr=LoadNexus(Filename=resolution,OutputWorkspace='resolution')
+  wsr=ConvertToPointData(wsr)
   E=wsr.readX(0)
-  wse=ScaleX(InputWorkspace=wsr, OutputWorkspace='elastics',factor=-1) # elastic line
-  wsc=LoadNexus(Filename=convolved,OutputWorkspace='convolveds')
+  wse=ScaleX(InputWorkspace=wsr, OutputWorkspace='elastic',factor=-1) # elastic line
+  wsc=LoadNexus(Filename=convolved,OutputWorkspace='convolved')
   for i in range(wsc.getNumberHistograms()):
     elastic=wse.readY(i) # elastic spectrum at a given Q
     convolved=wsc.readY(i) # convolved spectrum at a given Q
-    wsc.setY(i, (p['b0']+p['b1']*E) + (p['e0']*numpy.exp(-p['e1']*Q[i])*elastic) + (p['c1']*convolved) ) # overwrite spectrum
+    wsc.setY(i, (p['b0']+p['b1']*E) + (p['e0']*numpy.exp(-p['e1']*Q[i])*elastic) + (p['c0']*convolved) ) # overwrite spectrum
   SaveNexus(InputWorkspace=wsc, Filename=assembled)
   return wsc
 
