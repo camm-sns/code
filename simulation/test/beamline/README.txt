@@ -11,3 +11,21 @@ simulated.nxs: LiCl simulated system, Q=42, T=290
 Output:
 
 convolved.nxs
+
+===================================
+                      
+Command line:
+
+python /projects/development/CAMM/github/code/simulation/src/beamline/assemblemodel.py modelBEC --model model.txt --resolution resolution.nxs --convolved convolved.nxs --qvalues qvalues.dat --assembled assembled.nxs
+
+Input:
+
+model.txt: beamline model file is a single line, e.g, b0=1.3211; b1=0.00 e0=0.99; e1=1.9; c0=2.3
+resolutio.nxsn: Nexus file containing the resolution. This will be used to produce a elastic line.
+convolved.nxs: Nexus file containing the convolution of the simulated S(Q,E) with the resolution.
+qvalues.dat: single-column file containing list of Q-values
+
+Output:
+
+assembled.nxs: output Nexus file containing the assembled S(Q,E) of the beamline model and the simulated S(Q,E)
+
