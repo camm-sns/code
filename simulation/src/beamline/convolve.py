@@ -34,7 +34,7 @@ def convolution(simulated, resolution, expdata, convolved):
   width=wse.readX(0)[1]-wse.readX(0)[0] # rebin simulated as expdata
   Rebin(InputWorkspace='simulated', Params=(wse.readX(0)[0],width,wse.readX(0)[-1]), OutputWorkspace='simulated')
   wsc=NormaliseToUnity(InputWorkspace='simulated', OutputWorkspace='convolved')
-  trace()
+  #trace()
   SaveNexus(InputWorkspace='convolved', Filename=convolved)
   return wsc
 

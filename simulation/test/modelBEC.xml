@@ -8,7 +8,5 @@
     <FFParam init="2.0" maximum="10" minimum="0.01" name="e1" tolerance="0.01"/>
     <FFParam init="1.0" maximum="10000" minimum="0.000001" name="c0" tolerance="0.01"/>
   </FFParams>
-  <FFTemplate>
-b0=_b0_(%-14.6e); b1=_b1_(%-14.6e); e0=_e0_(%-14.6e); e1=_e1_(%-14.6e); c0=_c0_(%-14.6e)
-</FFTemplate>
+  <FFTemplate> b0=_b0_(%-14.6e); b1=_b1_(%-14.6e); e0=_e0_(%-14.6e); e1=_e1_(%-14.6e); c0=_c0_(%-14.6e) </FFTemplate>
 </root>

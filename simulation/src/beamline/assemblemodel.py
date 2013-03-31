@@ -7,7 +7,7 @@ Created on Mar 19, 2013
 '''
 from pdb import set_trace as trace # uncomment only for debugging purposes
 
-def modelBEC(model, resolution, convolved, qvalues, assembled):
+def modelBEC(model, resolution, convolved, qvalues, assembled, expdata=None, costfile=None):
   """Assemble the Background, Elastic line and Convolution of the resolution with the simulated S(Q,E)
   This is a hard-coded model consisting of a linear background, and elastic line, and a convolution:
     b0+b1*E  +  e0*exp(-e1*Q^2)*Elastic(E)  +  c0*Resolution(E)xSimulated(Q,E)
@@ -20,12 +20,14 @@ def modelBEC(model, resolution, convolved, qvalues, assembled):
     convolved: Nexus file containing the convolution of the simulated S(Q,E) with the resolution.
     qvalues: single-column file containing list of Q-values
     assembled: output Nexus file containing the assembled S(Q,E) of the beamline model and the simulated S(Q,E)
+    expdata: Optional, experimental nexus file. If passed, output convolved will be binned as expdata.
+    costfile: Optional, file to store cost. If passed, the cost of comparing convolved and expdata will be saved.
 
   Returns:
     workspace containing the assembled S(Q,E)
   """
   import numpy
-  from mantid.simpleapi import (LoadNexus, ScaleX, ConvertToPointData, SaveNexus)
+  from mantid.simpleapi import (LoadNexus, ScaleX, ConvertToPointData, SaveNexus, DakotaChiSquared)
   Q=[float(q) for q in open(qvalues,'r').read().split('\n')]
   p={}
   for pair in open(model,'r').readline().split(';'):
@@ -41,6 +43,8 @@ def modelBEC(model, resolution, convolved, qvalues, assembled):
     convolved=wsc.readY(i) # convolved spectrum at a given Q
     wsc.setY(i, (p['b0']+p['b1']*E) + (p['e0']*numpy.exp(-p['e1']*Q[i])*elastic) + (p['c0']*convolved) ) # overwrite spectrum
   SaveNexus(InputWorkspace=wsc, Filename=assembled)
+  if expdata and costfile:
+    DakotaChiSquared(DataFile=assembled,CalculatedFile=expdata,OutputFile=costfile)
   return wsc
 
 def lowTResolution(model, simulated, resolution, convolved, expdata=None,
@@ -136,10 +140,12 @@ if __name__ == "__main__":
     p.add_argument('--convolved',help='Nexus file containing the convolution of the simulated S(Q,E) with the resolution.')
     p.add_argument('--qvalues',help='Single-column file containing list of Q-values.')
     p.add_argument('--assembled',help='output Nexus file containing the assembled S(Q,E) of the beamline model and the simulated S(Q,E)')
+    p.add_argument('--expdata',help='optional, experimental nexus file. If passed, output convolved will be binned as expdata.')
+    p.add_argument('--costfile',help='optional, file to store cost. If passed, the cost of comparing convolved and expdata will be saved.')
     if '-explain' in sys.argv:
       p.parse_args(args=('-h',))
     else:
       args=p.parse_args()
-      modelBEC(args.model, args.resolution, args.convolved, args.qvalues, args.assembled)
+      modelBEC(args.model, args.resolution, args.convolved, args.qvalues, args.assembled, args.expdata, args.costfile)
   else:
     print 'service not found'
