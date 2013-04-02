@@ -2,7 +2,7 @@ Create S(Q,E) from I(Q,t)
 
   Command:
 
-python sassenatasks.py genSQE fqt.hd5 simulated.nxs --wsname simulated --indexes "2 4 6 8" --LoadSassena "TimeUnit:1.0" --SassenaFFT "FFTonlyRealPart:1,DetailedBalance:1,Temp:290" --NormaliseToUnity "RangeLofwer:-0.1,RangeUpper:0.1"
+python sassenatasks.py genSQE fqt.hd5 simulated.nxs --wsname simulated --indexes "2 4 6 8" --LoadSassena "TimeUnit:1.0" --SassenaFFT "FFTonlyRealPart:1,DetailedBalance:1,Temp:290" --NormaliseToUnity "RangeLower:-0.1,RangeUpper:0.1"
 
   Inputs:
 
