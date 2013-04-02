@@ -1,6 +1,6 @@
 #!/bin/bash
 #PBS -l nodes=12:ppn=16
-#PBS -l walltime=59:00
+#PBS -l walltime=4:00:00
 #PBS -N namdTest
 
 #module load /shared/etc/modulefiles/openmpi
