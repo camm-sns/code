@@ -3,17 +3,23 @@
 method,
         nl2sol
           max_iterations = 100
-          convergence_tolerance = 1e-3
-          absolute_conv_tol = 1e-3
-          x_conv_tol = 1e-3
-          function_precision = 1e-3
+          convergence_tolerance = 1e-8
+          #absolute_conv_tol = 1e-3
+          #x_conv_tol = 1e-3
+          #function_precision = 1e-3
 
 variables,
-	continuous_design = 6
-	  cdv_initial_point    0.40 1.0 0.0 1.0 0.001 1.0
-	  upper_bounds    0.5 1.0 0.0 0.1000 10 1000
-	  lower_bounds    0.3 0.0 0.0 0.0 0.001 0.001
-          cdv_descriptor 'FF1' 'b0' 'b1' 'e0' 'e1' 'c0'
+        continuous_state = 1
+          initial_state    0.43
+          upper_bounds    0.5
+          lower_bounds    0.3
+          descriptor 'FF1'
+
+        continuous_design = 5
+          cdv_initial_point 0.000001 0.0 1.0 2.0 1.0
+          #upper_bounds    1.0 0.001 1.0 10 1000
+          #lower_bounds    0.0 0.0 0.0 0.0 0.0
+          cdv_descriptor  'b0' 'b1' 'e0' 'e1' 'c0'
 
 
 # Case 1: Run DAKOTA in parallel and launch M-1 serial analysis jobs at once
@@ -40,5 +46,5 @@ responses,
 	numerical_gradients
 		method_source dakota
 		interval_type forward
-		fd_gradient_step_size = 0.25
+                fd_gradient_step_size = 0.25
 	no_hessians

@@ -13,11 +13,11 @@ mkdir toppar
 mv *psf toppar/Q42.psf
 cp /data/jbq/projects/research/LiCl/watBox30/Hq.II/Q42/toppar/par_all27_prot_lipid.inp toppar
 cp /data/jbq/projects/research/LiCl/watBox30/Hq.II/Q42/toppar/crd.md18_vmd_autopsf.pdb  toppar
-cp /data/jbq/projects/research/LiCl/watBox30/Hq.II/Q42/T290/production/production01.conf .
+cp /data/jbq/projects/research/LiCl/watBox30/Hq.II/Q42/T290/production/production_single.conf .
 cp /data/jbq/projects/research/LiCl/watBox30/Hq.II/Q42/T290/production/production00.restart.coor . 
 cp /data/jbq/projects/research/LiCl/watBox30/Hq.II/Q42/T290/production/production00.restart.vel . 
 cp /data/jbq/projects/research/LiCl/watBox30/Hq.II/Q42/T290/production/production00.restart.xsc . 
-$MPIRUN -machinefile $PBS_NODEFILE -np 192 $NAMD production01.conf > production01_eq_192cores.log
+$MPIRUN -machinefile $PBS_NODEFILE -np 192 $NAMD production_single.conf > production_single_192cores.log
 while [ $? -ne 0 ] ; do
-    $MPIRUN -machinefile $PBS_NODEFILE -np 128 $NAMD production01.conf > production01_eq_192cores.log
+    $MPIRUN -machinefile $PBS_NODEFILE -np 128 $NAMD production_single.conf > production_single_192cores.log
 done
