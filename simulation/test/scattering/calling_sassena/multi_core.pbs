@@ -1,0 +1,12 @@
+#!/bin/bash
+
+#PBS -l nodes=1:ppn=16
+#PBS -l walltime=59:00
+#PBS -N sassenaTest
+
+MPIRUN=/shared/openmpi/gcc/bin/mpirun
+SASSENA=/shared/local/sassena/sassena-v1.4.1/builds/shared/sassena
+WD=/data/jbq/sassena_test
+
+cd $WD
+$MPIRUN -machinefile $PBS_NODEFILE -np 16 $SASSENA --config=$WD/sassenaInc.xml
