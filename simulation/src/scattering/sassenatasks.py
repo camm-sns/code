@@ -22,17 +22,21 @@ def addVersionStamp(filename,stamp):
   f.attrs['sassena_version']=stamp
   f.close()
 
-def genSQE(hdfname,nxsname,wsname=None,indexes=[],**kwargs):
+def genSQE(hdfname,nxsname,wsname=None,indexes=[],rebinQ=None,**kwargs):
   """ Generate S(Q,E)
 
-  Loads Sassena output (HDF5 file) and generates a Nexus file containing
+  Loads Sassena output (HDF5 files) and generates a Nexus file containing
   S(Q,E) in a Workspace2D. Options to LoadSasena and SassenaFFT algorithms
   are lumped into optional 'options' parameter
 
   Args:
-    hdfname: path to sassena output hdf5 file
+    hsdfname: path to sassena output hdf5 files for the incoherent factors. If more than one,
+               enclosed then in quotes and separate with commas. The output S(Q,E) will be
+               the Fourier transform of the summ of the incoherent factors.
     nxsname: path to output Nexus file
     [wsname]: root name for the GroupWorkspace created when Sassena output is loaded
+    [rebinQ]: rebin in Q. Useful when reported experimental S(Q,E) was obtained integrating
+              over [Q-dQ,Q+dQ] ranges. Format is "Qmin,Qwidth,Qmax".
     [indexes]: save only spectra with indexes given by indexes list. If indexes is empty,
                all spectra are saved.
     [**kwargs]: extra options for the Mantid algorithms producing S(Q,E). For
@@ -57,11 +61,27 @@ def genSQE(hdfname,nxsname,wsname=None,indexes=[],**kwargs):
   from mantidhelper.algorithm import findopts
   from mantidhelper.workspace import prunespectra
   from os.path import basename,splitext
-  from mantid.simpleapi import (LoadSassena, SortByQVectors, SassenaFFT, SaveNexus)
+  from mantid.simpleapi import (LoadSassena, SortByQVectors, CheckWorkspacesMatch, Plus, SassenaFFT, SaveNexus)
   wsname=wsname or splitext(basename(nxsname))[0]
   algs_opt=locals()['kwargs']
-  ws=LoadSassena(Filename=hdfname, OutputWorkspace=wsname, **findopts('LoadSassena',algs_opt))
+  hdfs=[fname.strip() for fname in hdfname.split(',')] # list of sassena output files serving as input
+  ws=LoadSassena(Filename=hdfs[0], OutputWorkspace=wsname, **findopts('LoadSassena',algs_opt)) # initialize the first
   SortByQVectors(ws)
+  trace()
+  if len(hdfs)>1: # add remaining sassena output files
+    for hdf in hdfs[1:]:
+      ws1=LoadSassena(Filename=hdf, **findopts('LoadSassena',algs_opt))
+      SortByQVectors(ws1)
+      if CheckWorkspacesMatch(Workspace1=wsname+'_qvectors',Workspace2=ws1.getName()+'_qvectors'):
+        for wstype in ('_fq0','_fqt.Re','_fqt.Im'):
+          Plus(LHSWorkspace=wsname+wstype,RHSWorkspace=ws1.getName()+wstype,OutputWorkspace=wsname+wstype)
+      else:
+        print 'Workspaces do not match'
+  if rebinQ: # rebin in Q space
+    from mantid.simpleapi import (Transpose, Rebin)
+    Transpose(InputWorkspace=wsname+'_fqt.Re',OutputWorkspace=wsname+'_fqt.Re')
+    Rebin(InputWorkspace=wsname+'_fqt.Re',Params=rebinQ,OutputWorkspace=wsname+'_fqt.Re')
+    Transpose(InputWorkspace=wsname+'_fqt.Re',OutputWorkspace=wsname+'_fqt.Re')
   SassenaFFT(ws,**findopts('SassenaFFT',algs_opt))
   wss=wsname+'_sqw'
   if 'NormaliseToUnity' in algs_opt.keys():
@@ -98,10 +118,11 @@ if __name__ == '__main__':
     p.description='Loads Sassena output (HDF5 file) and generates a Nexus file containing S(Q,E) in a Workspace2D.' # update help message
     for action in p._actions:
       if action.dest=='service': action.help='substitue SERVICE by genSQE' # update help message
-    p.add_argument('hdfname', help='path to sassena output hdf5 file')
+    p.add_argument('hdfname', help='path to sassena output hdf5 files for the incoherent factors. If more than one file is passed, enclosed then in quotes and separate them with commas. The output S(Q,E) will be the Fourier transform of the summ of the incoherent factors.')
     p.add_argument('nxsname', help='path to output Nexus file')
     p.add_argument('--wsname', help='root name for the GroupWorkspace created when Sassena output is loaded')
     p.add_argument('--indexes', help='space separated list of workspace indexes to keep. Example: --indexes "2 4 6 8". If not declared, all indexes are kept')
+    p.add_argument('--rebinQ',help='useful when reported experimental S(Q,E) was obtained integrating over [Q-dQ,Q+dQ] ranges. Format is "Qmin,Qwidth,Qmax".')
     p.add_argument('--LoadSassena', help='certain arguments for the algorithm. Example --LoadSassena="TimeUnit:0.1"')
     p.add_argument('--SassenaFFT', help='certain arguments for the algorithm. Example: --SassenaFFT="FTTonlyRealPart:True,DetailedBalance:True,Temp:290"')
     p.add_argument('--NormaliseToUnity', help='certain arguments for the algorithm. Example: --NormaliseToUnity="RangeLower:-50.0,RangeUpper:50.0"')

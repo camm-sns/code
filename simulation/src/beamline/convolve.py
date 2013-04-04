@@ -27,8 +27,9 @@ def convolution(simulated, resolution, expdata, convolved):
   # convolve now, overwriting simulateds
   for i in range(wss.getNumberHistograms()):
     v=wsr.readY(i)
+    v=v[::-1] # numpy convolve uses the definition of convolution of math textbooks, which does E --> -E
     w=wss.readY(i)
-    x=convolve(v,w,mode='same') # CRITICAL: assumed X-array of simulateds > X-array of convolution
+    x=convolve(v,w,mode='same')
     wss.setY(i,x)
   wse=LoadNexus(Filename=expdata,OutputWorkspace='expdata')
   width=wse.readX(0)[1]-wse.readX(0)[0] # rebin simulated as expdata
