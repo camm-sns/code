@@ -67,7 +67,7 @@ def genSQE(hdfname,nxsname,wsname=None,indexes=[],rebinQ=None,**kwargs):
   hdfs=[fname.strip() for fname in hdfname.split(',')] # list of sassena output files serving as input
   ws=LoadSassena(Filename=hdfs[0], OutputWorkspace=wsname, **findopts('LoadSassena',algs_opt)) # initialize the first
   SortByQVectors(ws)
-  trace()
+  #trace()
   if len(hdfs)>1: # add remaining sassena output files
     for hdf in hdfs[1:]:
       ws1=LoadSassena(Filename=hdf, **findopts('LoadSassena',algs_opt))
