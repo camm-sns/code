@@ -7,6 +7,29 @@ Created on Mar 19, 2013
 '''
 from pdb import set_trace as trace # uncomment only for debugging purposes
 
+def camm_convolve(signal,response,mode='same'):
+  """In-house convolution
+
+  Does a convolution according to the following definition:
+                     (f*g)(t) = \integral_{f(t')*g(t'-t)*dt'}
+  This definition is that of standard mathematical texts, except for g(t'-t) which in 
+  standard mathematical texts is g(t-t'). This implies we have to reverse the input
+  response function if we are to use any mathematical library, such as numpy.convolve
+  
+  Arguments:
+    signal: numpy array corresponding to the signal
+    response: numpy array corresponding to the response function that we slide along the t' axis
+    [mode]: string indicating the mode for argument 'mode' of numpy.convolve. See numpy.convolve
+            for details on the meaning of mode.
+
+  Returns
+    in-house convolution of signal and response
+  """
+  from numpy import convolve
+  g=response[::-1] # numpy convolve uses the definition of convolution of math textbooks, which does E --> -E
+  return convolve(signal,g,mode=mode)
+
+
 def convolution(simulated, resolution, expdata, convolved):
   """Convolve a simulated S(Q,E) with a resolution file
 
@@ -19,7 +42,6 @@ def convolution(simulated, resolution, expdata, convolved):
     workspace for the convolution
   """
   from mantid.simpleapi import (LoadNexus, Rebin, NormaliseToUnity, SaveNexus)
-  from numpy import convolve
   wss=LoadNexus(Filename=simulated,OutputWorkspace='simulated')
   width=wss.readX(0)[1]-wss.readX(0)[0] # rebin resolution as simulated
   wsr=LoadNexus(Filename=resolution,OutputWorkspace='resolution')
@@ -27,9 +49,8 @@ def convolution(simulated, resolution, expdata, convolved):
   # convolve now, overwriting simulateds
   for i in range(wss.getNumberHistograms()):
     v=wsr.readY(i)
-    v=v[::-1] # numpy convolve uses the definition of convolution of math textbooks, which does E --> -E
     w=wss.readY(i)
-    x=convolve(v,w,mode='same')
+    x=camm_convolve(v,w,mode='same')
     wss.setY(i,x)
   wse=LoadNexus(Filename=expdata,OutputWorkspace='expdata')
   width=wse.readX(0)[1]-wse.readX(0)[0] # rebin simulated as expdata
