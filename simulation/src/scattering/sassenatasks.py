@@ -67,7 +67,6 @@ def genSQE(hdfname,nxsname,wsname=None,indexes=[],rebinQ=None,**kwargs):
   hdfs=[fname.strip() for fname in hdfname.split(',')] # list of sassena output files serving as input
   ws=LoadSassena(Filename=hdfs[0], OutputWorkspace=wsname, **findopts('LoadSassena',algs_opt)) # initialize the first
   SortByQVectors(ws)
-  #trace()
   if len(hdfs)>1: # add remaining sassena output files
     for hdf in hdfs[1:]:
       ws1=LoadSassena(Filename=hdf, **findopts('LoadSassena',algs_opt))
@@ -79,16 +78,18 @@ def genSQE(hdfname,nxsname,wsname=None,indexes=[],rebinQ=None,**kwargs):
         print 'Workspaces do not match'
   if rebinQ: # rebin in Q space
     from mantid.simpleapi import (Transpose, Rebin)
-    Transpose(InputWorkspace=wsname+'_fqt.Re',OutputWorkspace=wsname+'_fqt.Re')
-    Rebin(InputWorkspace=wsname+'_fqt.Re',Params=rebinQ,OutputWorkspace=wsname+'_fqt.Re')
-    Transpose(InputWorkspace=wsname+'_fqt.Re',OutputWorkspace=wsname+'_fqt.Re')
+    Rebin(InputWorkspace=wsname+'_fq0',Params=rebinQ,OutputWorkspace=wsname+'_fq0')
+    for wstype in ('_fqt.Re','_fqt.Im'):
+      Transpose(InputWorkspace=wsname+wstype,OutputWorkspace=wsname+wstype)
+      Rebin(InputWorkspace=wsname+wstype,Params=rebinQ,OutputWorkspace=wsname+wstype)
+      Transpose(InputWorkspace=wsname+wstype,OutputWorkspace=wsname+wstype)
   SassenaFFT(ws,**findopts('SassenaFFT',algs_opt))
   wss=wsname+'_sqw'
   if 'NormaliseToUnity' in algs_opt.keys():
     from mantid.simpleapi import (ConvertToHistogram, NormaliseToUnity)
     ConvertToHistogram(InputWorkspace=wss,OutputWorkspace=wss)
     NormaliseToUnity(InputWorkspace=wss,OutputWorkspace=wss,**findopts('NormaliseToUnity',algs_opt))
-  prunespectra(InputWorkspace=wss,indexes=indexes)
+  prunespectra(InputWorkspace=wss,indexes=indexes) # does nothing in indexes is empty
   SaveNexus(InputWorkspace=wss, Filename=nxsname, **findopts('SaveNexus',algs_opt))
   return ws
 
