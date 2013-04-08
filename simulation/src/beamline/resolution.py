@@ -6,6 +6,29 @@ Create on Apr 8, 2013
 @author: jmborr
 '''
 
+def elasticLineLowTemp(insqe, outres=None):
+  '''Produces a resolution function based on the quasi-elastic signal at low temperature
+  
+  Argument:
+    insqe: a Nexus file containing S(Q,E) at low temperature. One spectrum per Q-value.
+    [outres]: output Nexus file containing Res(Q,E). Each spectrum is separately applied the Mantid::NormaliseToUnity algorithm.
+
+  Returns:
+    mantid workspace containing Res(Q,E)
+  '''
+  from mantid.simpleapi import (LoadNexus, ExtractSingleSpectrum, AppendSpectra, ScaleX, SaveNexus)
+  wse=LoadNexus(Filename=insqe,OutputWorkspace='insqe')
+  for iw in range(wse.getNumberHistograms()):
+    iname='insqe'+str(iw)
+    ExtractSingleSpectrum(wse,OutputWorkspace=iname,WorkspaceIndex=iw)
+    NormaliseToUnity(InputWorkspace=iname, OutputWorkspace=iname)
+    if iw:
+      AppendSpectra(InputWorkspace1='insqe0', InputWorkspace2=iname, OutputWorkspace='insqe0')
+  wsr=ScaleX(InputWorkspace='insqe0', OutputWorkspace='resolution',factor=-1)
+  if outres:
+    SaveNexus(InputWorkspace='resolution', Filename=outres)
+  return wsr
+
 if __name__ == "__main__":
   import argparse
   import sys
@@ -14,3 +37,10 @@ if __name__ == "__main__":
   p.add_argument('service', help='name of the service to invoke')
   p.add_argument('-explain', action='store_true', help='print message explaining the arguments to pass for the particular service')
   if Set(['-h', '-help', '--help']).intersection(Set(sys.argv)): args=p.parse_args() # check if help message is requested
+
+  if 'elasticLineLowTemp' in sys.argv:
+    p.description='Produces a resolution function based on the quasi-elastic signal at low temperature'
+    for action in p._actions:
+      if action.dest=='service': action.help='substitue "service" with "elasticLineLowTemp"' # update help message
+    p.add_argument('--insqe',help=' Nexus file containing S(Q,E) at low temperature. One spectrum per Q-value.')
+    p.add_argument('--outres',help='output Nexus file containing Res(Q,E). Each spectrum is separately applied the Mantid::NormaliseToUnity algorithm.')
