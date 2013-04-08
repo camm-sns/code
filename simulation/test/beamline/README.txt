@@ -16,7 +16,7 @@ convolved.nxs
                       
 Command line:
 
-python /projects/development/CAMM/github/code/simulation/src/beamline/assemblemodel.py modelBEC --model model.txt --resolution resolution.nxs --convolved convolved.nxs --qvalues qvalues.dat --assembled assembled.nxs
+python code/simulation/src/beamline/assemblemodel.py modelBEC --model model.txt --resolution resolution.nxs --convolved convolved.nxs --qvalues qvalues.dat --assembled assembled.nxs
 
 Input:
 
@@ -28,4 +28,19 @@ qvalues.dat: single-column file containing list of Q-values
 Output:
 
 assembled.nxs: output Nexus file containing the assembled S(Q,E) of the beamline model and the simulated S(Q,E)
+
+===================================
+                      
+Command line:
+
+python /code/simulation/src/beamline/resolution.py elasticLineLowTemp --insqe elasticLine.nxs --outres resolution.nxs
+
+Input:
+
+elasticLine.nxs: a Nexus file containing S(Q,E) at low temperature. One spectrum per Q-value.
+
+Output:
+
+resolution.nxs: output Nexus file containing Res(Q,E). Each spectrum is separately applied the Mantid::NormaliseToUnity algorithm.
+
 
