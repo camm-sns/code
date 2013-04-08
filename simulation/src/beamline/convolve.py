@@ -50,7 +50,7 @@ def convolution(simulated, resolution, expdata, convolved):
   for i in range(wss.getNumberHistograms()):
     v=wsr.readY(i)
     w=wss.readY(i)
-    x=camm_convolve(v,w,mode='same')
+    x=camm_convolve(w,v,mode='same')
     wss.setY(i,x)
   wse=LoadNexus(Filename=expdata,OutputWorkspace='expdata')
   width=wse.readX(0)[1]-wse.readX(0)[0] # rebin simulated as expdata
