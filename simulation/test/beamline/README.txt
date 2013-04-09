@@ -1,12 +1,12 @@
 Command line:
 
-python code/simulation/src/beamline/interpX.py itp_simple --assembled expdata.nxs --shift 0.0006 --interpolated expdata_shifted.nxs
+python code/simulation/src/beamline/interpX.py itp_simple --assembled expdata.nxs --model model.txt --interpolated expdata_shifted.nxs
 
 Input:
 
 itp_simple: method employed for shift and subsequent interpolation
 expdata.nxs: S(Q,E) for LiCl experimental system, T=290K
-shift: number of meV by which to shift and interpolate the spectrum
+model.txt: file name for the model beamline string. Should contain "eshift=X", with X being the current value of the shift
 
 Output:
 

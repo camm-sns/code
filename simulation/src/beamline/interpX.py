@@ -32,6 +32,7 @@ def itp_simple(workspace,shift):
 if __name__ == "__main__":
   import argparse
   import sys
+  import re
   from sets import Set
   p=argparse.ArgumentParser(description='Provider for services involving shift of calculated S(Q,E) model Available services are: itp_simple')
   p.add_argument('service', help='name of the service to invoke')
@@ -43,14 +44,16 @@ if __name__ == "__main__":
     for action in p._actions:
       if action.dest=='service': action.help='substitue "service" with "itp_simple"' # update help message
     p.add_argument('--assembled',help='name of the Nexus file containing assembled S(Q,E) model')
-    p.add_argument('--shift', help='Energy to shift by the spectra. Assumed in same units as E in S(Q,E)')
+    p.add_argument('--model', help='file name for the model beamline string. Should contain "eshift=X", with X being the current value of the shift')
     p.add_argument('--interpolated',help='name of the Nexus file to output the interpolated S(Q,E) model')
     if '-explain' in sys.argv:
       p.parse_args(args=('-h',))
     else:
       args=p.parse_args()
       from mantid.simpleapi import (LoadNexus, SaveNexus)
+      trace()
+      eshift=float(re.search('eshift\s*=\s*(\d+\.*\d+)', open(args.model,'r').read()).groups()[0])
       ws=LoadNexus(Filename=args.assembled)
-      ws=itp_simple(ws, float(args.shift))
+      ws=itp_simple(ws, eshift)
       SaveNexus(InputWorkspace=ws.getName(),Filename=args.interpolated)
  
