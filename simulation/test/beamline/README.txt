@@ -1,5 +1,20 @@
 Command line:
 
+python code/simulation/src/beamline/interpX.py itp_simple --assembled expdata.nxs --shift 0.0006 --interpolated expdata_shifted.nxs
+
+Input:
+
+itp_simple: method employed for shift and subsequent interpolation
+expdata.nxs: S(Q,E) for LiCl experimental system, T=290K
+shift: number of meV by which to shift and interpolate the spectrum
+
+Output:
+
+expdata_shifted: output nexus file containing the shifted and interpolated S(Q,E)
+
+====================================================================================
+Command line:
+
 python code/simulation/src/beamline/convolve.py convolution --resolution=resolution.nxs --simulated=simulated.nxs --expdata=expdata.nxs --convolved=convolved.nxs
 
 Input:
@@ -12,8 +27,7 @@ Output:
 
 convolved.nxs
 
-===================================
-                      
+====================================================================================                      
 Command line:
 
 python code/simulation/src/beamline/assemblemodel.py modelBEC --model model.txt --resolution resolution.nxs --convolved convolved.nxs --qvalues qvalues.dat --assembled assembled.nxs
@@ -29,8 +43,7 @@ Output:
 
 assembled.nxs: output Nexus file containing the assembled S(Q,E) of the beamline model and the simulated S(Q,E)
 
-===================================
-                      
+====================================================================================                      
 Command line:
 
 python /code/simulation/src/beamline/resolution.py elasticLineLowTemp --insqe elasticLine.nxs --outres resolution.nxs
