@@ -46,14 +46,19 @@ if __name__ == "__main__":
     p.add_argument('--assembled',help='name of the Nexus file containing assembled S(Q,E) model')
     p.add_argument('--model', help='file name for the model beamline string. Should contain "eshift=X", with X being the current value of the shift')
     p.add_argument('--interpolated',help='name of the Nexus file to output the interpolated S(Q,E) model')
+    p.add_argument('--expdata',help='optional, experimental nexus file. If passed, output convolved will be binned as expdata.')
+    p.add_argument('--costfile',help='optional, file to store cost. If passed, the cost of comparing convolved and expdata will be saved.')
     if '-explain' in sys.argv:
       p.parse_args(args=('-h',))
     else:
       args=p.parse_args()
-      from mantid.simpleapi import (LoadNexus, SaveNexus)
-      trace()
+      from mantid.simpleapi import (LoadNexus, SaveNexus, DakotaChiSquared)
+      #trace()
       eshift=float(re.search('eshift\s*=\s*(\d+\.*\d+)', open(args.model,'r').read()).groups()[0])
+      print eshift
       ws=LoadNexus(Filename=args.assembled)
       ws=itp_simple(ws, eshift)
       SaveNexus(InputWorkspace=ws.getName(),Filename=args.interpolated)
- 
+      if args.expdata and args.costfile:
+        DakotaChiSquared(DataFile=args.expdata,CalculatedFile=args.interpolated,OutputFile=args.costfile)
+
