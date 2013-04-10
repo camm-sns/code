@@ -54,7 +54,7 @@ if __name__ == "__main__":
       args=p.parse_args()
       from mantid.simpleapi import (LoadNexus, SaveNexus, DakotaChiSquared)
       #trace()
-      eshift=float(re.search('eshift\s*=\s*(\d+\.*\d+)', open(args.model,'r').read()).groups()[0])
+      eshift=float(re.search('eshift\s*=\s*(-*\d+\.*\d+[e|E]*-*\d*)', open(args.model,'r').read()).groups()[0])
       print eshift
       ws=LoadNexus(Filename=args.assembled)
       ws=itp_simple(ws, eshift)
