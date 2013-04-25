@@ -42,6 +42,7 @@ model,
 variables,
 	id_variables = 'OUTER_V'
         continuous_design = 1
+           cdv_initial_point 0.423
            cdv_lower_bounds 0.3
            cdv_upper_bounds 0.5
 
@@ -73,12 +74,15 @@ model,
 
 variables,
 	id_variables = 'INNER_V'
-        continuous_design = 7
-          cdv_initial_point  0.423 0.5245 1.728e-05 0.029 2e-04 0 0
-          cdv_lower_bounds   0.3 0.25 1e-8 0.0 -0.0004 -2e-4 0.0
-          cdv_upper_bounds   0.5 2.0 2e-4 0.1 0.0004 2e-4 2.0
-          cdv_descriptors    'FF1' 'c0' 'b0' 'e0' 'eshift' 'b1' 'e1'
-          cdv_scale_types =  'auto' 'auto' 'auto' 'auto' 'auto' 'auto' 'auto'
+        continuous_state = 3
+          initial_state 0.423 0.0 0.0
+          descriptors 'FF1' 'b1' 'e1'
+        continuous_design = 4
+          cdv_initial_point  0.5245 1.728e-05 0.029 2e-04
+          cdv_lower_bounds   0.25 1e-8 0.0 -0.0004 
+          cdv_upper_bounds   2.0 2e-4 0.1 0.0004
+          cdv_descriptors    'c0' 'b0' 'e0' 'eshift' 
+          cdv_scale_types =  'auto' 'auto' 'auto' 'auto'
 
 interface,
 	id_interface = 'INNER_I'
