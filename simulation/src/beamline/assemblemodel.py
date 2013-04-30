@@ -247,6 +247,6 @@ if __name__ == "__main__":
       p.parse_args(args=('-h',))
     else:
       args=p.parse_args()
-      modelBEC(args.model, args.resolution, args.convolved, args.qvalues, args.assembled, args.expdata, args.costfile)
+      modelB_EC_C(args.model, args.resolution, args.convolved, args.qvalues, args.assembled, args.expdata, args.costfile)
   else:
     print 'service not found'
