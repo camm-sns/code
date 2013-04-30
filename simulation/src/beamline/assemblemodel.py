@@ -232,7 +232,7 @@ if __name__ == "__main__":
     else:
       args=p.parse_args()
       modelBEC(args.model, args.resolution, args.convolved, args.qvalues, args.assembled, args.expdata, args.costfile)
-  elif 'modelBE_EC_C' in sys.argv:
+  elif 'modelB_EC_C' in sys.argv:
     p.description='Assemble the background, elastic line and convolution of the resolution with the simulated S(Q,E) according to model (b0+b1*E  +  EC(Q)*e0*exp(-e1*Q^2)*Elastic(E)  +  c0*Resolution(E)xSimulated(Q,E)). EC(Q) is the modeled Q-dependence of the integrated intensity for an empty can in BASIS. Output to a Nexus file'
     for action in p._actions:
       if action.dest=='service': action.help='substitue "service" with "modelBEC"' # update help message
