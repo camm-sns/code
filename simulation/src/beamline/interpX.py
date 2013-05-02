@@ -55,10 +55,14 @@ if __name__ == "__main__":
       from mantid.simpleapi import (LoadNexus, SaveNexus, DakotaChiSquared)
       #trace()
       eshift=float(re.search('eshift\s*=\s*(-*\d+\.*\d+[e|E]*-*\d*)', open(args.model,'r').read()).groups()[0])
-      print eshift
       ws=LoadNexus(Filename=args.assembled)
       ws=itp_simple(ws, eshift)
       SaveNexus(InputWorkspace=ws.getName(),Filename=args.interpolated)
       if args.expdata and args.costfile:
-        DakotaChiSquared(DataFile=args.expdata,CalculatedFile=args.interpolated,OutputFile=args.costfile)
+        chisq,wR=DakotaChiSquared(DataFile=args.expdata,CalculatedFile=args.interpolated,OutputFile=args.costfile,ResidualsWorkspace='wR')
+        f=open(args.costfile,'w')
+        for i in range(wR.getNumberHistograms()):
+            Ry=wR.readY(i)
+            for j in range(len(Ry)):
+                f.write(str(Ry[j])+" least_squares_term\n")
 

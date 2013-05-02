@@ -45,7 +45,12 @@ def modelB_freeE_C(model, resolution, convolved, qvalues, assembled, expdata=Non
     wsc.setY(i, p['b0']+p['b1']*E + p['e0.'+str(i)]*elastic + p['c0']*convolved) # overwrite spectrum
   SaveNexus(InputWorkspace=wsc, Filename=assembled)
   if expdata and costfile:
-    DakotaChiSquared(DataFile=assembled,CalculatedFile=expdata,OutputFile=costfile)
+    chisq,wR=DakotaChiSquared(DataFile=expdata,CalculatedFile=assembled,OutputFile=costfile,ResidualsWorkspace='wR')
+    f=open(costfile,'w')
+    for i in range(wR.getNumberHistograms()):
+        Ry=wR.readY(i)
+        for j in range(len(Ry)):
+            f.write(str(Ry[j])+" least_squares_term\n")
   return wsc
 
 def modelBEC_EC(model, resolution, convolved, qvalues, assembled, expdata=None, costfile=None):
