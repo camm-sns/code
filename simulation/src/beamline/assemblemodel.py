@@ -7,7 +7,13 @@ Created on Mar 19, 2013
 '''
 from pdb import set_trace as trace # uncomment only for debugging purposes
 
-def modelB_freeE_C(model, resolution, convolved, qvalues, assembled, expdata=None, costfile=None):
+def writeworkspace_singlecolumn(workspace):
+  buf=''
+  for i in range(workspace.getNumberHistograms()):
+    buf += '\n'.join([str(x) for x in workspace.readY(i)]) + '\n'
+  return buf
+
+def modelB_freeE_C(model, resolution, convolved, qvalues, assembled, expdata=None, costfile=None, valsdata=None, derivdata=None, doshift=None):
   """Assemble the Background, Elastic line and Convolution of the resolution with the simulated S(Q,E)
   This is a hard-coded model consisting of a linear background, and elastic line, and a convolution:
     b0+b1*E  +  +e0(Q)*Elastic(E)  +  c0*Resolution(E)xSimulated(Q,E)
@@ -23,26 +29,66 @@ def modelB_freeE_C(model, resolution, convolved, qvalues, assembled, expdata=Non
     assembled: output Nexus file containing the assembled S(Q,E) of the beamline model and the simulated S(Q,E)
     expdata: Optional, experimental nexus file. If passed, output convolved will be binned as expdata.
     costfile: Optional, file to store cost. If passed, the cost of comparing convolved and expdata will be saved.
+    valsdata: Optional, file to store the model function in a single column
+    derivdata: Optional, file to store the analytic derivatives, each in a single column
+    doshift: Optional, perform the shift of the model function
 
   Returns:
     workspace containing the assembled S(Q,E)
   """
   import numpy
+  from copy import copy
+  trace()
   from mantid.simpleapi import (LoadNexus, ScaleX, ConvertToPointData, SaveNexus, DakotaChiSquared)
+  def shiftalongX(*kargs,**kwargs): # dummy shift function, does nothing
+    pass
+  import interpX
+  if doshift: # replace the dummy function with the real thing
+    if doshift in dir(interpX):
+      shiftalongX=getattr(__import__('interpX'), doshift)
+    else:
+      shiftalongX = getattr(__import__('interpX'), 'itp_simple')
   Q=[float(q) for q in open(qvalues,'r').read().split('\n')]
+  derivparnames=[] #list of parameters names for which analytical derivative exists, same order as in the input model file
   p={}
   for pair in open(model,'r').readline().split(';'):
-    key,val=pair.split('=')
-    p[key.strip()]=float(val.strip())
+    key,val=[x.strip() for x in pair.split('=')]
+    if key != 'eshift': derivparnames.append(key)
+    p[key]=float(val.strip())
   wsr=LoadNexus(Filename=resolution,OutputWorkspace='resolution')
-  wsr=ConvertToPointData(wsr)
-  E=wsr.readX(0)
+  #wsr=ConvertToPointData(wsr)
   wse=ScaleX(InputWorkspace=wsr, OutputWorkspace='elastic',factor=-1) # elastic line
+  wse=shiftalongX(wse,p['eshift']) # shift the spectrum, does nothing if shiftalongX is the dummy function
+  E=wsr.readX(0) # energy values, bins boundary values
+  Eshifted=(E[1:]+E[:-1])/2 # energy values, center bin values
+  if doshift:
+    Eshifted-=p['eshift']
   wsc=LoadNexus(Filename=convolved,OutputWorkspace='convolved')
-  for i in range(wsc.getNumberHistograms()):
+  wsc=shiftalongX(wsc,p['eshift']) # shift the spectrum, does nothing if shiftalongX is the dummy function
+  if derivdata: # calculate partial derivatives with respect to the fit parameters
+    gradients={}
+    gradients['b0']=[1]*len(Eshifted)*len(Q)
+    gradients['b1']=[]
+    gradients['c0']=[]
+    for i in range(len(Q)):
+      gradients['b1'] += Eshifted.tolist()
+      gradients['c0'] += wsc.readY(i).tolist()
+      gradients['e0.'+str(i)]=[]
+      for j in range(len(Q)):
+        if i==j: 
+          gradients['e0.'+str(i)] += wse.readY(i).tolist()
+        else:
+          gradients['e0.'+str(i)] += [0]*len(Eshifted)
+    buf='#'+' '.join([str(x) for x in derivparnames])+'\n'
+    for i in range(len(Q)*len(Eshifted)):
+      for parname in derivparnames:
+        buf+=' '+str(gradients[parname][i])
+      buf+='\n'
+    open(derivdata,'w').write(buf)
+  for i in range(len(Q)):
     elastic=wse.readY(i) # elastic spectrum at a given Q
     convolved=wsc.readY(i) # convolved spectrum at a given Q
-    wsc.setY(i, p['b0']+p['b1']*E + p['e0.'+str(i)]*elastic + p['c0']*convolved) # overwrite spectrum
+    wsc.setY(i, p['b0']+p['b1']*Eshifted + p['e0.'+str(i)]*elastic + p['c0']*convolved) # overwrite spectrum wsc
   SaveNexus(InputWorkspace=wsc, Filename=assembled)
   if expdata and costfile:
     chisq,wR=DakotaChiSquared(DataFile=expdata,CalculatedFile=assembled,OutputFile=costfile,ResidualsWorkspace='wR')
@@ -51,6 +97,9 @@ def modelB_freeE_C(model, resolution, convolved, qvalues, assembled, expdata=Non
         Ry=wR.readY(i)
         for j in range(len(Ry)):
             f.write(str(Ry[j])+" least_squares_term\n")
+  if valsdata: # output model values as a single column file
+    buf=writeworkspace_singlecolumn(wsc)
+    open(valsdata,'w').write(buf)
   return wsc
 
 def modelBEC_EC(model, resolution, convolved, qvalues, assembled, expdata=None, costfile=None):
@@ -282,7 +331,7 @@ if __name__ == "__main__":
   import sys
   from sets import Set
   from mantidhelper.algorithm import getDictFromArgparse
-  p=argparse.ArgumentParser(description='Provider for services involving convolution of simulated S(Q,E) with a model beamline. Available services are: lowTresolution, modelBEC.')
+  p=argparse.ArgumentParser(description='Provider for services involving convolution of simulated S(Q,E) with a model beamline. Available services are: lowTresolution, modelBEC, modelB_EC_C, modelB_freeE_C.')
   p.add_argument('service', help='name of the service to invoke')
   p.add_argument('-explain', action='store_true', help='print message explaining the arguments to pass for the particular service')
   if Set(['-h', '-help', '--help']).intersection(Set(sys.argv)): args=p.parse_args() # check if help message is requested
@@ -352,7 +401,7 @@ if __name__ == "__main__":
       p.parse_args(args=('-h',))
     else:
       args=p.parse_args()
-      modelBEC_EC(args.model, args.resolution, args.convolved, args.qvalues, args.assembled, args.expdata, args.costfile)
+      modelBEC_EC(args.model, args.resolution, args.convolved, args.qvalues, args.assembled, expdata=args.expdata, costfile=args.costfile)
   elif 'modelB_freeE_C' in sys.argv:
     p.description='Assemble the background, elastic line and convolution of the resolution with the simulated S(Q,E) according to model b0+b1*E + e0(Q)*Elastic(E) + c0*Resolution(E)xSimulated(Q,E)). e0(Q) is a set of fitting parameters, one for each Q. Output to a Nexus file'
     for action in p._actions:
@@ -364,12 +413,13 @@ if __name__ == "__main__":
     p.add_argument('--assembled',help='output Nexus file containing the assembled S(Q,E) of the beamline model and the simulated S(Q,E)')
     p.add_argument('--expdata',help='optional, experimental nexus file. If passed, output convolved will be binned as expdata.')
     p.add_argument('--costfile',help='optional, file to store cost. If passed, the cost of comparing convolved and expdata will be saved.')
+    p.add_argument('--valsdata',help='optional, file to store the model function in a single column')
+    p.add_argument('--derivdata',help='optional, file to store the analytic derivatives, each in a single column')
+    p.add_argument('--doshift',help='optional, perform the shift of the model function')
     if '-explain' in sys.argv:
       p.parse_args(args=('-h',))
     else:
       args=p.parse_args()
-      modelB_freeE_C(args.model, args.resolution, args.convolved, args.qvalues, args.assembled, args.expdata, args.costfile)
-
-
+      modelB_freeE_C(args.model, args.resolution, args.convolved, args.qvalues, args.assembled, expdata=args.expdata, costfile=args.costfile, valsdata=args.valsdata, derivdata=args.derivdata, doshift=args.doshift)
   else:
     print 'service not found'

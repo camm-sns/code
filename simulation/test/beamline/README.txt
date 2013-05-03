@@ -35,13 +35,36 @@ python code/simulation/src/beamline/assemblemodel.py modelBEC --model model.txt 
 Input:
 
 model.txt: beamline model file is a single line, e.g, b0=1.3211; b1=0.00 e0=0.99; e1=1.9; c0=2.3
-resolutio.nxsn: Nexus file containing the resolution. This will be used to produce a elastic line.
+resolution.nxs: Nexus file containing the resolution. This will be used to produce a elastic line.
 convolved.nxs: Nexus file containing the convolution of the simulated S(Q,E) with the resolution.
 qvalues.dat: single-column file containing list of Q-values
 
 Output:
 
 assembled.nxs: output Nexus file containing the assembled S(Q,E) of the beamline model and the simulated S(Q,E)
+
+====================================================================================    
+                  
+Command line:
+
+python code/simulation/src/beamline/assemblemodel.py modelB_freeE_C --model modelB_freeE_C.txt --resolution resolution.nxs --convolved convolved.nxs --qvalues qvalues.dat --expdata LiCl_290K.nxs --costfile=costfile.dat --assembled=assembled.nxs --valsdata=valsdata.dat --derivdata=derivdata.dat --doshift=itp_simple
+
+Input:
+
+model.txt: beamline model file is a single line, e.g, b0=1.3211; b1=0.00 e0=0.99; e1=1.9; c0=2.3
+resolution.nxs: Nexus file containing the resolution. This will be used to produce a elastic line.
+convolved.nxs: Nexus file containing the convolution of the simulated S(Q,E) with the resolution.
+qvalues.dat: single-column file containing list of Q-values
+doshift: method to do the shift. Must be the name of a function in module interpX.py. Do not pass
+	 this option if you don't want to the the shift along the E-axis
+
+Output:
+
+assembled.nxs: output Nexus file containing the assembled S(Q,E) of the beamline model and the simulated S(Q,E)
+costfile.dat: output ASCII file containing the residuals
+valsdata.dat: output ASCII file containing the values of the model function
+derivdata.dat: output ASCII file containing the values of the partial derivatives of the model function
+	       with respect to the fit parameters, except eshift.
 
 ====================================================================================                      
 Command line:
