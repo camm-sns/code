@@ -38,7 +38,7 @@ def modelB_freeE_C(model, resolution, convolved, qvalues, assembled, expdata=Non
   """
   import numpy
   from copy import copy
-  trace()
+  #trace()
   from mantid.simpleapi import (LoadNexus, ScaleX, ConvertToPointData, SaveNexus, DakotaChiSquared)
   def shiftalongX(*kargs,**kwargs): # dummy shift function, does nothing
     pass
@@ -53,7 +53,7 @@ def modelB_freeE_C(model, resolution, convolved, qvalues, assembled, expdata=Non
   p={}
   for pair in open(model,'r').readline().split(';'):
     key,val=[x.strip() for x in pair.split('=')]
-    if key != 'eshift': derivparnames.append(key)
+    if key != 'eshift' and  key != 'b1': derivparnames.append(key)
     p[key]=float(val.strip())
   wsr=LoadNexus(Filename=resolution,OutputWorkspace='resolution')
   #wsr=ConvertToPointData(wsr)
@@ -91,12 +91,24 @@ def modelB_freeE_C(model, resolution, convolved, qvalues, assembled, expdata=Non
     wsc.setY(i, p['b0']+p['b1']*Eshifted + p['e0.'+str(i)]*elastic + p['c0']*convolved) # overwrite spectrum wsc
   SaveNexus(InputWorkspace=wsc, Filename=assembled)
   if expdata and costfile:
+    wex=LoadNexus(Filename=expdata,OutputWorkspace='experiment')
     chisq,wR=DakotaChiSquared(DataFile=expdata,CalculatedFile=assembled,OutputFile=costfile,ResidualsWorkspace='wR')
     f=open(costfile,'w')
+    Xe=[]
     for i in range(wR.getNumberHistograms()):
         Ry=wR.readY(i)
+        Xe += wex.readE(i).tolist()
         for j in range(len(Ry)):
-            f.write(str(Ry[j])+" least_squares_term\n")
+            f.write(str(Ry[j])+" least_sq_term_"+str(i*len(Ry)+j+1)+"\n")
+    for i in range(len(Q)*len(Eshifted)):
+      f.write("[ ")
+      for parname in derivparnames:
+        if Xe[i] > 0:
+          f.write("%.10e" % (-gradients[parname][i]/Xe[i])+" ")
+        else:
+          f.write("%.10e" % (-gradients[parname][i])+" ")
+      f.write("]\n")
+      #f.write("] least_sq_term_"+str(i+1)+" gradient\n")
   if valsdata: # output model values as a single column file
     buf=writeworkspace_singlecolumn(wsc)
     open(valsdata,'w').write(buf)
