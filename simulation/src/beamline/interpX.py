@@ -6,7 +6,7 @@ Created on Apr 9, 2013
 '''
 from pdb import set_trace as trace # uncomment only for debugging purposes
 
-def itp_simple(workspace,shift):
+def itp_simple(workspace,shift,newWorkspace=None):
   '''For all spectra of a mantid workspace, shift a small amount and interpolate through Mantid::Rebin
 
   This function is appropriate for shifts of the order of the bin size. The workspace is
@@ -16,6 +16,7 @@ def itp_simple(workspace,shift):
   Arguments:
     workspace: Mantid workspace
     shift: real quantity to shift along the X-axis
+    [newWorkspace]: string, if not passed, overwrite input workspace
 
   Returns:
     workspace object shifted and interpolated
@@ -25,9 +26,9 @@ def itp_simple(workspace,shift):
   start=workspace.readX(0)[0]
   end=workspace.readX(0)[-1]
   from mantid.simpleapi import (ScaleX, Rebin)
-  ScaleX(InputWorkspace=wname,OutputWorkspace=wname,factor=shift,Operation='Add')
-  return Rebin(InputWorkspace=wname,OutputWorkspace=wname,Params=[start,width,end])
-
+  if not newWorkspace: newWorkspace=wname
+  ScaleX(InputWorkspace=wname,OutputWorkspace=newWorkspace,factor=shift,Operation='Add')
+  return Rebin(InputWorkspace=newWorkspace,OutputWorkspace=newWorkspace,Params=[start,width,end])
 
 if __name__ == "__main__":
   import argparse
