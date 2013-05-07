@@ -8,7 +8,7 @@
 cd $PBS_O_WORKDIR
 mkdir toppar
 cp /data/jbq/projects/research/LiCl/watBox30/Hq.II/Q42/toppar/crd.md18_vmd_autopsf.pdb  toppar
-cp ~/$NAMD_DIR/production_single.dcd  production_single.dcd
+cp $NAMD_DIR/production_single.dcd  production_single.dcd
 cp /data/jbq/projects/research/LiCl/watBox30/Hq.II/Q42/T290/production/db*.xml .
 cp -R /data/jbq/projects/research/LiCl/watBox30/Hq.II/Q42/T290/production/database .
 cp /data/jbq/sassena_test/sassenaInc.xml .
