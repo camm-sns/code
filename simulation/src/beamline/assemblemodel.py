@@ -115,6 +115,10 @@ def modelB_freeE_C(model, resolution, convolved, assembled, expdata=None, costfi
         else:
           gradients['e0.'+str(i)] = numpy.concatenate([gradients['e0.'+str(i)], numpy.zeros(len(Eshifted))])
 
+  # save model to file
+  wsm=computemodel(p,wse,wsc)
+  SaveNexus(InputWorkspace=wsm, Filename=assembled)
+
   # save residuals and partial derivatives
   buf=''
   if expdata and costfile:
@@ -134,9 +138,6 @@ def modelB_freeE_C(model, resolution, convolved, assembled, expdata=None, costfi
         buf+=" ]\n"
     open(costfile,'w').write(buf)
 
-  # save model to file
-  wsm=computemodel(p,wse,wsc)
-  SaveNexus(InputWorkspace=wsm, Filename=assembled)
   return {'model':wsm, 'gradients':gradients}
 
 def modelBEC_EC(model, resolution, convolved, qvalues, assembled, expdata=None, costfile=None):
