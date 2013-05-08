@@ -129,9 +129,9 @@ def modelB_freeE_C(model, resolution, convolved, assembled, expdata=None, costfi
     for parname in derivparnames: gradients[parname]/=numpy.where(Xe>0,Xe,1) # divide by experimental error (with non-positive elements replaced by one)
     if derivparnames:
       for i in range(nrsl):
-        buf+="[ "
+        buf+="["
         for parname in derivparnames: buf+=" %.10e"%(-gradients[parname][i])
-        buf+="]\n"
+        buf+=" ]\n"
     open(costfile,'w').write(buf)
 
   # save model to file
