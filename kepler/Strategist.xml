@@ -2,7 +2,7 @@
 <!DOCTYPE entity PUBLIC "-//UC Berkeley//DTD MoML 1//EN"
     "http://ptolemy.eecs.berkeley.edu/xml/dtd/MoML_1.dtd">
 <entity name="Strategist" class="org.kepler.moml.CompositeClassEntity">
-    <property name="entityId" class="org.kepler.moml.NamedObjId" value="urn:lsid:kepler-project.org/ns/:30354:1297:54">
+    <property name="entityId" class="org.kepler.moml.NamedObjId" value="urn:lsid:kepler-project.org/ns/:30354:1297:440">
     </property>
     <property name="class" class="ptolemy.kernel.util.StringAttribute" value="org.kepler.moml.CompositeClassEntity">
         <property name="id" class="ptolemy.kernel.util.StringAttribute" value="null">
@@ -86,7 +86,7 @@
         <property name="derivedFrom" class="org.kepler.moml.NamedObjIdReferralList" value="urn:lsid:kepler-project.org:actor:422:1">
         </property>
     </property>
-    <property name="LocalWorkingDirectory" class="ptolemy.data.expr.Parameter" value="&quot;/home/vel/camm-sns/code/Vickie&quot;">
+    <property name="LocalWorkingDirectory" class="ptolemy.data.expr.Parameter" value="&quot;/home/vel/camm-sns/code/GAtest&quot;">
 <property name="KeplerDocumentation" class="ptolemy.vergil.basic.KeplerDocumentationAttribute">
 <property name="description" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>null</configure></property>
 <property name="author" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>null</configure></property>
@@ -234,7 +234,7 @@
         </property>
     </property>
     <entity name="Ramp" class="ptolemy.actor.lib.Ramp">
-        <property name="firingCountLimit" class="ptolemy.data.expr.Parameter" value="500">
+        <property name="firingCountLimit" class="ptolemy.data.expr.Parameter" value="-1">
         </property>
         <property name="NONE" class="ptolemy.data.expr.Parameter" value="0">
         </property>
@@ -253,7 +253,7 @@
 <property name="prop:firingCountLimit" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>The number of iterations that transpire before the actor indicates that it is finished. If firingCountLimit is set to zero, the actor has no limit imposed.</configure></property>
 <property name="prop:step" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>The amount by which the output is incremented on each iteration. The port accepts a value of any type that supports addition. The default is the integer 1.</configure></property>
 <property name="prop:init" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>The value produced by the Ramp on its first iteration. The default value is the integer 0.</configure></property>
-</property>        <property name="entityId" class="org.kepler.moml.NamedObjId" value="urn:lsid:kepler-project.org/ns/:30354:345:61">
+</property>        <property name="entityId" class="org.kepler.moml.NamedObjId" value="urn:lsid:kepler-project.org/ns/:30354:345:101">
         </property>
         <property name="class" class="ptolemy.kernel.util.StringAttribute" value="ptolemy.actor.lib.Ramp">
             <property name="id" class="ptolemy.kernel.util.StringAttribute" value="urn:lsid:kepler-project.org:class:881:1">
@@ -369,7 +369,7 @@
         </property>
     </entity>
     <entity name="RunSimulation2" class="org.kepler.moml.CompositeClassEntity">
-        <property name="entityId" class="org.kepler.moml.NamedObjId" value="urn:lsid:kepler-project.org/ns/:30354:1101:991">
+        <property name="entityId" class="org.kepler.moml.NamedObjId" value="urn:lsid:kepler-project.org/ns/:30354:1101:1082">
         </property>
         <property name="class" class="ptolemy.kernel.util.StringAttribute" value="org.kepler.moml.CompositeClassEntity">
             <property name="id" class="ptolemy.kernel.util.StringAttribute" value="null">
@@ -484,10 +484,10 @@
 <property name="author" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>Xiaojun Liu, Edward A. Lee, Steve Neuendorffer</configure></property>
 <property name="version" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>null</configure></property>
 <property name="userLevelDocumentation" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>&#10;&lt;p&gt;The External Execution actor executes a system command from a workflow. The actor accepts a command, a directory and environment in which to execute the command, and a command input string. Once the command has finished executing, the actor will output the execution results along with any errors. If no results are generated, the actor will output an empty string.&lt;/p&gt;&#10;&#10;&lt;p&gt;The External Execution actor depends on system-specific executables and is operating-system specific.&lt;/p&gt;&#10;&#10;&lt;p&gt;To mimic the effect of executing a command in a shell interpreter, set the command parameter to &quot;cmd&quot; (Windows) or &quot;sh&quot; (Windows with Cygwin or Linux), and then provide commands, as a string, via the input port. Note that each passed command must be terminated with a newline. For example, to open a workflow in vergil and run it, set command to &quot;sh&quot; and use a StringConstant actor to pass the  input port the string: &#10; &quot;vergil -run model.xml\n exit\n&quot;&lt;/p&gt;&#10;</configure></property>
-<property name="port:output" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>An output port that broadcasts data generated by the executed command, output as a string after the command has finished executing. If the command generates no data on standard out, then the empty string (a string of length zero) is generated. </configure></property>
 <property name="port:input" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>An input port that accepts strings to pass to the standard input of the subprocess. Note that a newline is not appended to the string. If you require a newline, add one using the AddSubtract actor. This port is an input port of type String.</configure></property>
-<property name="port:error" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>An output port that broadcasts any errors generated by the command execution. Errors are output as a string after the command has finished executing. If the execution generates no errors, an empty string is output. </configure></property>
+<property name="port:output" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>An output port that broadcasts data generated by the executed command, output as a string after the command has finished executing. If the command generates no data on standard out, then the empty string (a string of length zero) is generated. </configure></property>
 <property name="port:trigger" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>If connected, a token must be available on this port before actor will execute.</configure></property>
+<property name="port:error" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>An output port that broadcasts any errors generated by the command execution. Errors are output as a string after the command has finished executing. If the execution generates no errors, an empty string is output. </configure></property>
 <property name="port:exitCode" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>An output port that broadcasts the command's exit code. A non-zero value signifies an error.</configure></property>
 <property name="prop:environment" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>An array of records that name an environment variable and a value:&#10; &#10;  {{name = &quot;NAME1&quot;, value = &quot;value1&quot;}...}&#10;  &#10;Where NAME1 is the name of the environment variable, and value1 is the value. &#10;For example, {{name = &quot;PTII&quot;, value = &quot;c:/ptII&quot;}} would set the value of the PTII to c:/ptII. &#10;If the parameter is set to {{name=&quot;&quot;, value = &quot;&quot;}}, then the environment from the parent process is used. If environmental variables are set with the parameter, the parent values may not be passed to the process. To view the current environment, use the &quot;env&quot; command.&#10;</configure></property>
 <property name="prop:directory" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>The directory in which to execute the command. The default value of this parameter $CWD, which represents the user's current working or home directory. </configure></property>
@@ -649,7 +649,7 @@
         <entity name="RemoteSimulationJob_SASSENA" class="ptolemy.actor.TypedCompositeActor">
             <property name="_createdBy" class="ptolemy.kernel.attributes.VersionAttribute" value="8.1.devel">
             </property>
-            <property name="entityId" class="org.kepler.moml.NamedObjId" value="urn:lsid:kepler-project.org/ns/:30354:1008:258">
+            <property name="entityId" class="org.kepler.moml.NamedObjId" value="urn:lsid:kepler-project.org/ns/:30354:1008:317">
             </property>
             <property name="class" class="ptolemy.kernel.util.StringAttribute" value="ptolemy.actor.TypedCompositeActor">
                 <property name="id" class="ptolemy.kernel.util.StringAttribute" value="urn:lsid:kepler-project.org:class:449:1">
@@ -712,7 +712,7 @@
                 </property>
                 <property name="executable" class="ptolemy.actor.parameters.PortParameter" value="&quot;&quot;">
                 </property>
-                <property name="workdir" class="ptolemy.actor.parameters.PortParameter" value="&quot;.kepler-hpcc&quot;">
+                <property name="workdir" class="ptolemy.actor.parameters.PortParameter" value="&quot;/data/.kepler-hpcc&quot;">
                 </property>
                 <property name="inputfiles" class="ptolemy.actor.parameters.PortParameter" value="{}">
                 </property>
@@ -725,11 +725,11 @@
 <property name="userLevelDocumentation" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>&lt;p&gt;The JobCreator actor is to create a job that can be submitted with JobSubmitter. This actor itself is not for job execution. &lt;/p&gt;&#10;&lt;p&gt; It currently support multiple job schedulers: Condor, PBS, SGE, Fork, NCCS, LoadLeveler, and can be extended for more. &lt;/p&gt; </configure></property>
 <property name="port:job" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>The created job (of type Object) that can be used later to submit the job in JobSubmitter and query its status in JobStatus actor. It is null if job creation failed.</configure></property>
 <property name="prop:executable" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>The path to the executable if it is located on this local machine.</configure></property>
-<property name="prop:cmdFile" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>The path to the job submission file that you have created before.</configure></property>
 <property name="prop:inputfiles" class="ptolemy.kernel.util.ConfigurableAttribute"><configure> The list of (local) input files to be staged to the remote site before job submission.</configure></property>
+<property name="prop:cmdFile" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>The path to the job submission file that you have created before.</configure></property>
 <property name="prop:remotefiles" class="ptolemy.kernel.util.ConfigurableAttribute"><configure> The array of remote files is the list of remote input files that are to be copied into the job's working directory before job submission.</configure></property>
 <property name="prop:workdir" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>The path to the remote working directory in which you want the job's files to be created.</configure></property>
-</property>                <property name="entityId" class="org.kepler.moml.NamedObjId" value="urn:lsid:kepler-project.org:actor:350:1">
+</property>                <property name="entityId" class="org.kepler.moml.NamedObjId" value="urn:lsid:kepler-project.org/ns/:30354:1475:1">
                 </property>
                 <property name="class" class="ptolemy.kernel.util.StringAttribute" value="org.kepler.actor.job.JobCreator">
                     <property name="id" class="ptolemy.kernel.util.StringAttribute" value="urn:lsid:kepler-project.org:class:1212:1">
@@ -760,6 +760,8 @@
                     </property>
                     <property name="workdir (parameter)" class="ptolemy.data.expr.StringParameter" value="The path to the remote working directory in which you want the job's files to be created.">
                     </property>
+                </property>
+                <property name="derivedFrom" class="org.kepler.moml.NamedObjIdReferralList" value="urn:lsid:kepler-project.org:actor:350:1">
                 </property>
                 <port name="cmdFile" class="ptolemy.actor.parameters.ParameterPort">
                     <property name="input"/>
@@ -963,8 +965,8 @@
 <property name="port:failed" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>A BooleanToken indicating whether the connection failed: 'true' if the &lt;i&gt;postpone&lt;/i&gt; flag is false and the connection failed, otherwise, 'false'. </configure></property>
 <property name="port:identity" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>The file path for the SSH identity file. Specify an identity path to connect to an SSH host without having to reenter the password.   </configure></property>
 <property name="port:target" class="ptolemy.kernel.util.ConfigurableAttribute"><configure> The machine to be used at job submission. It should be null, &quot;&quot; or &quot;local&quot; for the local machine or [user@]host to denote a remote machine accessible with SSH. If user is not provided, the local username will be used. If port is not provided, the default port 22 will be applied.  This parameter is read once at initialize. </configure></property>
-<property name="port:portforwarding" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>Specification for local and/or port forwardings. Format: &quot;-L port:host:hostport -R port:host:hostport ...&quot;. Many local and/or remote forwarding specification can be given.  </configure></property>
 <property name="port:target_out" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>A string that identifies the created session. The value is identical to the value of the specified target. If the target is specified as a parameter, you do not need to connect this port to pass the connection reference to downstream actors.  </configure></property>
+<property name="port:portforwarding" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>Specification for local and/or port forwardings. Format: &quot;-L port:host:hostport -R port:host:hostport ...&quot;. Many local and/or remote forwarding specification can be given.  </configure></property>
 <property name="prop:closeAtEnd" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>Specify whether the connection to the host should be closed when the workflow terminates. If you run more than one workflow simultaneously on the same remote host, this flag should be false to avoid closing the session in one workflow while the others are still using it. &#10; </configure></property>
 <property name="prop:identity" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>The file path for the SSH identity file. Specify an identity path to connect to an SSH host without having to reenter the password.  </configure></property>
 <property name="prop:postpone" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>Specify whether to postpone the connection until the first remote operation is executed. The default is false, as one of the main purposes of this actor is to request passwords and make a connection at the beginning of the workflow.  </configure></property>
@@ -1011,8 +1013,8 @@
 <property name="userLevelDocumentation" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>&lt;p&gt;The JobStatus actor is to check the status a job that can be submitted with JobSubmitter. This actor itself is not for job execution. &lt;/p&gt;&#10;&lt;p&gt; It currently support multiple job schedulers: Condor, PBS, SGE, Fork, NCCS, LoadLeveler, and can be extended for more. &lt;/p&gt; </configure></property>
 <property name="port:jobIn" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>The input should be a previously submitted job which has not been removed yet, i.e. the output from a JobSubmitter, never given to a JobRemover.</configure></property>
 <property name="port:jobOut" class="ptolemy.kernel.util.ConfigurableAttribute"><configure> The same job object for input.</configure></property>
-<property name="port:statusCode" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>&lt;p&gt; The status code of the job:&#10;&lt;ul&gt;&#10;&lt;li&gt;0: Error: some error occured during the execution of the actor&lt;/li&gt;&#10;&lt;li&gt;1: NotInQueue: no such job in the queue, i.e. never was or already gone&lt;/li&gt;&#10;&lt;li&gt;2: Wait: the job is in the queue and it is not running yet&lt;/li&gt;&#10;&lt;li&gt;3: Running: the job is running&lt;/li&gt;&#10;&lt;/ul&gt;&#10;&lt;/p&gt;&#10;&lt;p&gt;If not such job exists, the result will be also the Error status.&lt;/p&gt;</configure></property>
 <property name="port:log" class="ptolemy.kernel.util.ConfigurableAttribute"><configure> The logging information of job status query.</configure></property>
+<property name="port:statusCode" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>&lt;p&gt; The status code of the job:&#10;&lt;ul&gt;&#10;&lt;li&gt;0: Error: some error occured during the execution of the actor&lt;/li&gt;&#10;&lt;li&gt;1: NotInQueue: no such job in the queue, i.e. never was or already gone&lt;/li&gt;&#10;&lt;li&gt;2: Wait: the job is in the queue and it is not running yet&lt;/li&gt;&#10;&lt;li&gt;3: Running: the job is running&lt;/li&gt;&#10;&lt;/ul&gt;&#10;&lt;/p&gt;&#10;&lt;p&gt;If not such job exists, the result will be also the Error status.&lt;/p&gt;</configure></property>
 </property>                <property name="entityId" class="org.kepler.moml.NamedObjId" value="urn:lsid:kepler-project.org/ns/:30354:1046:3">
                 </property>
                 <property name="class" class="ptolemy.kernel.util.StringAttribute" value="org.kepler.actor.job.JobStatus">
@@ -1113,8 +1115,8 @@
 <property name="author" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>Edward A. Lee, Haibo Zeng</configure></property>
 <property name="version" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>null</configure></property>
 <property name="userLevelDocumentation" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>&lt;p&gt; This actor takes any number of input streams and merges them&#10; nondeterministically.  This actor is intended for use in the&#10; PN domain. It is a composite actor that&#10; creates its own contents.  It contains an instance of PNDirector and one&#10; actor for each input channel (it creates these actors automatically&#10; when a connection is created to the input multiport).  The contained&#10; actors are special actors (implemented as an instance of an inner class)&#10; that read from the port of this actor and write to the port of&#10; this actor. They have no ports of their own.  The lifecycle of the&#10; contained actors (when they are started or stopped) is handled by&#10; the PNDirector in the usual way.&lt;/p&gt;&#10;        </configure></property>
-<property name="port:output" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>An output port for the merged input tokens.</configure></property>
 <property name="port:input" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>An input multi-port that accepts tokens of any type.</configure></property>
+<property name="port:output" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>An output port for the merged input tokens.</configure></property>
 <property name="port:channel" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>Output port used to indicate which input channel the current output came from. This has type int.</configure></property>
 </property>                <property name="_location" class="ptolemy.kernel.util.Location" value="{590.0, 255.0}">
                 </property>
@@ -1253,10 +1255,10 @@
 <property name="version" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>null</configure></property>
 <property name="userLevelDocumentation" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>&lt;p&gt;The JobManager actor is to define a jobmanager on the local/remote machine, which will be used as an input for a JobSubmitter actor.&lt;/p&gt;&#10;&lt;p&gt; It currently support multiple job schedulers: Condor, PBS, SGE, Fork, NCCS, LoadLeveler, and can be extended for more. &lt;/p&gt; </configure></property>
 <property name="port:jmgr" class="ptolemy.kernel.util.ConfigurableAttribute"><configure> jobmanager of type ObjectToken, which should be  given as parameter to a JobSubmitter.</configure></property>
-<property name="prop:executable" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>The path to the executable if it is located on this local machine.</configure></property>
 <property name="prop:binPath" class="ptolemy.kernel.util.ConfigurableAttribute"><configure> the full path to the jobmanager commands on the target machine.</configure></property>
-<property name="prop:jobManager" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>Job manager name from [Condor | PBS | LoadLeveler| NCCS | SGE | Fork].</configure></property>
+<property name="prop:executable" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>The path to the executable if it is located on this local machine.</configure></property>
 <property name="prop:target" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>The target machine, either null, &quot;&quot; or &quot;local&quot; to denote a local jobmanager to be used by local execution command, OR &quot;[user@]host&quot; to denote a remote jobmanager to be used by an ssh connection.</configure></property>
+<property name="prop:jobManager" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>Job manager name from [Condor | PBS | LoadLeveler| NCCS | SGE | Fork].</configure></property>
 </property>                <property name="entityId" class="org.kepler.moml.NamedObjId" value="urn:lsid:kepler-project.org/ns/:30354:158:2">
                 </property>
                 <property name="class" class="ptolemy.kernel.util.StringAttribute" value="org.kepler.actor.job.JobManager">
@@ -1847,10 +1849,10 @@
 <property name="author" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>Xiaojun Liu, Edward A. Lee, Steve Neuendorffer</configure></property>
 <property name="version" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>null</configure></property>
 <property name="userLevelDocumentation" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>&#10;&lt;p&gt;The External Execution actor executes a system command from a workflow. The actor accepts a command, a directory and environment in which to execute the command, and a command input string. Once the command has finished executing, the actor will output the execution results along with any errors. If no results are generated, the actor will output an empty string.&lt;/p&gt;&#10;&#10;&lt;p&gt;The External Execution actor depends on system-specific executables and is operating-system specific.&lt;/p&gt;&#10;&#10;&lt;p&gt;To mimic the effect of executing a command in a shell interpreter, set the command parameter to &quot;cmd&quot; (Windows) or &quot;sh&quot; (Windows with Cygwin or Linux), and then provide commands, as a string, via the input port. Note that each passed command must be terminated with a newline. For example, to open a workflow in vergil and run it, set command to &quot;sh&quot; and use a StringConstant actor to pass the  input port the string: &#10; &quot;vergil -run model.xml\n exit\n&quot;&lt;/p&gt;&#10;</configure></property>
-<property name="port:input" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>An input port that accepts strings to pass to the standard input of the subprocess. Note that a newline is not appended to the string. If you require a newline, add one using the AddSubtract actor. This port is an input port of type String.</configure></property>
 <property name="port:output" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>An output port that broadcasts data generated by the executed command, output as a string after the command has finished executing. If the command generates no data on standard out, then the empty string (a string of length zero) is generated. </configure></property>
-<property name="port:trigger" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>If connected, a token must be available on this port before actor will execute.</configure></property>
+<property name="port:input" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>An input port that accepts strings to pass to the standard input of the subprocess. Note that a newline is not appended to the string. If you require a newline, add one using the AddSubtract actor. This port is an input port of type String.</configure></property>
 <property name="port:error" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>An output port that broadcasts any errors generated by the command execution. Errors are output as a string after the command has finished executing. If the execution generates no errors, an empty string is output. </configure></property>
+<property name="port:trigger" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>If connected, a token must be available on this port before actor will execute.</configure></property>
 <property name="port:exitCode" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>An output port that broadcasts the command's exit code. A non-zero value signifies an error.</configure></property>
 <property name="prop:environment" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>An array of records that name an environment variable and a value:&#10; &#10;  {{name = &quot;NAME1&quot;, value = &quot;value1&quot;}...}&#10;  &#10;Where NAME1 is the name of the environment variable, and value1 is the value. &#10;For example, {{name = &quot;PTII&quot;, value = &quot;c:/ptII&quot;}} would set the value of the PTII to c:/ptII. &#10;If the parameter is set to {{name=&quot;&quot;, value = &quot;&quot;}}, then the environment from the parent process is used. If environmental variables are set with the parameter, the parent values may not be passed to the process. To view the current environment, use the &quot;env&quot; command.&#10;</configure></property>
 <property name="prop:directory" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>The directory in which to execute the command. The default value of this parameter $CWD, which represents the user's current working or home directory. </configure></property>
@@ -1940,7 +1942,7 @@
         <entity name="RemoteSimulationJob_NAMD" class="ptolemy.actor.TypedCompositeActor">
             <property name="_createdBy" class="ptolemy.kernel.attributes.VersionAttribute" value="8.1.devel">
             </property>
-            <property name="entityId" class="org.kepler.moml.NamedObjId" value="urn:lsid:kepler-project.org/ns/:30354:1008:208">
+            <property name="entityId" class="org.kepler.moml.NamedObjId" value="urn:lsid:kepler-project.org/ns/:30354:1008:315">
             </property>
             <property name="class" class="ptolemy.kernel.util.StringAttribute" value="ptolemy.actor.TypedCompositeActor">
                 <property name="id" class="ptolemy.kernel.util.StringAttribute" value="urn:lsid:kepler-project.org:class:449:1">
@@ -1998,7 +2000,7 @@
                 </property>
                 <property name="executable" class="ptolemy.actor.parameters.PortParameter" value="&quot;&quot;">
                 </property>
-                <property name="workdir" class="ptolemy.actor.parameters.PortParameter" value="&quot;.kepler-hpcc&quot;">
+                <property name="workdir" class="ptolemy.actor.parameters.PortParameter" value="&quot;/data/.kepler-hpcc&quot;">
                 </property>
                 <property name="inputfiles" class="ptolemy.actor.parameters.PortParameter" value="{}">
                 </property>
@@ -2011,11 +2013,11 @@
 <property name="userLevelDocumentation" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>&lt;p&gt;The JobCreator actor is to create a job that can be submitted with JobSubmitter. This actor itself is not for job execution. &lt;/p&gt;&#10;&lt;p&gt; It currently support multiple job schedulers: Condor, PBS, SGE, Fork, NCCS, LoadLeveler, and can be extended for more. &lt;/p&gt; </configure></property>
 <property name="port:job" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>The created job (of type Object) that can be used later to submit the job in JobSubmitter and query its status in JobStatus actor. It is null if job creation failed.</configure></property>
 <property name="prop:executable" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>The path to the executable if it is located on this local machine.</configure></property>
-<property name="prop:inputfiles" class="ptolemy.kernel.util.ConfigurableAttribute"><configure> The list of (local) input files to be staged to the remote site before job submission.</configure></property>
 <property name="prop:cmdFile" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>The path to the job submission file that you have created before.</configure></property>
+<property name="prop:inputfiles" class="ptolemy.kernel.util.ConfigurableAttribute"><configure> The list of (local) input files to be staged to the remote site before job submission.</configure></property>
 <property name="prop:remotefiles" class="ptolemy.kernel.util.ConfigurableAttribute"><configure> The array of remote files is the list of remote input files that are to be copied into the job's working directory before job submission.</configure></property>
 <property name="prop:workdir" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>The path to the remote working directory in which you want the job's files to be created.</configure></property>
-</property>                <property name="entityId" class="org.kepler.moml.NamedObjId" value="urn:lsid:kepler-project.org:actor:350:1">
+</property>                <property name="entityId" class="org.kepler.moml.NamedObjId" value="urn:lsid:kepler-project.org/ns/:30354:1474:1">
                 </property>
                 <property name="class" class="ptolemy.kernel.util.StringAttribute" value="org.kepler.actor.job.JobCreator">
                     <property name="id" class="ptolemy.kernel.util.StringAttribute" value="urn:lsid:kepler-project.org:class:1212:1">
@@ -2046,6 +2048,8 @@
                     </property>
                     <property name="workdir (parameter)" class="ptolemy.data.expr.StringParameter" value="The path to the remote working directory in which you want the job's files to be created.">
                     </property>
+                </property>
+                <property name="derivedFrom" class="org.kepler.moml.NamedObjIdReferralList" value="urn:lsid:kepler-project.org:actor:350:1">
                 </property>
                 <port name="cmdFile" class="ptolemy.actor.parameters.ParameterPort">
                     <property name="input"/>
@@ -2129,8 +2133,8 @@
 <property name="port:failed" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>A BooleanToken indicating whether the connection failed: 'true' if the &lt;i&gt;postpone&lt;/i&gt; flag is false and the connection failed, otherwise, 'false'. </configure></property>
 <property name="port:identity" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>The file path for the SSH identity file. Specify an identity path to connect to an SSH host without having to reenter the password.   </configure></property>
 <property name="port:target" class="ptolemy.kernel.util.ConfigurableAttribute"><configure> The machine to be used at job submission. It should be null, &quot;&quot; or &quot;local&quot; for the local machine or [user@]host to denote a remote machine accessible with SSH. If user is not provided, the local username will be used. If port is not provided, the default port 22 will be applied.  This parameter is read once at initialize. </configure></property>
-<property name="port:target_out" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>A string that identifies the created session. The value is identical to the value of the specified target. If the target is specified as a parameter, you do not need to connect this port to pass the connection reference to downstream actors.  </configure></property>
 <property name="port:portforwarding" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>Specification for local and/or port forwardings. Format: &quot;-L port:host:hostport -R port:host:hostport ...&quot;. Many local and/or remote forwarding specification can be given.  </configure></property>
+<property name="port:target_out" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>A string that identifies the created session. The value is identical to the value of the specified target. If the target is specified as a parameter, you do not need to connect this port to pass the connection reference to downstream actors.  </configure></property>
 <property name="prop:closeAtEnd" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>Specify whether the connection to the host should be closed when the workflow terminates. If you run more than one workflow simultaneously on the same remote host, this flag should be false to avoid closing the session in one workflow while the others are still using it. &#10; </configure></property>
 <property name="prop:identity" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>The file path for the SSH identity file. Specify an identity path to connect to an SSH host without having to reenter the password.  </configure></property>
 <property name="prop:postpone" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>Specify whether to postpone the connection until the first remote operation is executed. The default is false, as one of the main purposes of this actor is to request passwords and make a connection at the beginning of the workflow.  </configure></property>
@@ -2231,10 +2235,10 @@
 <property name="version" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>null</configure></property>
 <property name="userLevelDocumentation" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>&lt;p&gt;The JobManager actor is to define a jobmanager on the local/remote machine, which will be used as an input for a JobSubmitter actor.&lt;/p&gt;&#10;&lt;p&gt; It currently support multiple job schedulers: Condor, PBS, SGE, Fork, NCCS, LoadLeveler, and can be extended for more. &lt;/p&gt; </configure></property>
 <property name="port:jmgr" class="ptolemy.kernel.util.ConfigurableAttribute"><configure> jobmanager of type ObjectToken, which should be  given as parameter to a JobSubmitter.</configure></property>
-<property name="prop:binPath" class="ptolemy.kernel.util.ConfigurableAttribute"><configure> the full path to the jobmanager commands on the target machine.</configure></property>
 <property name="prop:executable" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>The path to the executable if it is located on this local machine.</configure></property>
-<property name="prop:target" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>The target machine, either null, &quot;&quot; or &quot;local&quot; to denote a local jobmanager to be used by local execution command, OR &quot;[user@]host&quot; to denote a remote jobmanager to be used by an ssh connection.</configure></property>
+<property name="prop:binPath" class="ptolemy.kernel.util.ConfigurableAttribute"><configure> the full path to the jobmanager commands on the target machine.</configure></property>
 <property name="prop:jobManager" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>Job manager name from [Condor | PBS | LoadLeveler| NCCS | SGE | Fork].</configure></property>
+<property name="prop:target" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>The target machine, either null, &quot;&quot; or &quot;local&quot; to denote a local jobmanager to be used by local execution command, OR &quot;[user@]host&quot; to denote a remote jobmanager to be used by an ssh connection.</configure></property>
 </property>                <property name="entityId" class="org.kepler.moml.NamedObjId" value="urn:lsid:kepler-project.org/ns/:30354:158:2">
                 </property>
                 <property name="class" class="ptolemy.kernel.util.StringAttribute" value="org.kepler.actor.job.JobManager">
@@ -2566,7 +2570,7 @@
             </port>
         </entity>
         <entity name="Expression4" class="ptolemy.actor.lib.Expression">
-            <property name="expression" class="ptolemy.kernel.util.StringAttribute" value="&quot;python &quot;+CammDirectory+&quot;/scattering/sassenatasks.py genSQE \&quot;fqt_inc_&quot;+in+&quot;.hd5 fqt_coh_&quot;+in+&quot;.hd5\&quot; output_&quot;+in+&quot;.nxs --wsname simulated --rebinQ \&quot;0.2 0.2 1.0\&quot; --LoadSassena \&quot;TimeUnit:1.0\&quot; --SassenaFFT \&quot;FFTonlyRealPart:1,DetailedBalance:1,Temp:290\&quot; --NormaliseToUnity \&quot;RangeLower:-0.1,RangeUpper:0.1\&quot;\n&quot;">
+            <property name="expression" class="ptolemy.kernel.util.StringAttribute" value="&quot;python &quot;+CammDirectory+&quot;/scattering/sassenatasks.py genSQE \&quot;fqt_inc_&quot;+in+&quot;.hd5 fqt_coh_&quot;+in+&quot;.hd5\&quot; output_&quot;+in+&quot;.nxs --wsname simulated --rebinQ \&quot;0.4 0.2 1.0\&quot; --LoadSassena \&quot;TimeUnit:1.0\&quot; --SassenaFFT \&quot;FFTonlyRealPart:1,DetailedBalance:1,Temp:290\&quot; --NormaliseToUnity \&quot;RangeLower:-0.1,RangeUpper:0.1\&quot;\n&quot;">
                 <property name="_hide" class="ptolemy.data.expr.Parameter" value="true">
                 </property>
             </property>
@@ -2577,7 +2581,7 @@
 <property name="userLevelDocumentation" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>&lt;p&gt;The Expression actor evaluates a specified expression (e.g., an addition or multiplication operation), which may reference the values of user-specified input ports, the current time, or the actor's iteration count. The actor outputs the value of the evaluated expression. &lt;/p&gt;&#10;&#10;&lt;p&gt;Expressions are specified in the Ptolemy expression language via the expression parameter. For more information about the expression language, see http://ptolemy.eecs.berkeley.edu/papers/05/ptIIdesign1-intro/ptIIdesign1-intro.pdf. &lt;/p&gt;&#10;&#10;&lt;p&gt;By default, the expression parameter is empty, and attempting to execute the actor without first specifying an expression generates an error. Expressions can refer to the values of inputs by the port name; to the current time by the identifier &quot;time&quot;; and to the current iteration count by the identifier &quot;iteration.&quot; &lt;/p&gt;&#10;&#10;&lt;p&gt;Input ports are created by the user and correspond to variables used in the specified expression. Currently, the Expression actor does not support input multiports. The actor requires all of its inputs to be present. If inputs are not all present, then the actor will generate an error. &lt;/p&gt;&#10;&#10;&lt;p&gt;Note: the Expression actor can be used instead of many of the arithmetic actors, such as AddSubtract, MultiplyDivide, and TrigFunction. However, those actors will be usually be more efficient, and sometimes more convenient to use.&lt;/p&gt;</configure></property>
 <property name="port:output" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>An output port that broadcasts the value of the evaluated expression. The actor automatically determines the type based on the type of the input.</configure></property>
 <property name="prop:expression" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>An expression to evaluate. Expressions are specified in the Ptolemy expression language. For more information about the expression language, see http://ptolemy.eecs.berkeley.edu/papers/05/ptIIdesign1-intro/ptIIdesign1-intro.pdf. By default, the parameter is empty, and attempting to execute the actor without first specifying an expression generates an error. Expressions can refer to the values of inputs by the port name; to the current time by the identifier &quot;time&quot;; and to the current iteration count by the identifier &quot;iteration.&quot;</configure></property>
-</property>            <property name="entityId" class="org.kepler.moml.NamedObjId" value="urn:lsid:kepler-project.org/ns/:30354:1028:210">
+</property>            <property name="entityId" class="org.kepler.moml.NamedObjId" value="urn:lsid:kepler-project.org/ns/:30354:1028:233">
             </property>
             <property name="class" class="ptolemy.kernel.util.StringAttribute" value="ptolemy.actor.lib.Expression">
                 <property name="id" class="ptolemy.kernel.util.StringAttribute" value="urn:lsid:kepler-project.org:class:950:1">
@@ -2630,10 +2634,10 @@
 <property name="author" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>Xiaojun Liu, Edward A. Lee, Steve Neuendorffer</configure></property>
 <property name="version" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>null</configure></property>
 <property name="userLevelDocumentation" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>&#10;&lt;p&gt;The External Execution actor executes a system command from a workflow. The actor accepts a command, a directory and environment in which to execute the command, and a command input string. Once the command has finished executing, the actor will output the execution results along with any errors. If no results are generated, the actor will output an empty string.&lt;/p&gt;&#10;&#10;&lt;p&gt;The External Execution actor depends on system-specific executables and is operating-system specific.&lt;/p&gt;&#10;&#10;&lt;p&gt;To mimic the effect of executing a command in a shell interpreter, set the command parameter to &quot;cmd&quot; (Windows) or &quot;sh&quot; (Windows with Cygwin or Linux), and then provide commands, as a string, via the input port. Note that each passed command must be terminated with a newline. For example, to open a workflow in vergil and run it, set command to &quot;sh&quot; and use a StringConstant actor to pass the  input port the string: &#10; &quot;vergil -run model.xml\n exit\n&quot;&lt;/p&gt;&#10;</configure></property>
-<property name="port:output" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>An output port that broadcasts data generated by the executed command, output as a string after the command has finished executing. If the command generates no data on standard out, then the empty string (a string of length zero) is generated. </configure></property>
 <property name="port:input" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>An input port that accepts strings to pass to the standard input of the subprocess. Note that a newline is not appended to the string. If you require a newline, add one using the AddSubtract actor. This port is an input port of type String.</configure></property>
-<property name="port:error" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>An output port that broadcasts any errors generated by the command execution. Errors are output as a string after the command has finished executing. If the execution generates no errors, an empty string is output. </configure></property>
+<property name="port:output" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>An output port that broadcasts data generated by the executed command, output as a string after the command has finished executing. If the command generates no data on standard out, then the empty string (a string of length zero) is generated. </configure></property>
 <property name="port:trigger" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>If connected, a token must be available on this port before actor will execute.</configure></property>
+<property name="port:error" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>An output port that broadcasts any errors generated by the command execution. Errors are output as a string after the command has finished executing. If the execution generates no errors, an empty string is output. </configure></property>
 <property name="port:exitCode" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>An output port that broadcasts the command's exit code. A non-zero value signifies an error.</configure></property>
 <property name="prop:environment" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>An array of records that name an environment variable and a value:&#10; &#10;  {{name = &quot;NAME1&quot;, value = &quot;value1&quot;}...}&#10;  &#10;Where NAME1 is the name of the environment variable, and value1 is the value. &#10;For example, {{name = &quot;PTII&quot;, value = &quot;c:/ptII&quot;}} would set the value of the PTII to c:/ptII. &#10;If the parameter is set to {{name=&quot;&quot;, value = &quot;&quot;}}, then the environment from the parent process is used. If environmental variables are set with the parameter, the parent values may not be passed to the process. To view the current environment, use the &quot;env&quot; command.&#10;</configure></property>
 <property name="prop:directory" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>The directory in which to execute the command. The default value of this parameter $CWD, which represents the user's current working or home directory. </configure></property>
@@ -2867,8 +2871,8 @@
 <property name="author" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>Edward A. Lee, Haibo Zeng</configure></property>
 <property name="version" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>null</configure></property>
 <property name="userLevelDocumentation" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>&lt;p&gt; This actor takes any number of input streams and merges them&#10; nondeterministically.  This actor is intended for use in the&#10; PN domain. It is a composite actor that&#10; creates its own contents.  It contains an instance of PNDirector and one&#10; actor for each input channel (it creates these actors automatically&#10; when a connection is created to the input multiport).  The contained&#10; actors are special actors (implemented as an instance of an inner class)&#10; that read from the port of this actor and write to the port of&#10; this actor. They have no ports of their own.  The lifecycle of the&#10; contained actors (when they are started or stopped) is handled by&#10; the PNDirector in the usual way.&lt;/p&gt;&#10;        </configure></property>
-<property name="port:input" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>An input multi-port that accepts tokens of any type.</configure></property>
 <property name="port:output" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>An output port for the merged input tokens.</configure></property>
+<property name="port:input" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>An input multi-port that accepts tokens of any type.</configure></property>
 <property name="port:channel" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>Output port used to indicate which input channel the current output came from. This has type int.</configure></property>
 </property>            <property name="_location" class="ptolemy.kernel.util.Location" value="[1100.0, 885.0]">
             </property>
@@ -3024,10 +3028,10 @@
 <property name="author" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>Xiaojun Liu, Edward A. Lee, Steve Neuendorffer</configure></property>
 <property name="version" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>null</configure></property>
 <property name="userLevelDocumentation" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>&#10;&lt;p&gt;The External Execution actor executes a system command from a workflow. The actor accepts a command, a directory and environment in which to execute the command, and a command input string. Once the command has finished executing, the actor will output the execution results along with any errors. If no results are generated, the actor will output an empty string.&lt;/p&gt;&#10;&#10;&lt;p&gt;The External Execution actor depends on system-specific executables and is operating-system specific.&lt;/p&gt;&#10;&#10;&lt;p&gt;To mimic the effect of executing a command in a shell interpreter, set the command parameter to &quot;cmd&quot; (Windows) or &quot;sh&quot; (Windows with Cygwin or Linux), and then provide commands, as a string, via the input port. Note that each passed command must be terminated with a newline. For example, to open a workflow in vergil and run it, set command to &quot;sh&quot; and use a StringConstant actor to pass the  input port the string: &#10; &quot;vergil -run model.xml\n exit\n&quot;&lt;/p&gt;&#10;</configure></property>
-<property name="port:input" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>An input port that accepts strings to pass to the standard input of the subprocess. Note that a newline is not appended to the string. If you require a newline, add one using the AddSubtract actor. This port is an input port of type String.</configure></property>
 <property name="port:output" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>An output port that broadcasts data generated by the executed command, output as a string after the command has finished executing. If the command generates no data on standard out, then the empty string (a string of length zero) is generated. </configure></property>
-<property name="port:trigger" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>If connected, a token must be available on this port before actor will execute.</configure></property>
+<property name="port:input" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>An input port that accepts strings to pass to the standard input of the subprocess. Note that a newline is not appended to the string. If you require a newline, add one using the AddSubtract actor. This port is an input port of type String.</configure></property>
 <property name="port:error" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>An output port that broadcasts any errors generated by the command execution. Errors are output as a string after the command has finished executing. If the execution generates no errors, an empty string is output. </configure></property>
+<property name="port:trigger" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>If connected, a token must be available on this port before actor will execute.</configure></property>
 <property name="port:exitCode" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>An output port that broadcasts the command's exit code. A non-zero value signifies an error.</configure></property>
 <property name="prop:environment" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>An array of records that name an environment variable and a value:&#10; &#10;  {{name = &quot;NAME1&quot;, value = &quot;value1&quot;}...}&#10;  &#10;Where NAME1 is the name of the environment variable, and value1 is the value. &#10;For example, {{name = &quot;PTII&quot;, value = &quot;c:/ptII&quot;}} would set the value of the PTII to c:/ptII. &#10;If the parameter is set to {{name=&quot;&quot;, value = &quot;&quot;}}, then the environment from the parent process is used. If environmental variables are set with the parameter, the parent values may not be passed to the process. To view the current environment, use the &quot;env&quot; command.&#10;</configure></property>
 <property name="prop:directory" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>The directory in which to execute the command. The default value of this parameter $CWD, which represents the user's current working or home directory. </configure></property>
@@ -3248,8 +3252,8 @@
 <property name="author" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>Edward A. Lee, Haibo Zeng</configure></property>
 <property name="version" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>null</configure></property>
 <property name="userLevelDocumentation" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>&lt;p&gt; This actor takes any number of input streams and merges them&#10; nondeterministically.  This actor is intended for use in the&#10; PN domain. It is a composite actor that&#10; creates its own contents.  It contains an instance of PNDirector and one&#10; actor for each input channel (it creates these actors automatically&#10; when a connection is created to the input multiport).  The contained&#10; actors are special actors (implemented as an instance of an inner class)&#10; that read from the port of this actor and write to the port of&#10; this actor. They have no ports of their own.  The lifecycle of the&#10; contained actors (when they are started or stopped) is handled by&#10; the PNDirector in the usual way.&lt;/p&gt;&#10;        </configure></property>
-<property name="port:input" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>An input multi-port that accepts tokens of any type.</configure></property>
 <property name="port:output" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>An output port for the merged input tokens.</configure></property>
+<property name="port:input" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>An input multi-port that accepts tokens of any type.</configure></property>
 <property name="port:channel" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>Output port used to indicate which input channel the current output came from. This has type int.</configure></property>
 </property>                <property name="_location" class="ptolemy.kernel.util.Location" value="[510.0, 500.0]">
                 </property>
@@ -3685,7 +3689,7 @@
             </port>
         </entity>
         <entity name="Expression7" class="ptolemy.actor.lib.Expression">
-            <property name="expression" class="ptolemy.kernel.util.StringAttribute" value="&quot;python &quot;+CammDirectory+&quot;/beamline/assemblemodel.py  modelBEC --model fit_&quot;+in+&quot;.txt --resolution &quot;+CammDirectory+&quot;/../test/beamline/resolution.nxs --convolved &quot;+nxs+&quot; --qvalues &quot;+CammDirectory+&quot;/../test/beamline/qvalues.dat  --expdata  &quot;+CammDirectory+&quot;/../test/beamline/LiCl_290K.nxs --costfile notshifted.out.&quot;+in+&quot; --assembled assembled_&quot;+in+&quot;.nxs\n&quot;">
+            <property name="expression" class="ptolemy.kernel.util.StringAttribute" value="&quot;python &quot;+CammDirectory+&quot;/beamline/assemblemodel.py  modelB_freeE_C --model fit_&quot;+in+&quot;.txt --resolution &quot;+CammDirectory+&quot;/../test/beamline/resolution.nxs --convolved &quot;+nxs+&quot; --expdata  &quot;+CammDirectory+&quot;/../test/beamline/LiCl_290K.nxs --costfile results.out.&quot;+in+&quot; --assembled assembled_&quot;+in+&quot;.nxs  --derivdata 1 --derivexclude \&quot;b1\&quot; --doshift itp_simple\n&quot;">
                 <property name="_hide" class="ptolemy.data.expr.Parameter" value="true">
                 </property>
             </property>
@@ -3696,7 +3700,7 @@
 <property name="userLevelDocumentation" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>&lt;p&gt;The Expression actor evaluates a specified expression (e.g., an addition or multiplication operation), which may reference the values of user-specified input ports, the current time, or the actor's iteration count. The actor outputs the value of the evaluated expression. &lt;/p&gt;&#10;&#10;&lt;p&gt;Expressions are specified in the Ptolemy expression language via the expression parameter. For more information about the expression language, see http://ptolemy.eecs.berkeley.edu/papers/05/ptIIdesign1-intro/ptIIdesign1-intro.pdf. &lt;/p&gt;&#10;&#10;&lt;p&gt;By default, the expression parameter is empty, and attempting to execute the actor without first specifying an expression generates an error. Expressions can refer to the values of inputs by the port name; to the current time by the identifier &quot;time&quot;; and to the current iteration count by the identifier &quot;iteration.&quot; &lt;/p&gt;&#10;&#10;&lt;p&gt;Input ports are created by the user and correspond to variables used in the specified expression. Currently, the Expression actor does not support input multiports. The actor requires all of its inputs to be present. If inputs are not all present, then the actor will generate an error. &lt;/p&gt;&#10;&#10;&lt;p&gt;Note: the Expression actor can be used instead of many of the arithmetic actors, such as AddSubtract, MultiplyDivide, and TrigFunction. However, those actors will be usually be more efficient, and sometimes more convenient to use.&lt;/p&gt;</configure></property>
 <property name="port:output" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>An output port that broadcasts the value of the evaluated expression. The actor automatically determines the type based on the type of the input.</configure></property>
 <property name="prop:expression" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>An expression to evaluate. Expressions are specified in the Ptolemy expression language. For more information about the expression language, see http://ptolemy.eecs.berkeley.edu/papers/05/ptIIdesign1-intro/ptIIdesign1-intro.pdf. By default, the parameter is empty, and attempting to execute the actor without first specifying an expression generates an error. Expressions can refer to the values of inputs by the port name; to the current time by the identifier &quot;time&quot;; and to the current iteration count by the identifier &quot;iteration.&quot;</configure></property>
-</property>            <property name="entityId" class="org.kepler.moml.NamedObjId" value="urn:lsid:kepler-project.org/ns/:30354:1028:209">
+</property>            <property name="entityId" class="org.kepler.moml.NamedObjId" value="urn:lsid:kepler-project.org/ns/:30354:1028:239">
             </property>
             <property name="class" class="ptolemy.kernel.util.StringAttribute" value="ptolemy.actor.lib.Expression">
                 <property name="id" class="ptolemy.kernel.util.StringAttribute" value="urn:lsid:kepler-project.org:class:950:1">
@@ -3724,7 +3728,7 @@
             </port>
         </entity>
         <entity name="Expression8" class="ptolemy.actor.lib.Expression">
-            <property name="expression" class="ptolemy.kernel.util.StringAttribute" value="&quot;python &quot;+CammDirectory+&quot;/molmec/ffupdate/ff_update.py --fftp=&quot;+CammDirectory+&quot;/../test/modelBEC.xml --ffout=fit_&quot;+in+&quot;.txt --dak params.in.&quot;+in+&quot;\n&quot; ">
+            <property name="expression" class="ptolemy.kernel.util.StringAttribute" value="&quot;python &quot;+CammDirectory+&quot;/molmec/ffupdate/ff_update.py --fftp=&quot;+CammDirectory+&quot;/../test/modelB_freeE_C.xml --ffout=fit_&quot;+in+&quot;.txt --dak params.in.&quot;+in+&quot;\n&quot; ">
                 <property name="_hide" class="ptolemy.data.expr.Parameter" value="true">
                 </property>
             </property>
@@ -3735,7 +3739,7 @@
 <property name="userLevelDocumentation" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>&lt;p&gt;The Expression actor evaluates a specified expression (e.g., an addition or multiplication operation), which may reference the values of user-specified input ports, the current time, or the actor's iteration count. The actor outputs the value of the evaluated expression. &lt;/p&gt;&#10;&#10;&lt;p&gt;Expressions are specified in the Ptolemy expression language via the expression parameter. For more information about the expression language, see http://ptolemy.eecs.berkeley.edu/papers/05/ptIIdesign1-intro/ptIIdesign1-intro.pdf. &lt;/p&gt;&#10;&#10;&lt;p&gt;By default, the expression parameter is empty, and attempting to execute the actor without first specifying an expression generates an error. Expressions can refer to the values of inputs by the port name; to the current time by the identifier &quot;time&quot;; and to the current iteration count by the identifier &quot;iteration.&quot; &lt;/p&gt;&#10;&#10;&lt;p&gt;Input ports are created by the user and correspond to variables used in the specified expression. Currently, the Expression actor does not support input multiports. The actor requires all of its inputs to be present. If inputs are not all present, then the actor will generate an error. &lt;/p&gt;&#10;&#10;&lt;p&gt;Note: the Expression actor can be used instead of many of the arithmetic actors, such as AddSubtract, MultiplyDivide, and TrigFunction. However, those actors will be usually be more efficient, and sometimes more convenient to use.&lt;/p&gt;</configure></property>
 <property name="port:output" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>An output port that broadcasts the value of the evaluated expression. The actor automatically determines the type based on the type of the input.</configure></property>
 <property name="prop:expression" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>An expression to evaluate. Expressions are specified in the Ptolemy expression language. For more information about the expression language, see http://ptolemy.eecs.berkeley.edu/papers/05/ptIIdesign1-intro/ptIIdesign1-intro.pdf. By default, the parameter is empty, and attempting to execute the actor without first specifying an expression generates an error. Expressions can refer to the values of inputs by the port name; to the current time by the identifier &quot;time&quot;; and to the current iteration count by the identifier &quot;iteration.&quot;</configure></property>
-</property>            <property name="entityId" class="org.kepler.moml.NamedObjId" value="urn:lsid:kepler-project.org/ns/:30354:1028:191">
+</property>            <property name="entityId" class="org.kepler.moml.NamedObjId" value="urn:lsid:kepler-project.org/ns/:30354:1028:233">
             </property>
             <property name="class" class="ptolemy.kernel.util.StringAttribute" value="ptolemy.actor.lib.Expression">
                 <property name="id" class="ptolemy.kernel.util.StringAttribute" value="urn:lsid:kepler-project.org:class:950:1">
@@ -3824,10 +3828,10 @@
 <property name="author" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>Xiaojun Liu, Edward A. Lee, Steve Neuendorffer</configure></property>
 <property name="version" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>null</configure></property>
 <property name="userLevelDocumentation" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>&#10;&lt;p&gt;The External Execution actor executes a system command from a workflow. The actor accepts a command, a directory and environment in which to execute the command, and a command input string. Once the command has finished executing, the actor will output the execution results along with any errors. If no results are generated, the actor will output an empty string.&lt;/p&gt;&#10;&#10;&lt;p&gt;The External Execution actor depends on system-specific executables and is operating-system specific.&lt;/p&gt;&#10;&#10;&lt;p&gt;To mimic the effect of executing a command in a shell interpreter, set the command parameter to &quot;cmd&quot; (Windows) or &quot;sh&quot; (Windows with Cygwin or Linux), and then provide commands, as a string, via the input port. Note that each passed command must be terminated with a newline. For example, to open a workflow in vergil and run it, set command to &quot;sh&quot; and use a StringConstant actor to pass the  input port the string: &#10; &quot;vergil -run model.xml\n exit\n&quot;&lt;/p&gt;&#10;</configure></property>
-<property name="port:input" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>An input port that accepts strings to pass to the standard input of the subprocess. Note that a newline is not appended to the string. If you require a newline, add one using the AddSubtract actor. This port is an input port of type String.</configure></property>
 <property name="port:output" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>An output port that broadcasts data generated by the executed command, output as a string after the command has finished executing. If the command generates no data on standard out, then the empty string (a string of length zero) is generated. </configure></property>
-<property name="port:trigger" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>If connected, a token must be available on this port before actor will execute.</configure></property>
+<property name="port:input" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>An input port that accepts strings to pass to the standard input of the subprocess. Note that a newline is not appended to the string. If you require a newline, add one using the AddSubtract actor. This port is an input port of type String.</configure></property>
 <property name="port:error" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>An output port that broadcasts any errors generated by the command execution. Errors are output as a string after the command has finished executing. If the execution generates no errors, an empty string is output. </configure></property>
+<property name="port:trigger" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>If connected, a token must be available on this port before actor will execute.</configure></property>
 <property name="port:exitCode" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>An output port that broadcasts the command's exit code. A non-zero value signifies an error.</configure></property>
 <property name="prop:environment" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>An array of records that name an environment variable and a value:&#10; &#10;  {{name = &quot;NAME1&quot;, value = &quot;value1&quot;}...}&#10;  &#10;Where NAME1 is the name of the environment variable, and value1 is the value. &#10;For example, {{name = &quot;PTII&quot;, value = &quot;c:/ptII&quot;}} would set the value of the PTII to c:/ptII. &#10;If the parameter is set to {{name=&quot;&quot;, value = &quot;&quot;}}, then the environment from the parent process is used. If environmental variables are set with the parameter, the parent values may not be passed to the process. To view the current environment, use the &quot;env&quot; command.&#10;</configure></property>
 <property name="prop:directory" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>The directory in which to execute the command. The default value of this parameter $CWD, which represents the user's current working or home directory. </configure></property>
@@ -3968,10 +3972,10 @@
 <property name="author" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>Xiaojun Liu, Edward A. Lee, Steve Neuendorffer</configure></property>
 <property name="version" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>null</configure></property>
 <property name="userLevelDocumentation" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>&#10;&lt;p&gt;The External Execution actor executes a system command from a workflow. The actor accepts a command, a directory and environment in which to execute the command, and a command input string. Once the command has finished executing, the actor will output the execution results along with any errors. If no results are generated, the actor will output an empty string.&lt;/p&gt;&#10;&#10;&lt;p&gt;The External Execution actor depends on system-specific executables and is operating-system specific.&lt;/p&gt;&#10;&#10;&lt;p&gt;To mimic the effect of executing a command in a shell interpreter, set the command parameter to &quot;cmd&quot; (Windows) or &quot;sh&quot; (Windows with Cygwin or Linux), and then provide commands, as a string, via the input port. Note that each passed command must be terminated with a newline. For example, to open a workflow in vergil and run it, set command to &quot;sh&quot; and use a StringConstant actor to pass the  input port the string: &#10; &quot;vergil -run model.xml\n exit\n&quot;&lt;/p&gt;&#10;</configure></property>
-<property name="port:output" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>An output port that broadcasts data generated by the executed command, output as a string after the command has finished executing. If the command generates no data on standard out, then the empty string (a string of length zero) is generated. </configure></property>
 <property name="port:input" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>An input port that accepts strings to pass to the standard input of the subprocess. Note that a newline is not appended to the string. If you require a newline, add one using the AddSubtract actor. This port is an input port of type String.</configure></property>
-<property name="port:error" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>An output port that broadcasts any errors generated by the command execution. Errors are output as a string after the command has finished executing. If the execution generates no errors, an empty string is output. </configure></property>
+<property name="port:output" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>An output port that broadcasts data generated by the executed command, output as a string after the command has finished executing. If the command generates no data on standard out, then the empty string (a string of length zero) is generated. </configure></property>
 <property name="port:trigger" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>If connected, a token must be available on this port before actor will execute.</configure></property>
+<property name="port:error" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>An output port that broadcasts any errors generated by the command execution. Errors are output as a string after the command has finished executing. If the execution generates no errors, an empty string is output. </configure></property>
 <property name="port:exitCode" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>An output port that broadcasts the command's exit code. A non-zero value signifies an error.</configure></property>
 <property name="prop:environment" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>An array of records that name an environment variable and a value:&#10; &#10;  {{name = &quot;NAME1&quot;, value = &quot;value1&quot;}...}&#10;  &#10;Where NAME1 is the name of the environment variable, and value1 is the value. &#10;For example, {{name = &quot;PTII&quot;, value = &quot;c:/ptII&quot;}} would set the value of the PTII to c:/ptII. &#10;If the parameter is set to {{name=&quot;&quot;, value = &quot;&quot;}}, then the environment from the parent process is used. If environmental variables are set with the parameter, the parent values may not be passed to the process. To view the current environment, use the &quot;env&quot; command.&#10;</configure></property>
 <property name="prop:directory" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>The directory in which to execute the command. The default value of this parameter $CWD, which represents the user's current working or home directory. </configure></property>
@@ -4305,10 +4309,10 @@
 <property name="author" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>Xiaojun Liu, Edward A. Lee, Steve Neuendorffer</configure></property>
 <property name="version" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>null</configure></property>
 <property name="userLevelDocumentation" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>&#10;&lt;p&gt;The External Execution actor executes a system command from a workflow. The actor accepts a command, a directory and environment in which to execute the command, and a command input string. Once the command has finished executing, the actor will output the execution results along with any errors. If no results are generated, the actor will output an empty string.&lt;/p&gt;&#10;&#10;&lt;p&gt;The External Execution actor depends on system-specific executables and is operating-system specific.&lt;/p&gt;&#10;&#10;&lt;p&gt;To mimic the effect of executing a command in a shell interpreter, set the command parameter to &quot;cmd&quot; (Windows) or &quot;sh&quot; (Windows with Cygwin or Linux), and then provide commands, as a string, via the input port. Note that each passed command must be terminated with a newline. For example, to open a workflow in vergil and run it, set command to &quot;sh&quot; and use a StringConstant actor to pass the  input port the string: &#10; &quot;vergil -run model.xml\n exit\n&quot;&lt;/p&gt;&#10;</configure></property>
-<property name="port:input" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>An input port that accepts strings to pass to the standard input of the subprocess. Note that a newline is not appended to the string. If you require a newline, add one using the AddSubtract actor. This port is an input port of type String.</configure></property>
 <property name="port:output" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>An output port that broadcasts data generated by the executed command, output as a string after the command has finished executing. If the command generates no data on standard out, then the empty string (a string of length zero) is generated. </configure></property>
-<property name="port:trigger" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>If connected, a token must be available on this port before actor will execute.</configure></property>
+<property name="port:input" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>An input port that accepts strings to pass to the standard input of the subprocess. Note that a newline is not appended to the string. If you require a newline, add one using the AddSubtract actor. This port is an input port of type String.</configure></property>
 <property name="port:error" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>An output port that broadcasts any errors generated by the command execution. Errors are output as a string after the command has finished executing. If the execution generates no errors, an empty string is output. </configure></property>
+<property name="port:trigger" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>If connected, a token must be available on this port before actor will execute.</configure></property>
 <property name="port:exitCode" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>An output port that broadcasts the command's exit code. A non-zero value signifies an error.</configure></property>
 <property name="prop:environment" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>An array of records that name an environment variable and a value:&#10; &#10;  {{name = &quot;NAME1&quot;, value = &quot;value1&quot;}...}&#10;  &#10;Where NAME1 is the name of the environment variable, and value1 is the value. &#10;For example, {{name = &quot;PTII&quot;, value = &quot;c:/ptII&quot;}} would set the value of the PTII to c:/ptII. &#10;If the parameter is set to {{name=&quot;&quot;, value = &quot;&quot;}}, then the environment from the parent process is used. If environmental variables are set with the parameter, the parent values may not be passed to the process. To view the current environment, use the &quot;env&quot; command.&#10;</configure></property>
 <property name="prop:directory" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>The directory in which to execute the command. The default value of this parameter $CWD, which represents the user's current working or home directory. </configure></property>
@@ -4569,10 +4573,10 @@
 <property name="author" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>Xiaojun Liu, Edward A. Lee, Steve Neuendorffer</configure></property>
 <property name="version" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>null</configure></property>
 <property name="userLevelDocumentation" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>&#10;&lt;p&gt;The External Execution actor executes a system command from a workflow. The actor accepts a command, a directory and environment in which to execute the command, and a command input string. Once the command has finished executing, the actor will output the execution results along with any errors. If no results are generated, the actor will output an empty string.&lt;/p&gt;&#10;&#10;&lt;p&gt;The External Execution actor depends on system-specific executables and is operating-system specific.&lt;/p&gt;&#10;&#10;&lt;p&gt;To mimic the effect of executing a command in a shell interpreter, set the command parameter to &quot;cmd&quot; (Windows) or &quot;sh&quot; (Windows with Cygwin or Linux), and then provide commands, as a string, via the input port. Note that each passed command must be terminated with a newline. For example, to open a workflow in vergil and run it, set command to &quot;sh&quot; and use a StringConstant actor to pass the  input port the string: &#10; &quot;vergil -run model.xml\n exit\n&quot;&lt;/p&gt;&#10;</configure></property>
-<property name="port:output" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>An output port that broadcasts data generated by the executed command, output as a string after the command has finished executing. If the command generates no data on standard out, then the empty string (a string of length zero) is generated. </configure></property>
 <property name="port:input" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>An input port that accepts strings to pass to the standard input of the subprocess. Note that a newline is not appended to the string. If you require a newline, add one using the AddSubtract actor. This port is an input port of type String.</configure></property>
-<property name="port:error" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>An output port that broadcasts any errors generated by the command execution. Errors are output as a string after the command has finished executing. If the execution generates no errors, an empty string is output. </configure></property>
+<property name="port:output" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>An output port that broadcasts data generated by the executed command, output as a string after the command has finished executing. If the command generates no data on standard out, then the empty string (a string of length zero) is generated. </configure></property>
 <property name="port:trigger" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>If connected, a token must be available on this port before actor will execute.</configure></property>
+<property name="port:error" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>An output port that broadcasts any errors generated by the command execution. Errors are output as a string after the command has finished executing. If the execution generates no errors, an empty string is output. </configure></property>
 <property name="port:exitCode" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>An output port that broadcasts the command's exit code. A non-zero value signifies an error.</configure></property>
 <property name="prop:environment" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>An array of records that name an environment variable and a value:&#10; &#10;  {{name = &quot;NAME1&quot;, value = &quot;value1&quot;}...}&#10;  &#10;Where NAME1 is the name of the environment variable, and value1 is the value. &#10;For example, {{name = &quot;PTII&quot;, value = &quot;c:/ptII&quot;}} would set the value of the PTII to c:/ptII. &#10;If the parameter is set to {{name=&quot;&quot;, value = &quot;&quot;}}, then the environment from the parent process is used. If environmental variables are set with the parameter, the parent values may not be passed to the process. To view the current environment, use the &quot;env&quot; command.&#10;</configure></property>
 <property name="prop:directory" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>The directory in which to execute the command. The default value of this parameter $CWD, which represents the user's current working or home directory. </configure></property>
@@ -4723,158 +4727,6 @@
                 </property>
             </port>
         </entity>
-        <entity name="MantidFitting3" class="ptolemy.actor.lib.Exec">
-            <property name="firingCountLimit" class="ptolemy.data.expr.Parameter" value="0">
-            </property>
-            <property name="NONE" class="ptolemy.data.expr.Parameter" value="0">
-            </property>
-            <property name="command" class="ptolemy.actor.parameters.PortParameter" value="sh">
-            </property>
-            <property name="directory" class="ptolemy.data.expr.FileParameter" value="$LocalWorkingDirectory">
-                <property name="allowFiles" class="ptolemy.data.expr.Parameter" value="false">
-                </property>
-                <property name="allowDirectories" class="ptolemy.data.expr.Parameter" value="true">
-                </property>
-            </property>
-            <property name="environment" class="ptolemy.data.expr.Parameter" value="{{name = &quot;&quot;, value = &quot;&quot;}}">
-            </property>
-            <property name="prependPlatformDependentShellCommand" class="ptolemy.data.expr.Parameter" value="false">
-            </property>
-            <property name="throwExceptionOnNonZeroReturn" class="ptolemy.data.expr.Parameter" value="false">
-            </property>
-            <property name="waitForProcess" class="ptolemy.data.expr.Parameter" value="true">
-            </property>
-<property name="KeplerDocumentation" class="ptolemy.vergil.basic.KeplerDocumentationAttribute">
-<property name="description" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>null</configure></property>
-<property name="author" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>Xiaojun Liu, Edward A. Lee, Steve Neuendorffer</configure></property>
-<property name="version" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>null</configure></property>
-<property name="userLevelDocumentation" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>&#10;&lt;p&gt;The External Execution actor executes a system command from a workflow. The actor accepts a command, a directory and environment in which to execute the command, and a command input string. Once the command has finished executing, the actor will output the execution results along with any errors. If no results are generated, the actor will output an empty string.&lt;/p&gt;&#10;&#10;&lt;p&gt;The External Execution actor depends on system-specific executables and is operating-system specific.&lt;/p&gt;&#10;&#10;&lt;p&gt;To mimic the effect of executing a command in a shell interpreter, set the command parameter to &quot;cmd&quot; (Windows) or &quot;sh&quot; (Windows with Cygwin or Linux), and then provide commands, as a string, via the input port. Note that each passed command must be terminated with a newline. For example, to open a workflow in vergil and run it, set command to &quot;sh&quot; and use a StringConstant actor to pass the  input port the string: &#10; &quot;vergil -run model.xml\n exit\n&quot;&lt;/p&gt;&#10;</configure></property>
-<property name="port:input" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>An input port that accepts strings to pass to the standard input of the subprocess. Note that a newline is not appended to the string. If you require a newline, add one using the AddSubtract actor. This port is an input port of type String.</configure></property>
-<property name="port:output" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>An output port that broadcasts data generated by the executed command, output as a string after the command has finished executing. If the command generates no data on standard out, then the empty string (a string of length zero) is generated. </configure></property>
-<property name="port:trigger" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>If connected, a token must be available on this port before actor will execute.</configure></property>
-<property name="port:error" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>An output port that broadcasts any errors generated by the command execution. Errors are output as a string after the command has finished executing. If the execution generates no errors, an empty string is output. </configure></property>
-<property name="port:exitCode" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>An output port that broadcasts the command's exit code. A non-zero value signifies an error.</configure></property>
-<property name="prop:environment" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>An array of records that name an environment variable and a value:&#10; &#10;  {{name = &quot;NAME1&quot;, value = &quot;value1&quot;}...}&#10;  &#10;Where NAME1 is the name of the environment variable, and value1 is the value. &#10;For example, {{name = &quot;PTII&quot;, value = &quot;c:/ptII&quot;}} would set the value of the PTII to c:/ptII. &#10;If the parameter is set to {{name=&quot;&quot;, value = &quot;&quot;}}, then the environment from the parent process is used. If environmental variables are set with the parameter, the parent values may not be passed to the process. To view the current environment, use the &quot;env&quot; command.&#10;</configure></property>
-<property name="prop:directory" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>The directory in which to execute the command. The default value of this parameter $CWD, which represents the user's current working or home directory. </configure></property>
-<property name="prop:throwExceptionOnNonZeroReturn" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>If true, then throw an exception if the subprocess returns non-zero.</configure></property>
-<property name="prop:firingCountLimit" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>If a positive integer, then it is the maximum number of times to execute the actor.</configure></property>
-<property name="prop:prependPlatformDependentShellCommand" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>&#10;If true, then prepend the platform dependent shell command to the&#10;parsed value of the command parameter.  By setting this argument&#10;to true, it is possible to invoke commands in a platform neutral&#10;method.&#10;&lt;p&gt;Under Windows NT or XP, the arguments &quot;cmd.exe&quot; and &quot;/C&quot; are&#10;prepended.  Under Windows 95, the arguments &quot;command.com&quot; and &quot;/C&quot;&#10;are prepended.  Under all other platforms, the arguments &quot;/bin/sh&quot;&#10;and &quot;-c&quot; are prepended. &lt;/p&gt;&#10;&lt;p&gt;The default value of this parameter is a boolean of value false,&#10;which allows the user to arbitrarily invoke /bin/sh scripts on all&#10;platforms. &lt;/p&gt;&#10;&lt;p&gt;&lt;b&gt;NOTE:&lt;/b&gt; This must be true if file redirection is used in &lt;i&gt;command&lt;/i&gt;.&lt;/p&gt;&#10;&lt;p&gt;&lt;b&gt;NOTE:&lt;/b&gt; Under Cygwin, if true, the path environment of the subprocess is not&#10;identical to the path of the calling process. In this case the full path to the program&#10;must be specified.&lt;/p&gt;&#10;</configure></property>
-<property name="prop:waitForProcess" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>If true, then actor will wait until subprocess completes.</configure></property>
-<property name="prop:command" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>The command to be executed (e.g., echo &quot;Hello, world.&quot;). The command can be specified via either the command port or parameter.</configure></property>
-</property>            <property name="entityId" class="org.kepler.moml.NamedObjId" value="urn:lsid:kepler-project.org/ns/:30354:1020:202">
-            </property>
-            <property name="class" class="ptolemy.kernel.util.StringAttribute" value="ptolemy.actor.lib.Exec">
-                <property name="id" class="ptolemy.kernel.util.StringAttribute" value="urn:lsid:kepler-project.org:class:976:1">
-                </property>
-            </property>
-            <property name="semanticType00" class="org.kepler.sms.SemanticType" value="urn:lsid:localhost:onto:1:1#ExternalExecutionEnvironmentActor">
-            </property>
-            <property name="semanticType11" class="org.kepler.sms.SemanticType" value="urn:lsid:localhost:onto:2:1#UnixCommand">
-            </property>
-            <property name="_location" class="ptolemy.kernel.util.Location" value="[465.0, 1450.0]">
-            </property>
-            <property name="" class="ptolemy.vergil.basic.DocAttribute">
-                <property name="description" class="ptolemy.kernel.util.StringAttribute" value="&#10;&lt;p&gt;The External Execution actor executes a system command from a workflow. The actor accepts a command, a directory and environment in which to execute the command, and a command input string. Once the command has finished executing, the actor will output the execution results along with any errors. If no results are generated, the actor will output an empty string.&lt;/p&gt;&#10;&#10;&lt;p&gt;The External Execution actor depends on system-specific executables and is operating-system specific.&lt;/p&gt;&#10;&#10;&lt;p&gt;To mimic the effect of executing a command in a shell interpreter, set the command parameter to &quot;cmd&quot; (Windows) or &quot;sh&quot; (Windows with Cygwin or Linux), and then provide commands, as a string, via the input port. Note that each passed command must be terminated with a newline. For example, to open a workflow in vergil and run it, set command to &quot;sh&quot; and use a StringConstant actor to pass the  input port the string: &#10; &quot;vergil -run model.xml\n exit\n&quot;&lt;/p&gt;&#10;">
-                </property>
-                <property name="author" class="ptolemy.kernel.util.StringAttribute" value="Xiaojun Liu, Edward A. Lee, Steve Neuendorffer">
-                </property>
-                <property name="version" class="ptolemy.kernel.util.StringAttribute" value="null">
-                </property>
-                <property name="firingCountLimit (parameter)" class="ptolemy.data.expr.StringParameter" value="If a positive integer, then it is the maximum number of times to execute the actor.">
-                </property>
-                <property name="directory (parameter)" class="ptolemy.data.expr.StringParameter" value="The directory in which to execute the command. The default value of this parameter $CWD, which represents the user's current working or home directory. ">
-                </property>
-                <property name="environment (parameter)" class="ptolemy.data.expr.StringParameter" value="An array of records that name an environment variable and a value:&#10; &#10;  {{name = &quot;NAME1&quot;, value = &quot;value1&quot;}...}&#10;  &#10;Where NAME1 is the name of the environment variable, and value1 is the value. &#10;For example, {{name = &quot;PTII&quot;, value = &quot;c:/ptII&quot;}} would set the value of the PTII to c:/ptII. &#10;If the parameter is set to {{name=&quot;&quot;, value = &quot;&quot;}}, then the environment from the parent process is used. If environmental variables are set with the parameter, the parent values may not be passed to the process. To view the current environment, use the &quot;env&quot; command.&#10;">
-                </property>
-                <property name="prependPlatformDependentShellCommand (parameter)" class="ptolemy.data.expr.StringParameter" value="&#10;If true, then prepend the platform dependent shell command to the&#10;parsed value of the command parameter.  By setting this argument&#10;to true, it is possible to invoke commands in a platform neutral&#10;method.&#10;&lt;p&gt;Under Windows NT or XP, the arguments &quot;cmd.exe&quot; and &quot;/C&quot; are&#10;prepended.  Under Windows 95, the arguments &quot;command.com&quot; and &quot;/C&quot;&#10;are prepended.  Under all other platforms, the arguments &quot;/bin/sh&quot;&#10;and &quot;-c&quot; are prepended. &lt;/p&gt;&#10;&lt;p&gt;The default value of this parameter is a boolean of value false,&#10;which allows the user to arbitrarily invoke /bin/sh scripts on all&#10;platforms. &lt;/p&gt;&#10;&lt;p&gt;&lt;b&gt;NOTE:&lt;/b&gt; This must be true if file redirection is used in &lt;i&gt;command&lt;/i&gt;.&lt;/p&gt;&#10;&lt;p&gt;&lt;b&gt;NOTE:&lt;/b&gt; Under Cygwin, if true, the path environment of the subprocess is not&#10;identical to the path of the calling process. In this case the full path to the program&#10;must be specified.&lt;/p&gt;&#10;">
-                </property>
-                <property name="throwExceptionOnNonZeroReturn (parameter)" class="ptolemy.data.expr.StringParameter" value="If true, then throw an exception if the subprocess returns non-zero.">
-                </property>
-                <property name="waitForProcess (parameter)" class="ptolemy.data.expr.StringParameter" value="If true, then actor will wait until subprocess completes.">
-                </property>
-                <property name="output (port)" class="ptolemy.kernel.util.StringAttribute" value="An output port that broadcasts data generated by the executed command, output as a string after the command has finished executing. If the command generates no data on standard out, then the empty string (a string of length zero) is generated. ">
-                </property>
-                <property name="trigger (port)" class="ptolemy.kernel.util.StringAttribute" value="If connected, a token must be available on this port before actor will execute.">
-                </property>
-                <property name="error (port)" class="ptolemy.kernel.util.StringAttribute" value="An output port that broadcasts any errors generated by the command execution. Errors are output as a string after the command has finished executing. If the execution generates no errors, an empty string is output. ">
-                </property>
-                <property name="input (port)" class="ptolemy.kernel.util.StringAttribute" value="An input port that accepts strings to pass to the standard input of the subprocess. Note that a newline is not appended to the string. If you require a newline, add one using the AddSubtract actor. This port is an input port of type String.">
-                </property>
-                <property name="exitCode (port)" class="ptolemy.kernel.util.StringAttribute" value="An output port that broadcasts the command's exit code. A non-zero value signifies an error.">
-                </property>
-                <property name="command (parameter)" class="ptolemy.data.expr.StringParameter" value="The command to be executed (e.g., echo &quot;Hello, world.&quot;). The command can be specified via either the command port or parameter.">
-                </property>
-            </property>
-            <property name="derivedFrom" class="org.kepler.moml.NamedObjIdReferralList" value="urn:lsid:kepler-project.org:actor:102:1">
-            </property>
-            <port name="output" class="ptolemy.actor.TypedIOPort">
-                <property name="output"/>
-                <property name="_showName" class="ptolemy.data.expr.Parameter" value="true">
-                </property>
-            </port>
-            <port name="trigger" class="ptolemy.actor.TypedIOPort">
-                <property name="input"/>
-                <property name="multiport"/>
-                <property name="_showName" class="ptolemy.data.expr.SingletonParameter" value="true">
-                </property>
-            </port>
-            <port name="command" class="ptolemy.actor.parameters.ParameterPort">
-                <property name="input"/>
-                <property name="_showName" class="ptolemy.data.expr.Parameter" value="true">
-                </property>
-            </port>
-            <port name="error" class="ptolemy.actor.TypedIOPort">
-                <property name="output"/>
-                <property name="_showName" class="ptolemy.data.expr.Parameter" value="true">
-                </property>
-            </port>
-            <port name="input" class="ptolemy.actor.TypedIOPort">
-                <property name="input"/>
-                <property name="_showName" class="ptolemy.data.expr.Parameter" value="true">
-                </property>
-            </port>
-            <port name="exitCode" class="ptolemy.actor.TypedIOPort">
-                <property name="output"/>
-                <property name="_showName" class="ptolemy.data.expr.Parameter" value="true">
-                </property>
-            </port>
-        </entity>
-        <entity name="Expression11" class="ptolemy.actor.lib.Expression">
-            <property name="expression" class="ptolemy.kernel.util.StringAttribute" value="&quot;python &quot;+CammDirectory+&quot;/beamline/interpX.py  itp_simple --model fit_&quot;+in+&quot;.txt --expdata  &quot;+CammDirectory+&quot;/../test/beamline/LiCl_290K.nxs --costfile results.out.&quot;+in+&quot; --assembled assembled_&quot;+in+&quot;.nxs --interpolated interpolated_&quot;+in+&quot;.nxs\n&quot;">
-                <property name="_hide" class="ptolemy.data.expr.Parameter" value="true">
-                </property>
-            </property>
-<property name="KeplerDocumentation" class="ptolemy.vergil.basic.KeplerDocumentationAttribute">
-<property name="description" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>null</configure></property>
-<property name="author" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>Xiaojun Liu, Edward A. Lee, Steve Neuendorffer</configure></property>
-<property name="version" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>null</configure></property>
-<property name="userLevelDocumentation" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>&lt;p&gt;The Expression actor evaluates a specified expression (e.g., an addition or multiplication operation), which may reference the values of user-specified input ports, the current time, or the actor's iteration count. The actor outputs the value of the evaluated expression. &lt;/p&gt;&#10;&#10;&lt;p&gt;Expressions are specified in the Ptolemy expression language via the expression parameter. For more information about the expression language, see http://ptolemy.eecs.berkeley.edu/papers/05/ptIIdesign1-intro/ptIIdesign1-intro.pdf. &lt;/p&gt;&#10;&#10;&lt;p&gt;By default, the expression parameter is empty, and attempting to execute the actor without first specifying an expression generates an error. Expressions can refer to the values of inputs by the port name; to the current time by the identifier &quot;time&quot;; and to the current iteration count by the identifier &quot;iteration.&quot; &lt;/p&gt;&#10;&#10;&lt;p&gt;Input ports are created by the user and correspond to variables used in the specified expression. Currently, the Expression actor does not support input multiports. The actor requires all of its inputs to be present. If inputs are not all present, then the actor will generate an error. &lt;/p&gt;&#10;&#10;&lt;p&gt;Note: the Expression actor can be used instead of many of the arithmetic actors, such as AddSubtract, MultiplyDivide, and TrigFunction. However, those actors will be usually be more efficient, and sometimes more convenient to use.&lt;/p&gt;</configure></property>
-<property name="port:output" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>An output port that broadcasts the value of the evaluated expression. The actor automatically determines the type based on the type of the input.</configure></property>
-<property name="prop:expression" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>An expression to evaluate. Expressions are specified in the Ptolemy expression language. For more information about the expression language, see http://ptolemy.eecs.berkeley.edu/papers/05/ptIIdesign1-intro/ptIIdesign1-intro.pdf. By default, the parameter is empty, and attempting to execute the actor without first specifying an expression generates an error. Expressions can refer to the values of inputs by the port name; to the current time by the identifier &quot;time&quot;; and to the current iteration count by the identifier &quot;iteration.&quot;</configure></property>
-</property>            <property name="entityId" class="org.kepler.moml.NamedObjId" value="urn:lsid:kepler-project.org/ns/:30354:1028:211">
-            </property>
-            <property name="class" class="ptolemy.kernel.util.StringAttribute" value="ptolemy.actor.lib.Expression">
-                <property name="id" class="ptolemy.kernel.util.StringAttribute" value="urn:lsid:kepler-project.org:class:950:1">
-                </property>
-            </property>
-            <property name="semanticType00" class="org.kepler.sms.SemanticType" value="urn:lsid:localhost:onto:1:1#MathOperationActor">
-            </property>
-            <property name="semanticType11" class="org.kepler.sms.SemanticType" value="urn:lsid:localhost:onto:2:1#GeneralPurpose">
-            </property>
-            <property name="_icon" class="ptolemy.vergil.icon.BoxedValueIcon">
-                <property name="attributeName" class="ptolemy.kernel.util.StringAttribute" value="expression">
-                </property>
-                <property name="displayWidth" class="ptolemy.data.expr.Parameter" value="60">
-                </property>
-            </property>
-            <property name="_location" class="ptolemy.kernel.util.Location" value="[1125.0, 1390.0]">
-            </property>
-            <property name="derivedFrom" class="org.kepler.moml.NamedObjIdReferralList" value="urn:lsid:kepler-project.org:actor:75:1">
-            </property>
-            <port name="in" class="ptolemy.actor.TypedIOPort">
-                <property name="input"/>
-            </port>
-        </entity>
         <relation name="relation" class="ptolemy.actor.TypedIORelation">
         </relation>
         <relation name="relation2" class="ptolemy.actor.TypedIORelation">
@@ -4993,10 +4845,6 @@
         </relation>
         <relation name="relation41" class="ptolemy.actor.TypedIORelation">
         </relation>
-        <relation name="relation50" class="ptolemy.actor.TypedIORelation">
-        </relation>
-        <relation name="relation51" class="ptolemy.actor.TypedIORelation">
-        </relation>
         <link port="in" relation="relation16"/>
         <link port="FileOut" relation="relation22"/>
         <link port="Expression.output" relation="relation12"/>
@@ -5093,7 +4941,7 @@
         <link port="MantidFitting.trigger" relation="relation38"/>
         <link port="MantidFitting.command" relation="relation25"/>
         <link port="MantidFitting.error" relation="relation32"/>
-        <link port="MantidFitting.exitCode" relation="relation50"/>
+        <link port="MantidFitting.exitCode" relation="relation41"/>
         <link port="Logger8.text" relation="relation27"/>
         <link port="Logger9.text" relation="relation40"/>
         <link port="DakotaInputFile.output" relation="relation43"/>
@@ -5119,11 +4967,6 @@
         <link port="Expression10.output" relation="relation46"/>
         <link port="Expression10.in" relation="relation4"/>
         <link port="Logger10.text" relation="relation48"/>
-        <link port="MantidFitting3.trigger" relation="relation50"/>
-        <link port="MantidFitting3.command" relation="relation51"/>
-        <link port="MantidFitting3.exitCode" relation="relation41"/>
-        <link port="Expression11.output" relation="relation51"/>
-        <link port="Expression11.in" relation="relation16"/>
     </entity>
     <relation name="relation" class="ptolemy.actor.TypedIORelation">
         <vertex name="vertex1" value="[110.0, 390.0]">
