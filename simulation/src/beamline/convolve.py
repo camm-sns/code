@@ -7,6 +7,21 @@ Created on Mar 19, 2013
 '''
 from pdb import set_trace as trace # uncomment only for debugging purposes
 
+def getParams(paramsFile):
+  """Load the params file from Dakota onto a standard dictionary"""
+  from itertools import islice
+  import re
+  pf=open(paramsFile)
+  # find number of parameters to read
+  nparm=int( re.compile('(\d+)\s+variable').search(pf.readline()).group(1) )
+  # initialize dictionary containing values for the parameters
+  parms={}
+  for line in islice(pf,nparm):
+    val,name=line.split()
+    parms[name]=float(val)
+  pf.close()
+  return parms
+
 def camm_convolve(signal,response,mode='same'):
   """In-house convolution
 
@@ -30,7 +45,7 @@ def camm_convolve(signal,response,mode='same'):
   return convolve(signal,g,mode=mode)
 
 
-def convolution(simulated, resolution, expdata, convolved):
+def convolution(simulated, resolution, expdata, convolved, dak):
   """Convolve a simulated S(Q,E) with a resolution file
 
   Arguments:
@@ -41,7 +56,7 @@ def convolution(simulated, resolution, expdata, convolved):
   Returns:
     workspace for the convolution
   """
-  from mantid.simpleapi import (LoadNexus, Rebin, NormaliseToUnity, SaveNexus)
+  from mantid.simpleapi import (LoadNexus, Rebin, NormaliseToUnity, SaveNexus, AddSampleLog)
   wss=LoadNexus(Filename=simulated,OutputWorkspace='simulated')
   width=wss.readX(0)[1]-wss.readX(0)[0] # rebin resolution as simulated
   wsr=LoadNexus(Filename=resolution,OutputWorkspace='resolution')
@@ -57,6 +72,9 @@ def convolution(simulated, resolution, expdata, convolved):
   Rebin(InputWorkspace='simulated', Params=(wse.readX(0)[0],width,wse.readX(0)[-1]), OutputWorkspace='simulated')
   wsc=NormaliseToUnity(InputWorkspace='simulated', OutputWorkspace='convolved')
   #trace()
+  if dak:
+    dakota_vals = getParams(dak) # read in Dakota params file
+    AddSampleLog(Workspace='convolved',LogName='FF1',LogText=str(dakota_vals["FF1"]),LogType='Number')
   SaveNexus(InputWorkspace='convolved', Filename=convolved)
   return wsc
 
@@ -76,8 +94,9 @@ if __name__ == "__main__":
     p.add_argument('--resolution',help='name of the nexus file containing the resolution function. This will be used to produce an elastic line.')
     p.add_argument('--convolved',help='name of the output nexus file')
     p.add_argument('--expdata',help='name of the experimental nexus file. Convolved will be binned as expdata.')
+    p.add_argument('--dak',help='name of the dakota params file')
     if '-explain' in sys.argv:
       p.parse_args(args=('-h',))
     else:
       args=p.parse_args()
-      convolution(args.simulated, args.resolution, args.expdata, args.convolved)
+      convolution(args.simulated, args.resolution, args.expdata, args.convolved, args.dak)

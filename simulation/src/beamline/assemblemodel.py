@@ -13,7 +13,7 @@ def writeworkspace_singlecolumn(workspace):
     buf += '\n'.join([str(x) for x in workspace.readY(i)]) + '\n'
   return buf
 
-def modelB_freeE_C(model, resolution, convolved, assembled, expdata=None, costfile=None, derivdata=None, derivexclude=[], doshift=None):
+def modelB_freeE_C(model, resolution, convolved, convolved2, assembled, expdata=None, costfile=None, derivdata=None, derivexclude=[], doshift=None):
   """Assemble the Background, Elastic line and Convolution of the resolution with the simulated S(Q,E)
   This is a hard-coded model consisting of a linear background, and elastic line, and a convolution:
     b0+b1*E  +  +e0(Q)*Elastic(E)  +  c0*Resolution(E)xSimulated(Q,E)
@@ -25,6 +25,7 @@ def modelB_freeE_C(model, resolution, convolved, assembled, expdata=None, costfi
            b0=1.3211; b1=0.00; e0.0=0.99; e0.1=0.99; e0.2=0.99;...e0.N=0.99; e1=1.9; c0=2.3
     resolution: Nexus file containing the resolution. This will be used to produce a elastic line.
     convolved: Nexus file containing the convolution of the simulated S(Q,E) with the resolution.
+    convolved2: Nexus file containing the convolution of the simulated S(Q,E) with the resolution for FF1*1.01
     assembled: output Nexus file containing the assembled S(Q,E) of the beamline model and the simulated S(Q,E)
     expdata: Optional, experimental nexus file. If passed, output convolved will be binned as expdata.
     costfile: Optional, file to store cost. If passed, residuals and (optionally) partial derivatives will be stored
@@ -100,20 +101,36 @@ def modelB_freeE_C(model, resolution, convolved, assembled, expdata=None, costfi
   wse=shiftalongX(wse,p['eshift']) # shift the spectrum, does nothing if shiftalongX is the dummy function
   wsc=shiftalongX(wsc,p['eshift']) # shift the spectrum, does nothing if shiftalongX is the dummy function
 
+  # find difference in convolutions with FF1 changed
+  if convolved2:
+    derivparnames.append('FF1')
+    # difference in FF1 workspaces
+    wsc2=LoadNexus(Filename=convolved2,OutputWorkspace='convolved2')
+    wksp_diff=wsc2-wsc
+
   # calculate analytic partial derivatives with respect to the fit parameters
   if derivparnames:
     gradients['b0']=numpy.ones(nrsl)
     gradients['b1']=numpy.zeros(0)
     gradients['c0']=numpy.zeros(0)
+    gradients['FF1']=numpy.zeros(0)
     for i in range(nhist):
       gradients['b1'] = numpy.concatenate([gradients['b1'], Eshifted])
       gradients['c0'] = numpy.concatenate([gradients['c0'], wsc.readY(i)])
+      if convolved2:
+        gradients['FF1'] = numpy.concatenate([gradients['FF1'], wksp_diff.readY(i)])
       gradients['e0.'+str(i)]=numpy.zeros(0)
       for j in range(nhist):
         if i==j: 
           gradients['e0.'+str(i)] = numpy.concatenate([gradients['e0.'+str(i)], wse.readY(i)])
         else:
           gradients['e0.'+str(i)] = numpy.concatenate([gradients['e0.'+str(i)], numpy.zeros(len(Eshifted))])
+
+  if convolved2:
+    FF1_1=wsc.getRun().getLogData('FF1').value
+    FF1_2=wsc2.getRun().getLogData('FF1').value
+    print "FF1 parameters in convolved files ",FF1_2,FF1_1
+    gradients['FF1']/=(FF1_2-FF1_1)
 
   # save model to file
   wsm=computemodel(p,wse,wsc)
@@ -447,6 +464,7 @@ if __name__ == "__main__":
     p.add_argument('--model',        help='name of the file containing the model beamline string')
     p.add_argument('--resolution',   help='name of the nexus file containing the resolution function. This will be used to produce an elastic line.')
     p.add_argument('--convolved',    help='Nexus file containing the convolution of the simulated S(Q,E) with the resolution.')
+    p.add_argument('--convolved2',    help='Nexus file containing the convolution of the simulated S(Q,E) with the resolution for FF1*0.01.')
     p.add_argument('--qvalues',      help='Single-column file containing list of Q-values.')
     p.add_argument('--assembled',    help='output Nexus file containing the assembled S(Q,E) of the beamline model and the simulated S(Q,E)')
     p.add_argument('--expdata',      help='optional, experimental nexus file. If passed, output convolved will be binned as expdata.')
@@ -460,6 +478,6 @@ if __name__ == "__main__":
       args=p.parse_args()
       derivexclude=[]
       if args.derivexclude: derivexclude=args.derivexclude.split()
-      modelB_freeE_C(args.model, args.resolution, args.convolved, args.assembled, expdata=args.expdata, costfile=args.costfile, derivdata=bool(args.derivdata), derivexclude=derivexclude, doshift=args.doshift)
+      modelB_freeE_C(args.model, args.resolution, args.convolved, args.convolved2, args.assembled, expdata=args.expdata, costfile=args.costfile, derivdata=bool(args.derivdata), derivexclude=derivexclude, doshift=args.doshift)
   else:
     print 'service not found'
