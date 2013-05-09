@@ -39,7 +39,7 @@ def modelB_freeE_C(model, resolution, convolved, convolved2, assembled, expdata=
   """
   import numpy
   from copy import copy,deepcopy
-  from mantid.simpleapi import (LoadNexus, ScaleX, ConvertToPointData, SaveNexus, DakotaChiSquared)
+  from mantid.simpleapi import (LoadNexus, ScaleX, ConvertToPointData, SaveNexus, DakotaChiSquared, AddSampleLog)
 
   def shiftalongX(*kargs,**kwargs):
     """ Function to do the shift along the E-axis. By default, does nothing """
@@ -107,7 +107,7 @@ def modelB_freeE_C(model, resolution, convolved, convolved2, assembled, expdata=
     # difference in FF1 workspaces
     wsc2=LoadNexus(Filename=convolved2,OutputWorkspace='convolved2')
     wksp_diff=wsc2-wsc
-
+ 
   # calculate analytic partial derivatives with respect to the fit parameters
   if derivparnames:
     gradients['b0']=numpy.ones(nrsl)
@@ -130,10 +130,14 @@ def modelB_freeE_C(model, resolution, convolved, convolved2, assembled, expdata=
     FF1_1=wsc.getRun().getLogData('FF1').value
     FF1_2=wsc2.getRun().getLogData('FF1').value
     print "FF1 parameters in convolved files ",FF1_2,FF1_1
-    gradients['FF1']/=(FF1_2-FF1_1)
+    gradients['FF1'] *= p['c0']/(FF1_2-FF1_1)
 
   # save model to file
   wsm=computemodel(p,wse,wsc)
+  # add all parameters to assembled file
+  for pair in open(model,'r').readline().split(';'):
+    key,val=[x.strip() for x in pair.split('=')]
+    AddSampleLog(Workspace=wsm,LogName=key,LogText=str(p[key]),LogType='Number')
   SaveNexus(InputWorkspace=wsm, Filename=assembled)
 
   # save residuals and partial derivatives
