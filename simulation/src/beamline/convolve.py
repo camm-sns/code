@@ -74,7 +74,13 @@ def convolution(simulated, resolution, expdata, convolved, dak):
   #trace()
   if dak:
     dakota_vals = getParams(dak) # read in Dakota params file
-    AddSampleLog(Workspace='convolved',LogName='FF1',LogText=str(dakota_vals["FF1"]),LogType='Number')
+    if convolved.endswith('b.nxs'):
+      deriv=0.99
+    elif convolved.endswith('f.nxs'):
+      deriv=1.01
+    else:
+      deriv=1.0
+    AddSampleLog(Workspace='convolved',LogName='FF1',LogText=str(deriv*dakota_vals["FF1"]),LogType='Number')
   SaveNexus(InputWorkspace='convolved', Filename=convolved)
   return wsc
 
