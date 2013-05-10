@@ -75,8 +75,26 @@ if __name__ == "__main__":
     for key, val in data.items():
       w.writerow([key, val])
     g.close()
+
   params,template=loadFFtpl(args.fftpl) # read in force field template file
+  free_params=[param for param in params if param.isFree()]
+  for param in free_params: param._value=1.01*dakota_vals[param._name] # Update free param values
+  for param in params:
+    if not param.isFree(): param.resolveTie(free_params) # Update non-free param values
+  template=updateTemplate(template,params)
+  ffoutf=args.ffout.replace('.psf','f.psf')
+  open(ffoutf,'w').write(template)
+
+  params,template=loadFFtpl(args.fftpl) # read in force field template file
+  free_params=[param for param in params if param.isFree()]
+  for param in free_params: param._value=0.99*dakota_vals[param._name] # Update free param values
+  for param in params:
+    if not param.isFree(): param.resolveTie(free_params) # Update non-free param values
+  template=updateTemplate(template,params)
+  ffoutb=args.ffout.replace('.psf','b.psf')
+  open(ffoutb,'w').write(template)
   
+  params,template=loadFFtpl(args.fftpl) # read in force field template file
   free_params=[param for param in params if param.isFree()]
   for param in free_params: param._value=dakota_vals[param._name] # Update free param values
   for param in params:
