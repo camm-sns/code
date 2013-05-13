@@ -39,6 +39,7 @@ def modelB_freeE_C(model, resolution, convolved, assembled, expdata=None, costfi
   import numpy
   from copy import copy,deepcopy
   from mantid.simpleapi import (LoadNexus, ScaleX, ConvertToPointData, SaveNexus, DakotaChiSquared, AddSampleLog)
+  from math import sqrt
 
   def shiftalongX(*kargs,**kwargs):
     """ Function to do the shift along the E-axis. By default, does nothing """
@@ -162,6 +163,9 @@ def modelB_freeE_C(model, resolution, convolved, assembled, expdata=None, costfi
     open(costfile,'w').write(buf)
 
   AddSampleLog(Workspace=wsm,LogName="chisq",LogText=str(chisq),LogType='Number')
+  norm_chisq=chisq/(len(Ry)-len(derivparnames))
+  AddSampleLog(Workspace=wsm,LogName="norm_chisq",LogText=str(norm_chisq),LogType='Number')
+  AddSampleLog(Workspace=wsm,LogName="norm_chi",LogText=str(sqrt(norm_chisq)),LogType='Number')
   SaveNexus(InputWorkspace=wsm, Filename=assembled)
 
   return {'model':wsm, 'gradients':gradients}
