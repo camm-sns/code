@@ -1,5 +1,22 @@
 Command line:
 
+python initparams.py modelB_freeE_C --model modelB_freeE_C.xml --resolution resolution.nxs  --qlist "0.3 0.5 0.7 0.9" --pdb LiCl_watBox30.pdb --expdata LiCl_290K_4Qs.nxs --initparfile modelB_freeE_C_init.txt
+
+Input:
+
+modelB_freeE_C.xml      beamline template model file (xml format)
+resolution.nxs:         Nexus file containing the model resolution
+"0.3 0.5 0.7 0.9"       list of Q-values
+LiCl_watBox30.pdb       PDB file containing conformation of the system
+LiCl_290K_4Qs.nxs       Nexus file containing the experimental data
+
+Output:
+
+modelB_freeE_C_init.txt Output the initial parameters as a string in file with name initparfile
+
+====================================================================================
+Command line:
+
 python code/simulation/src/beamline/interpX.py itp_simple --assembled expdata.nxs --model model.txt --interpolated expdata_shifted.nxs
 
 Input:

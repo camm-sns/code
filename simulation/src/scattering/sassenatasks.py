@@ -5,6 +5,52 @@ Created on Mar 8, 2013
 '''
 
 from pdb import set_trace as trace # uncomment only for debugging purposes
+import os
+
+sassexec=None
+sassdb=None
+catdcd=None
+
+def setDataBasePath(sassena_libray):
+  """ Set the directory where the Sassena database is located """
+  sassdb=sassena_library
+
+def setSassExec(filepath=None):
+  """Set global variable sassexec by providing the path or finding it under PATH environment variable"""
+  if filepath:
+    if os.path.exists(filepath) and os.access(filepath, os.X_OK):
+      globals()['sassexec']=filepath
+      return filepath
+  if globals()['sassexec']: return None # no need to set in initialized
+  for path in os.environ["PATH"].split(os.pathsep):
+    path=path.strip('"')
+    fpath=os.path.join(path, 'sassena')
+    if os.path.exists(fpath) and os.access(fpath, os.X_OK):
+      globals()['sassexec']=fpath
+      break
+  return globals()['sassexec']
+
+def setSassDB(filepath=None):
+  if filepath:
+    if os.path.exists(filepath) and os.access(filepath, os.R_OK):
+      globals()['sassdb']=filepath
+  if "SASSENA_DB_DIR" in os.environ.keys(): globals()['sassdb']=os.environ["SASSENA_DB_DIR"]
+  return globals()['sassdb']
+
+def setCatDCD(filepath=None):
+  """Set global variable catdcd by providing the path or finding it under PATH environment variable"""
+  if filepath:
+    if os.path.exists(filepath) and os.access(fpath, os.X_OK):
+      globals()['catdcd']=filepath
+      return filepath
+  if globals()['catdcd']: return None # no need to set in initialized
+  for path in os.environ["PATH"].split(os.pathsep):
+    path=path.strip('"')
+    fpath=os.path.join(path, 'catdcd')
+    if os.path.exists(fpath) and os.access(fpath, os.X_OK):
+      globals()['catdcd']=fpath
+      break
+  return globals()['catdcd']
 
 def hasVersion(filename):
   """Check filename as sassena version"""
@@ -22,7 +68,170 @@ def addVersionStamp(filename,stamp):
   f.attrs['sassena_version']=stamp
   f.close()
 
-def genSQE(hdfname,nxsname,wsname=None,indexes=[],rebinQ=None,**kwargs):
+def calculateIQ(qlist, pdbfile):
+  """Calculate both the static coherent and static incoherent intermediate structure factors
+  Arguments:
+    qslit: list of Q=values
+    pdbfile: conformation for which to calculate I(Q)
+
+  Returns:
+    incoherent and coherent Mantid WorkspaceGroups, in this order
+  """
+  import sys
+  from tempfile import mkdtemp
+  from os.path import exists
+  from mantid.simpleapi import LoadSassena,SortByQVectors,mtd
+
+  inc_template='''<root>
+<sample>
+  <structure>
+    <file>_PDB_</file>
+    <format>pdb</format>
+  </structure>
+  <framesets>
+    <frameset>
+    <file>_DCD_</file>
+    <format>dcd</format>
+    </frameset>
+  </framesets>
+</sample>
+<stager>
+  <target>system</target>
+</stager>
+<scattering>
+  <type>self</type>
+  <dsp>
+    <type>autocorrelate</type>
+    <method>fftw</method>
+  </dsp>
+  <vectors>
+    <type>file</type>
+    <file>_QLIST_</file>
+  </vectors>
+  <average>
+    <orientation>
+    <type>vectors</type>
+    <vectors>
+    <type>sphere</type>
+    <algorithm>boost_uniform_on_sphere</algorithm>
+    <resolution>500</resolution>
+    <seed>5</seed>
+    </vectors>
+    </orientation>
+  </average>
+  <signal>
+    <file>_FQINC_</file>
+    <fqt>false</fqt>
+    <fq0>true</fq0>
+    <fq>false</fq>
+    <fq2>false</fq2>
+  </signal>
+</scattering>
+<database>
+  <type>file</type>
+  <file>_DATABASEDIR_/db-neutron-incoherent.xml</file>
+</database>
+</root>'''
+
+  coh_template='''<root>
+<sample>
+  <structure>
+    <file>_PDB_</file>
+    <format>pdb</format>
+  </structure>
+  <framesets>
+    <frameset>
+    <file>_DCD_</file> 
+    <format>dcd</format>
+    </frameset>
+  </framesets>
+</sample>
+<stager>
+  <target>system</target>
+</stager>
+<scattering>
+  <type>all</type>
+  <dsp>
+    <type>autocorrelate</type>
+    <method>fftw</method>
+  </dsp>
+  <vectors>
+    <type>file</type>
+    <file>_QLIST_</file>
+  </vectors>
+  <average>
+    <orientation>
+    <type>vectors</type>
+    <vectors>
+    <type>sphere</type>
+    <algorithm>boost_uniform_on_sphere</algorithm>
+    <resolution>500</resolution>
+    <seed>5</seed>
+    </vectors>
+    </orientation>
+  </average>
+  <signal>
+    <file>_FQCOH_</file>
+    <fqt>false</fqt>
+    <fq0>true</fq0>
+    <fq>false</fq>
+    <fq2>false</fq2>
+  </signal>
+</scattering>
+<database>
+  <type>file</type>
+  <file>_DATABASEDIR_/db-neutron-coherent.xml</file>
+</database>
+</root>'''
+
+  catdcd=setCatDCD() # set variable catdcd with the path to executable catdcd
+  if not catdcd:
+    sys.stderr.write('executable "catdcd" not found')
+    return None
+
+  sassexec=setSassExec() # set variable sassexec with the path to executable sassena
+  if not sassexec: 
+    sys.stderr.write('executable "sassena" not found')
+    return None
+
+  sassdb=setSassDB() # set variable sassdb with the path to the sassena database
+  if not sassdb: 
+    sys.stderr.write('directory containing the sassena database not found. Set SASSENA_DB_DIR environment variable first')
+    return None
+
+  workdir=mkdtemp(prefix='calculateIQ', dir='/tmp') # temporary workding directory
+  os.system('%s -o %s/dcd -pdb %s'%(globals()['catdcd'],workdir,pdbfile)) # create dcd one-frame trajectory
+  open(workdir+'/qlist.dat','w').write('\n'.join([ str(q)+' 0. 0.' for q in qlist])) # save list of Q to file
+  os.system('/bin/cp %s %s/pdb'%(pdbfile,workdir))
+  pairs={'_PDB_':os.path.join(workdir,'pdb'),
+         '_DCD_':os.path.join(workdir,'dcd'),
+         '_QLIST_':os.path.join(workdir,'qlist.dat'),
+         '_FQINC_':os.path.join(workdir,'fq_inc.h5'),
+         '_FQCOH_':os.path.join(workdir,'fq_coh.h5'),
+         '_DATABASEDIR_':sassdb,
+         }
+
+  options=inc_template
+  for (key,val) in pairs.items(): options=options.replace(key,val)
+  open(workdir+'/sassena_inc.xml','w').write(options)
+  os.system('%s --config=%s/sassena_inc.xml'%(sassexec,workdir)) # run sassena
+  addVersionStamp(os.path.join(workdir,'fq_inc.h5'),'1.4.1')
+  
+  options=coh_template
+  for (key,val) in pairs.items(): options=options.replace(key,val)
+  open(workdir+'/sassena_coh.xml','w').write(options)
+  os.system('%s --config=%s/sassena_coh.xml'%(sassexec,workdir))
+  addVersionStamp(os.path.join(workdir,'fq_coh.h5'),'1.4.1')
+
+  LoadSassena(Filename=os.path.join(workdir,'fq_inc.h5'),OutputWorkspace='inc')
+  SortByQVectors(InputWorkspace='inc')
+  LoadSassena(Filename=os.path.join(workdir,'fq_coh.h5'),OutputWorkspace='coh')
+  SortByQVectors(InputWorkspace='coh')
+
+  os.system('/bin/rm -rf '+workdir)
+  return mtd['inc'],mtd['coh']
+
+def genSQE(hdfname,nxsname,wsname=None,indexes=[],rebinQ=None, **kwargs):
   """ Generate S(Q,E)
 
   Loads Sassena output (HDF5 files) and generates a Nexus file containing
