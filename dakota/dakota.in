@@ -1,4 +1,4 @@
-# DAKOTA INPUT FILE: Set CAMM_HOME environment variable
+# DAKOTA INPUT FILE: nohup dakota dakota.in &
 
 method,
         nl2sol
@@ -18,7 +18,7 @@ variables,
 
 interface,
 	fork
-	  analysis_driver = '$CAMM_HOME/code/dakota/opt_driver'
+	  analysis_driver = 'opt_driver'
 	    parameters_file = 'params.in'
 	    results_file = 'results.out'
 	    file_tag
