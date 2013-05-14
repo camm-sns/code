@@ -45,7 +45,7 @@ def camm_convolve(signal,response,mode='same'):
   return convolve(signal,g,mode=mode)
 
 
-def convolution(simulated, resolution, expdata, convolved, dak):
+def convolution(simulated, resolution, expdata, convolved, dak, norm2one=false):
   """Convolve a simulated S(Q,E) with a resolution file
 
   Arguments:
@@ -69,9 +69,10 @@ def convolution(simulated, resolution, expdata, convolved, dak):
     wss.setY(i,x)
   wse=LoadNexus(Filename=expdata,OutputWorkspace='expdata')
   width=wse.readX(0)[1]-wse.readX(0)[0] # rebin simulated as expdata
-  Rebin(InputWorkspace='simulated', Params=(wse.readX(0)[0],width,wse.readX(0)[-1]), OutputWorkspace='simulated')
-  wsc=NormaliseToUnity(InputWorkspace='simulated', OutputWorkspace='convolved')
-  #trace()
+  Rebin(InputWorkspace='simulated', Params=(wse.readX(0)[0],width,wse.readX(0)[-1]), OutputWorkspace='convolved')
+  if norm2one:
+    wsc=NormaliseToUnity(InputWorkspace='convolved', OutputWorkspace='convolved')
+  AddSampleLog(Workspace='convolved',LogName='NormaliseToUnity',LogText=str(float(norm2one)),LogType='Number')
   if dak:
     dakota_vals = getParams(dak) # read in Dakota params file
     if convolved.endswith('b.nxs'):
@@ -96,13 +97,16 @@ if __name__ == "__main__":
     p.description='Convolve simulated S(Q,E) with a resolution Nexus file. Generates a Nexus file containing the convolution.' # update help message
     for action in p._actions:
       if action.dest=='service': action.help='substitue "service" with "convolution"' # update help message
-    p.add_argument('--simulated',help='name of the nexus file containing the simulated S(Q,E)')
+    p.add_argument('--simulated', help='name of the nexus file containing the simulated S(Q,E)')
     p.add_argument('--resolution',help='name of the nexus file containing the resolution function. This will be used to produce an elastic line.')
-    p.add_argument('--convolved',help='name of the output nexus file')
-    p.add_argument('--expdata',help='name of the experimental nexus file. Convolved will be binned as expdata.')
-    p.add_argument('--dak',help='name of the dakota params file')
+    p.add_argument('--convolved', help='name of the output nexus file')
+    p.add_argument('--expdata',   help='name of the experimental nexus file. Convolved will be binned as expdata.')
+    p.add_argument('--dak',       help='name of the dakota params file')
+    p.add_argument('--norm2one',  help='apply Mantid::NormaliseToUnity. Default is false')
     if '-explain' in sys.argv:
       p.parse_args(args=('-h',))
     else:
       args=p.parse_args()
-      convolution(args.simulated, args.resolution, args.expdata, args.convolved, args.dak)
+      norm2one=False
+      if args.norm2one in ('True','true','1'): norm2one=True
+      convolution(args.simulated, args.resolution, args.expdata, args.convolved, args.dak, norm2one=norm2one)
