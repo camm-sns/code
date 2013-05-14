@@ -231,7 +231,7 @@ def calculateIQ(qlist, pdbfile):
   os.system('/bin/rm -rf '+workdir)
   return mtd['inc'],mtd['coh']
 
-def genSQE(hdfname,nxsname,wsname=None,indexes=[],rebinQ=None, **kwargs):
+def genSQE(hdfname,nxsname,wsname=None,indexes=[],rebinQ=None,scale=1.0, **kwargs):
   """ Generate S(Q,E)
 
   Loads Sassena output (HDF5 files) and generates a Nexus file containing
@@ -239,21 +239,22 @@ def genSQE(hdfname,nxsname,wsname=None,indexes=[],rebinQ=None, **kwargs):
   are lumped into optional 'options' parameter
 
   Args:
-    hsdfname: path to sassena output hdf5 files for the incoherent factors. If more than one,
-               enclosed then in quotes and separate with space(s). The output S(Q,E) will be
-               the Fourier transform of the summ of the incoherent factors.
-    nxsname: path to output Nexus file
-    [wsname]: root name for the GroupWorkspace created when Sassena output is loaded
-    [rebinQ]: rebin in Q. Useful when reported experimental S(Q,E) was obtained integrating
-              over different [Q-dQ,Q+dQ] ranges. Format is "Qmin Qwidth Qmax".
-    [indexes]: save only spectra with indexes given by indexes list. If indexes is empty,
-               all spectra are saved.
+    hsdfname:   path to sassena output hdf5 files for the incoherent factors. If more than one,
+                 enclosed then in quotes and separate with space(s). The output S(Q,E) will be
+                 the Fourier transform of the summ of the incoherent factors.
+    nxsname:    path to output Nexus file
+    [wsname]:   root name for the GroupWorkspace created when Sassena output is loaded
+    [rebinQ]:   rebin in Q. Useful when reported experimental S(Q,E) was obtained integrating
+                 over different [Q-dQ,Q+dQ] ranges. Format is "Qmin Qwidth Qmax".
+    [indexes]:  save only spectra with indexes given by indexes list. If indexes is empty,
+                 all spectra are saved.
+    [scale]:    multipy the generated S(Q,E) by this scaling factor
     [**kwargs]: extra options for the Mantid algorithms producing S(Q,E). For
-             example:
-             kwargs={'LoadSassena':{'TimeUnit':0.1,},
-                     'SassenaFFT':{'Temp':290,},
-                     'NormaliseToUnity:{'RangeLower'=50.0,'RangeUpper':50.0}'
-                    }
+                example:
+                kwargs={'LoadSassena':{'TimeUnit':0.1,},
+                        'SassenaFFT':{'Temp':290,},
+                        'NormaliseToUnity:{'RangeLower'=50.0,'RangeUpper':50.0}'
+                       }
 
   Returns:
     GroupWorkspace containing I(Q,t), S(Q,E), and Q-vectors Worskpaces, among others.
@@ -270,7 +271,7 @@ def genSQE(hdfname,nxsname,wsname=None,indexes=[],rebinQ=None, **kwargs):
   from mantidhelper.algorithm import findopts
   from mantidhelper.workspace import prunespectra
   from os.path import basename,splitext
-  from mantid.simpleapi import (LoadSassena, SortByQVectors, CheckWorkspacesMatch, Plus, SassenaFFT, SaveNexus)
+  from mantid.simpleapi import LoadSassena,SortByQVectors,CheckWorkspacesMatch,Plus,SassenaFFT,SaveNexus,Scale
   wsname=wsname or splitext(basename(nxsname))[0]
   algs_opt=locals()['kwargs']
   hdfs=hdfname.split() # list of sassena output files serving as input
@@ -300,6 +301,7 @@ def genSQE(hdfname,nxsname,wsname=None,indexes=[],rebinQ=None, **kwargs):
     ConvertToHistogram(InputWorkspace=wss,OutputWorkspace=wss)
     NormaliseToUnity(InputWorkspace=wss,OutputWorkspace=wss,**findopts('NormaliseToUnity',algs_opt))
   prunespectra(InputWorkspace=wss,indexes=indexes) # does nothing in indexes is empty
+  if scale!=1.0: wss=Scale(wss,Factor=scale,Operation='Multiply')
   SaveNexus(InputWorkspace=wss, Filename=nxsname, **findopts('SaveNexus',algs_opt))
   return ws
 
@@ -328,15 +330,16 @@ if __name__ == '__main__':
     p.description='Loads Sassena output (HDF5 file) and generates a Nexus file containing S(Q,E) in a Workspace2D.' # update help message
     for action in p._actions:
       if action.dest=='service': action.help='substitue SERVICE by genSQE' # update help message
-    p.add_argument('hdfname', help='path to sassena output hdf5 files for the incoherent factors. If more than one file is passed, enclosed then in quotes and separate them with space(s). The output S(Q,E) will be the Fourier transform of the summ of the incoherent factors.')
-    p.add_argument('nxsname', help='path to output Nexus file')
-    p.add_argument('--wsname', help='root name for the GroupWorkspace created when Sassena output is loaded')
-    p.add_argument('--indexes', help='space separated list of workspace indexes to keep. Example: --indexes "2 4 6 8". If not declared, all indexes are kept')
-    p.add_argument('--rebinQ',help='useful when reported experimental S(Q,E) was obtained integrating over different [Q-dQ,Q+dQ] ranges. Format is "Qmin Qwidth Qmax".')
-    p.add_argument('--LoadSassena', help='certain arguments for the algorithm. Example --LoadSassena="TimeUnit:0.1"')
-    p.add_argument('--SassenaFFT', help='certain arguments for the algorithm. Example: --SassenaFFT="FTTonlyRealPart:True,DetailedBalance:True,Temp:290"')
+    p.add_argument('hdfname',            help='path to sassena output hdf5 files for the incoherent factors. If more than one file is passed, enclosed then in quotes and separate them with space(s). The output S(Q,E) will be the Fourier transform of the summ of the incoherent factors.')
+    p.add_argument('nxsname',            help='path to output Nexus file')
+    p.add_argument('--wsname',           help='root name for the GroupWorkspace created when Sassena output is loaded')
+    p.add_argument('--indexes',          help='space separated list of workspace indexes to keep. Example: --indexes "2 4 6 8". If not declared, all indexes are kept')
+    p.add_argument('--rebinQ',           help='useful when reported experimental S(Q,E) was obtained integrating over different [Q-dQ,Q+dQ] ranges. Format is "Qmin Qwidth Qmax".')
+    p.add_argument('--scale',            help='scale S(Q,E) by this factor. Default=1.0',default=1.0,type=float)
+    p.add_argument('--LoadSassena',      help='certain arguments for the algorithm. Example --LoadSassena="TimeUnit:0.1"')
+    p.add_argument('--SassenaFFT',       help='certain arguments for the algorithm. Example: --SassenaFFT="FTTonlyRealPart:True,DetailedBalance:True,Temp:290"')
     p.add_argument('--NormaliseToUnity', help='certain arguments for the algorithm. Example: --NormaliseToUnity="RangeLower:-50.0,RangeUpper:50.0"')
-    p.add_argument('--SaveNexus', help='certain arguments for the algorithm. Example: --SaveNexus="Title:some title here"')
+    p.add_argument('--SaveNexus',        help='certain arguments for the algorithm. Example: --SaveNexus="Title:some title here"')
     # Check if help message is requested
     if '-explain' in sys.argv:
       p.parse_args(args=('-h',))
@@ -344,7 +347,7 @@ if __name__ == '__main__':
       args=p.parse_args()
       indexes=[]
       if args.indexes: indexes=[int(i) for i in args.indexes.split()]
-      genSQE(args.hdfname, args.nxsname, wsname=args.wsname, indexes=indexes, rebinQ=args.rebinQ,
+      genSQE(args.hdfname, args.nxsname, wsname=args.wsname, indexes=indexes, rebinQ=args.rebinQ, scale=args.scale,
              LoadSassena=getDictFromArgparse('LoadSassena',args),
              SassenaFFT=getDictFromArgparse('SassenaFFT',args),
              SaveNexus=getDictFromArgparse('SaveNexus',args),
