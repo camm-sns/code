@@ -132,7 +132,6 @@ def modelB_freeE_C(model, resolution, convolved, assembled, expdata=None, costfi
   if 'FF1' not in derivexclude:
     FF1_f=wscf.getRun().getLogData('FF1').value
     FF1_b=wscb.getRun().getLogData('FF1').value
-    print "FF1 parameters in convolved files ",FF1_f,FF1_b
     gradients['FF1'] *= p['c0']/(FF1_f-FF1_b)
 
   # save model to file
@@ -164,6 +163,7 @@ def modelB_freeE_C(model, resolution, convolved, assembled, expdata=None, costfi
 
   AddSampleLog(Workspace=wsm,LogName="chisq",LogText=str(chisq),LogType='Number')
   norm_chisq=chisq/(len(Ry)-len(derivparnames))
+  print costfile, " R = ", norm_chisq
   AddSampleLog(Workspace=wsm,LogName="norm_chisq",LogText=str(norm_chisq),LogType='Number')
   AddSampleLog(Workspace=wsm,LogName="norm_chi",LogText=str(sqrt(norm_chisq)),LogType='Number')
   SaveNexus(InputWorkspace=wsm, Filename=assembled)

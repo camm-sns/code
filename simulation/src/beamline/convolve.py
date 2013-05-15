@@ -45,7 +45,7 @@ def camm_convolve(signal,response,mode='same'):
   return convolve(signal,g,mode=mode)
 
 
-def convolution(simulated, resolution, expdata, convolved, dak, norm2one=false):
+def convolution(simulated, resolution, expdata, convolved, dak, norm2one=False):
   """Convolve a simulated S(Q,E) with a resolution file
 
   Arguments:
@@ -83,7 +83,7 @@ def convolution(simulated, resolution, expdata, convolved, dak, norm2one=false):
       deriv=1.0
     AddSampleLog(Workspace='convolved',LogName='FF1',LogText=str(deriv*dakota_vals["FF1"]),LogType='Number')
   SaveNexus(InputWorkspace='convolved', Filename=convolved)
-  return wsc
+  return
 
 if __name__ == "__main__":
   import argparse
