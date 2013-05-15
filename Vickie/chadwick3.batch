@@ -1,8 +1,0 @@
-#!/bin/bash
-#PBS -l nodes=1:ppn=1
-#PBS -l walltime=1:00
-#PBS -N Kepler_test
-
-echo $PBS_O_WORKDIR
-/home/vel/chisq $PBS_O_WORKDIR/params.in.* $PBS_O_WORKDIR/results.out
-#/shared/openmpi/gcc/bin/mpirun -machinefile $PBS_NODEFILE -np 1 /home/vel/chisq params.in.*
