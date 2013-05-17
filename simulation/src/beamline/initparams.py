@@ -53,7 +53,7 @@ def modelB_freeE_C(modeltpl, resolution, pdb, qlist, expdata, initparfile=None):
   nhist=wsri.getNumberHistograms()
   pard['b0'].setValue(1e-10) # needs to be positive
   pard['b1'].setValue(0.)
-  trace()
+  #trace()
   pard['c0'].setValue(0.5*wsei.readY(0)[0]/(wssi.readY(0)[0]*wsri.readY(0)[0]))
   pard['e0.0'].setValue(0.5*wsei.readY(0)[0]/wsri.readY(0)[0])
   for ihist in range(1,nhist ):

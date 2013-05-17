@@ -140,6 +140,9 @@ def modelB_freeE_C(model, resolution, convolved, assembled, expdata=None, costfi
   for pair in open(model,'r').readline().split(';'):
     key,val=[x.strip() for x in pair.split('=')]
     AddSampleLog(Workspace=wsm,LogName=key,LogText=str(p[key]),LogType='Number')
+    print key, "=",  p[key]
+  print "FF1 =", wsm.getRun().getLogData('FF1').value
+
   SaveNexus(InputWorkspace=wsm, Filename=assembled)
 
   # save residuals and partial derivatives
@@ -163,7 +166,7 @@ def modelB_freeE_C(model, resolution, convolved, assembled, expdata=None, costfi
 
   AddSampleLog(Workspace=wsm,LogName="chisq",LogText=str(chisq),LogType='Number')
   norm_chisq=chisq/(len(Ry)-len(derivparnames))
-  print costfile, " R = ", norm_chisq
+  print costfile, " R = ", sqrt(norm_chisq)
   AddSampleLog(Workspace=wsm,LogName="norm_chisq",LogText=str(norm_chisq),LogType='Number')
   AddSampleLog(Workspace=wsm,LogName="norm_chi",LogText=str(sqrt(norm_chisq)),LogType='Number')
   SaveNexus(InputWorkspace=wsm, Filename=assembled)
