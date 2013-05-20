@@ -45,7 +45,7 @@ def camm_convolve(signal,response,mode='same'):
   return convolve(signal,g,mode=mode)
 
 
-def convolution(simulated, resolution, expdata, convolved, dak, norm2one=False):
+def convolution(simulated, resolution, expdata, convolved, dak=None, norm2one=False):
   """Convolve a simulated S(Q,E) with a resolution file
 
   Arguments:
@@ -111,4 +111,4 @@ if __name__ == "__main__":
       args=p.parse_args()
       norm2one=False
       if args.norm2one in ('True','true','1'): norm2one=True
-      convolution(args.simulated, args.resolution, args.expdata, args.convolved, args.dak, norm2one=norm2one)
+      convolution(args.simulated, args.resolution, args.expdata, args.convolved, dak=args.dak, norm2one=norm2one)
