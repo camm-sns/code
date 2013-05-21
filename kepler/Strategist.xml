@@ -1794,7 +1794,7 @@
                 </port>
             </entity>
             <entity name="Expression2" class="ptolemy.actor.lib.Expression">
-                <property name="expression" class="ptolemy.kernel.util.StringAttribute" value="&quot;python &quot;+CammDirectory+&quot;/beamline/convolve.py  convolution --simulated output_&quot;+in+&quot;.nxs --resolution &quot;+CammDirectory+&quot;/../test/beamline/resolution.nxs --convolved convolved_&quot;+in+&quot;.nxs --expdata &quot;+CammDirectory+&quot;/../test/beamline/LiCl_290K.nxs --dak params.in.&quot;+in+&quot; --norm2one True\n&quot; ">
+                <property name="expression" class="ptolemy.kernel.util.StringAttribute" value="&quot;python &quot;+CammDirectory+&quot;/beamline/convolve.py  convolution --simulated output_&quot;+in+&quot;.nxs --resolution &quot;+CammDirectory+&quot;/../test/beamline/resolution.nxs --convolved convolved_&quot;+in+&quot;.nxs --expdata &quot;+CammDirectory+&quot;/../test/beamline/LiCl_290K.nxs --dak params.in.&quot;+in">
                     <property name="_hide" class="ptolemy.data.expr.Parameter" value="true">
                     </property>
                 </property>
@@ -2776,7 +2776,7 @@
                 </port>
             </entity>
             <entity name="Expression6" class="ptolemy.actor.lib.Expression">
-                <property name="expression" class="ptolemy.kernel.util.StringAttribute" value="&quot;python &quot;+CammDirectory+&quot;/scattering/sassenatasks.py genSQE \&quot;fqt_inc_&quot;+in+&quot;.hd5 fqt_coh_&quot;+in+&quot;.hd5\&quot; output_&quot;+in+&quot;.nxs --wsname simulated --rebinQ \&quot;0.4 0.2 1.0\&quot; --LoadSassena \&quot;TimeUnit:1.0\&quot; --SassenaFFT \&quot;FFTonlyRealPart:1,DetailedBalance:1,Temp:290\&quot; --scale=0.00003\n&quot;">
+                <property name="expression" class="ptolemy.kernel.util.StringAttribute" value="&quot;python &quot;+CammDirectory+&quot;/scattering/sassenatasks.py genSQE \&quot;fqt_inc_&quot;+in+&quot;.hd5 fqt_coh_&quot;+in+&quot;.hd5\&quot; output_&quot;+in+&quot;.nxs --wsname simulated --rebinQ \&quot;0.4 0.2 1.0\&quot; --LoadSassena \&quot;TimeUnit:1.0\&quot; --SassenaFFT \&quot;FFTonlyRealPart:1,DetailedBalance:1,Temp:290\&quot; --scale=1.e-12\n&quot;">
                     <property name="_hide" class="ptolemy.data.expr.Parameter" value="true">
                     </property>
                 </property>
@@ -4142,7 +4142,7 @@
             <entity name="MantidFitting" class="ptolemy.actor.lib.Exec">
                 <property name="NONE" class="ptolemy.data.expr.Parameter" value="0">
                 </property>
-                <property name="command" class="ptolemy.actor.parameters.PortParameter" value="python /tmp/code/simulation/src/beamline/convolve.py  convolution --simulated output_2.nxs --resolution /tmp/code/simulation/src/../test/beamline/resolution.nxs --convolved convolved_2.nxs --expdata /tmp/code/simulation/src/../test/beamline/LiCl_290K.nxs --dak params.in.2 --norm2one True&#10;">
+                <property name="command" class="ptolemy.actor.parameters.PortParameter" value="python /tmp/code/simulation/src/beamline/convolve.py  convolution --simulated output_2.nxs --resolution /tmp/code/simulation/src/../test/beamline/resolution.nxs --convolved convolved_2.nxs --expdata /tmp/code/simulation/src/../test/beamline/LiCl_290K.nxs --dak params.in.2&#10;">
                 </property>
                 <property name="directory" class="ptolemy.data.expr.FileParameter" value="$LocalWorkingDirectory">
                     <property name="allowFiles" class="ptolemy.data.expr.Parameter" value="false">
@@ -4258,7 +4258,7 @@
             <entity name="MantidScript" class="ptolemy.actor.lib.Exec">
                 <property name="NONE" class="ptolemy.data.expr.Parameter" value="0">
                 </property>
-                <property name="command" class="ptolemy.actor.parameters.PortParameter" value="python /tmp/code/simulation/src/scattering/sassenatasks.py genSQE &quot;fqt_inc_2.hd5 fqt_coh_2.hd5&quot; output_2.nxs --wsname simulated --rebinQ &quot;0.4 0.2 1.0&quot; --LoadSassena &quot;TimeUnit:1.0&quot; --SassenaFFT &quot;FFTonlyRealPart:1,DetailedBalance:1,Temp:290&quot; --scale=0.00003&#10;">
+                <property name="command" class="ptolemy.actor.parameters.PortParameter" value="python /tmp/code/simulation/src/scattering/sassenatasks.py genSQE &quot;fqt_inc_2.hd5 fqt_coh_2.hd5&quot; output_2.nxs --wsname simulated --rebinQ &quot;0.4 0.2 1.0&quot; --LoadSassena &quot;TimeUnit:1.0&quot; --SassenaFFT &quot;FFTonlyRealPart:1,DetailedBalance:1,Temp:290&quot; --scale=1.e-12&#10;">
                 </property>
                 <property name="directory" class="ptolemy.data.expr.FileParameter" value="$LocalWorkingDirectory">
                     <property name="allowFiles" class="ptolemy.data.expr.Parameter" value="false">
@@ -5088,7 +5088,7 @@
                 </port>
             </entity>
             <entity name="Expression2" class="ptolemy.actor.lib.Expression">
-                <property name="expression" class="ptolemy.kernel.util.StringAttribute" value="&quot;python &quot;+CammDirectory+&quot;/beamline/convolve.py  convolution --simulated output_&quot;+in+&quot;.nxs --resolution &quot;+CammDirectory+&quot;/../test/beamline/resolution.nxs --convolved convolved_&quot;+in+&quot;.nxs --expdata &quot;+CammDirectory+&quot;/../test/beamline/LiCl_290K.nxs --dak params.in.&quot;+in+&quot; --norm2one True\n&quot; ">
+                <property name="expression" class="ptolemy.kernel.util.StringAttribute" value="&quot;python &quot;+CammDirectory+&quot;/beamline/convolve.py  convolution --simulated output_&quot;+in+&quot;.nxs --resolution &quot;+CammDirectory+&quot;/../test/beamline/resolution.nxs --convolved convolved_&quot;+in+&quot;.nxs --expdata &quot;+CammDirectory+&quot;/../test/beamline/LiCl_290K.nxs --dak params.in.&quot;+in">
                     <property name="_hide" class="ptolemy.data.expr.Parameter" value="true">
                     </property>
                 </property>
@@ -6070,7 +6070,7 @@
                 </port>
             </entity>
             <entity name="Expression6" class="ptolemy.actor.lib.Expression">
-                <property name="expression" class="ptolemy.kernel.util.StringAttribute" value="&quot;python &quot;+CammDirectory+&quot;/scattering/sassenatasks.py genSQE \&quot;fqt_inc_&quot;+in+&quot;.hd5 fqt_coh_&quot;+in+&quot;.hd5\&quot; output_&quot;+in+&quot;.nxs --wsname simulated --rebinQ \&quot;0.4 0.2 1.0\&quot; --LoadSassena \&quot;TimeUnit:1.0\&quot; --SassenaFFT \&quot;FFTonlyRealPart:1,DetailedBalance:1,Temp:290\&quot; --scale=0.00003\n&quot;">
+                <property name="expression" class="ptolemy.kernel.util.StringAttribute" value="&quot;python &quot;+CammDirectory+&quot;/scattering/sassenatasks.py genSQE \&quot;fqt_inc_&quot;+in+&quot;.hd5 fqt_coh_&quot;+in+&quot;.hd5\&quot; output_&quot;+in+&quot;.nxs --wsname simulated --rebinQ \&quot;0.4 0.2 1.0\&quot; --LoadSassena \&quot;TimeUnit:1.0\&quot; --SassenaFFT \&quot;FFTonlyRealPart:1,DetailedBalance:1,Temp:290\&quot; --scale=1.e-12\n&quot;">
                     <property name="_hide" class="ptolemy.data.expr.Parameter" value="true">
                     </property>
                 </property>
@@ -7436,7 +7436,7 @@
             <entity name="MantidFitting" class="ptolemy.actor.lib.Exec">
                 <property name="NONE" class="ptolemy.data.expr.Parameter" value="0">
                 </property>
-                <property name="command" class="ptolemy.actor.parameters.PortParameter" value="python /tmp/code/simulation/src/beamline/convolve.py  convolution --simulated output_2f.nxs --resolution /tmp/code/simulation/src/../test/beamline/resolution.nxs --convolved convolved_2f.nxs --expdata /tmp/code/simulation/src/../test/beamline/LiCl_290K.nxs --dak params.in.2f --norm2one True&#10;">
+                <property name="command" class="ptolemy.actor.parameters.PortParameter" value="python /tmp/code/simulation/src/beamline/convolve.py  convolution --simulated output_2f.nxs --resolution /tmp/code/simulation/src/../test/beamline/resolution.nxs --convolved convolved_2f.nxs --expdata /tmp/code/simulation/src/../test/beamline/LiCl_290K.nxs --dak params.in.2f&#10;">
                 </property>
                 <property name="directory" class="ptolemy.data.expr.FileParameter" value="$LocalWorkingDirectory">
                     <property name="allowFiles" class="ptolemy.data.expr.Parameter" value="false">
@@ -7552,7 +7552,7 @@
             <entity name="MantidScript" class="ptolemy.actor.lib.Exec">
                 <property name="NONE" class="ptolemy.data.expr.Parameter" value="0">
                 </property>
-                <property name="command" class="ptolemy.actor.parameters.PortParameter" value="python /tmp/code/simulation/src/scattering/sassenatasks.py genSQE &quot;fqt_inc_2f.hd5 fqt_coh_2f.hd5&quot; output_2f.nxs --wsname simulated --rebinQ &quot;0.4 0.2 1.0&quot; --LoadSassena &quot;TimeUnit:1.0&quot; --SassenaFFT &quot;FFTonlyRealPart:1,DetailedBalance:1,Temp:290&quot; --scale=0.00003&#10;">
+                <property name="command" class="ptolemy.actor.parameters.PortParameter" value="python /tmp/code/simulation/src/scattering/sassenatasks.py genSQE &quot;fqt_inc_2f.hd5 fqt_coh_2f.hd5&quot; output_2f.nxs --wsname simulated --rebinQ &quot;0.4 0.2 1.0&quot; --LoadSassena &quot;TimeUnit:1.0&quot; --SassenaFFT &quot;FFTonlyRealPart:1,DetailedBalance:1,Temp:290&quot; --scale=1.e-12&#10;">
                 </property>
                 <property name="directory" class="ptolemy.data.expr.FileParameter" value="$LocalWorkingDirectory">
                     <property name="allowFiles" class="ptolemy.data.expr.Parameter" value="false">
@@ -8274,7 +8274,7 @@
                 </port>
             </entity>
             <entity name="Expression2" class="ptolemy.actor.lib.Expression">
-                <property name="expression" class="ptolemy.kernel.util.StringAttribute" value="&quot;python &quot;+CammDirectory+&quot;/beamline/convolve.py  convolution --simulated output_&quot;+in+&quot;.nxs --resolution &quot;+CammDirectory+&quot;/../test/beamline/resolution.nxs --convolved convolved_&quot;+in+&quot;.nxs --expdata &quot;+CammDirectory+&quot;/../test/beamline/LiCl_290K.nxs --dak params.in.&quot;+in+&quot; --norm2one True\n&quot; ">
+                <property name="expression" class="ptolemy.kernel.util.StringAttribute" value="&quot;python &quot;+CammDirectory+&quot;/beamline/convolve.py  convolution --simulated output_&quot;+in+&quot;.nxs --resolution &quot;+CammDirectory+&quot;/../test/beamline/resolution.nxs --convolved convolved_&quot;+in+&quot;.nxs --expdata &quot;+CammDirectory+&quot;/../test/beamline/LiCl_290K.nxs --dak params.in.&quot;+in">
                     <property name="_hide" class="ptolemy.data.expr.Parameter" value="true">
                     </property>
                 </property>
@@ -9256,7 +9256,7 @@
                 </port>
             </entity>
             <entity name="Expression6" class="ptolemy.actor.lib.Expression">
-                <property name="expression" class="ptolemy.kernel.util.StringAttribute" value="&quot;python &quot;+CammDirectory+&quot;/scattering/sassenatasks.py genSQE \&quot;fqt_inc_&quot;+in+&quot;.hd5 fqt_coh_&quot;+in+&quot;.hd5\&quot; output_&quot;+in+&quot;.nxs --wsname simulated --rebinQ \&quot;0.4 0.2 1.0\&quot; --LoadSassena \&quot;TimeUnit:1.0\&quot; --SassenaFFT \&quot;FFTonlyRealPart:1,DetailedBalance:1,Temp:290\&quot; --scale=0.00003\n&quot;">
+                <property name="expression" class="ptolemy.kernel.util.StringAttribute" value="&quot;python &quot;+CammDirectory+&quot;/scattering/sassenatasks.py genSQE \&quot;fqt_inc_&quot;+in+&quot;.hd5 fqt_coh_&quot;+in+&quot;.hd5\&quot; output_&quot;+in+&quot;.nxs --wsname simulated --rebinQ \&quot;0.4 0.2 1.0\&quot; --LoadSassena \&quot;TimeUnit:1.0\&quot; --SassenaFFT \&quot;FFTonlyRealPart:1,DetailedBalance:1,Temp:290\&quot; --scale=1.e-12\n&quot;">
                     <property name="_hide" class="ptolemy.data.expr.Parameter" value="true">
                     </property>
                 </property>
@@ -10622,7 +10622,7 @@
             <entity name="MantidFitting" class="ptolemy.actor.lib.Exec">
                 <property name="NONE" class="ptolemy.data.expr.Parameter" value="0">
                 </property>
-                <property name="command" class="ptolemy.actor.parameters.PortParameter" value="python /tmp/code/simulation/src/beamline/convolve.py  convolution --simulated output_2b.nxs --resolution /tmp/code/simulation/src/../test/beamline/resolution.nxs --convolved convolved_2b.nxs --expdata /tmp/code/simulation/src/../test/beamline/LiCl_290K.nxs --dak params.in.2b --norm2one True&#10;">
+                <property name="command" class="ptolemy.actor.parameters.PortParameter" value="python /tmp/code/simulation/src/beamline/convolve.py  convolution --simulated output_2b.nxs --resolution /tmp/code/simulation/src/../test/beamline/resolution.nxs --convolved convolved_2b.nxs --expdata /tmp/code/simulation/src/../test/beamline/LiCl_290K.nxs --dak params.in.2b&#10;">
                 </property>
                 <property name="directory" class="ptolemy.data.expr.FileParameter" value="$LocalWorkingDirectory">
                     <property name="allowFiles" class="ptolemy.data.expr.Parameter" value="false">
@@ -10738,7 +10738,7 @@
             <entity name="MantidScript" class="ptolemy.actor.lib.Exec">
                 <property name="NONE" class="ptolemy.data.expr.Parameter" value="0">
                 </property>
-                <property name="command" class="ptolemy.actor.parameters.PortParameter" value="python /tmp/code/simulation/src/scattering/sassenatasks.py genSQE &quot;fqt_inc_2b.hd5 fqt_coh_2b.hd5&quot; output_2b.nxs --wsname simulated --rebinQ &quot;0.4 0.2 1.0&quot; --LoadSassena &quot;TimeUnit:1.0&quot; --SassenaFFT &quot;FFTonlyRealPart:1,DetailedBalance:1,Temp:290&quot; --scale=0.00003&#10;">
+                <property name="command" class="ptolemy.actor.parameters.PortParameter" value="python /tmp/code/simulation/src/scattering/sassenatasks.py genSQE &quot;fqt_inc_2b.hd5 fqt_coh_2b.hd5&quot; output_2b.nxs --wsname simulated --rebinQ &quot;0.4 0.2 1.0&quot; --LoadSassena &quot;TimeUnit:1.0&quot; --SassenaFFT &quot;FFTonlyRealPart:1,DetailedBalance:1,Temp:290&quot; --scale=1.e-12&#10;">
                 </property>
                 <property name="directory" class="ptolemy.data.expr.FileParameter" value="$LocalWorkingDirectory">
                     <property name="allowFiles" class="ptolemy.data.expr.Parameter" value="false">
