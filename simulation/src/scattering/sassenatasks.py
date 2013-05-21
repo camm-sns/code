@@ -298,7 +298,7 @@ def genSQE(hdfname,nxsname,wsname=None,indexes=[],rebinQ=None,scale=1.0, **kwarg
       Transpose(InputWorkspace=wsname+wstype,OutputWorkspace=wsname+wstype)
   SassenaFFT(ws,**findopts('SassenaFFT',algs_opt))
   wss=wsname+'_sqw'
-  trace()
+
   if algs_opt['NormaliseToUnity']:
     from mantid.simpleapi import (ConvertToHistogram, NormaliseToUnity)
     ConvertToHistogram(InputWorkspace=wss,OutputWorkspace=wss)
