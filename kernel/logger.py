@@ -3,7 +3,7 @@
 
 import logging
 
-class SimpleLogger(logging):
+class SimpleLogger(logging.Logger):
   '''Single-handle logger, plus a constructor having typical options'''
 
   def SimpleLogger(self, name, level='ERROR', format='[%(levelname)s] %(message)s', handler = logging.StreamHandler()):

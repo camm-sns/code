@@ -56,7 +56,7 @@ def convolution(simulated, resolution, expdata, convolved, dak=None, norm2one=Fa
   Returns:
     workspace for the convolution
   """
-  from mantid.simpleapi import (LoadNexus, Rebin, NormaliseToUnity, SaveNexus, AddSampleLog)
+  from mantid.simpleapi import (LoadNexus, Rebin, ConvertToHistogram, NormaliseToUnity, SaveNexus, AddSampleLog)
   wss=LoadNexus(Filename=simulated,OutputWorkspace='simulated')
   width=wss.readX(0)[1]-wss.readX(0)[0] # rebin resolution as simulated
   wsr=LoadNexus(Filename=resolution,OutputWorkspace='resolution')
@@ -70,6 +70,7 @@ def convolution(simulated, resolution, expdata, convolved, dak=None, norm2one=Fa
   wse=LoadNexus(Filename=expdata,OutputWorkspace='expdata')
   width=wse.readX(0)[1]-wse.readX(0)[0] # rebin simulated as expdata
   Rebin(InputWorkspace='simulated', Params=(wse.readX(0)[0],width,wse.readX(0)[-1]), OutputWorkspace='convolved')
+  ConvertToHistogram(InputWorkspace='convolved', OutputWorkspace='convolved') # remember that output from sassena are point-data
   if norm2one:
     wsc=NormaliseToUnity(InputWorkspace='convolved', OutputWorkspace='convolved')
   AddSampleLog(Workspace='convolved',LogName='NormaliseToUnity',LogText=str(float(norm2one)),LogType='Number')
@@ -84,6 +85,7 @@ def convolution(simulated, resolution, expdata, convolved, dak=None, norm2one=Fa
       deriv=1.0
       dakota_vals = getParams(dak) # read in Dakota params file
     AddSampleLog(Workspace='convolved',LogName='FF1',LogText=str(deriv*dakota_vals["FF1"]),LogType='Number')
+  from mantid.simpleapi import mtd
   SaveNexus(InputWorkspace='convolved', Filename=convolved)
   return
 
