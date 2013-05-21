@@ -277,6 +277,7 @@ def genSQE(hdfname,nxsname,wsname=None,indexes=[],rebinQ=None,scale=1.0, **kwarg
   hdfs=hdfname.split() # list of sassena output files serving as input
   ws=LoadSassena(Filename=hdfs[0], OutputWorkspace=wsname, **findopts('LoadSassena',algs_opt)) # initialize the first
   SortByQVectors(ws)
+
   if len(hdfs)>1: # add remaining sassena output files
     for hdf in hdfs[1:]:
       ws1=LoadSassena(Filename=hdf, **findopts('LoadSassena',algs_opt))
@@ -286,6 +287,7 @@ def genSQE(hdfname,nxsname,wsname=None,indexes=[],rebinQ=None,scale=1.0, **kwarg
           Plus(LHSWorkspace=wsname+wstype,RHSWorkspace=ws1.getName()+wstype,OutputWorkspace=wsname+wstype)
       else:
         print 'Workspaces do not match'
+
   if rebinQ: # rebin in Q space
     rebinQ=','.join(rebinQ.split()) #substitute separators, from space to comma
     from mantid.simpleapi import (Transpose, Rebin)
@@ -296,12 +298,15 @@ def genSQE(hdfname,nxsname,wsname=None,indexes=[],rebinQ=None,scale=1.0, **kwarg
       Transpose(InputWorkspace=wsname+wstype,OutputWorkspace=wsname+wstype)
   SassenaFFT(ws,**findopts('SassenaFFT',algs_opt))
   wss=wsname+'_sqw'
-  if 'NormaliseToUnity' in algs_opt.keys():
+  trace()
+  if algs_opt['NormaliseToUnity']:
     from mantid.simpleapi import (ConvertToHistogram, NormaliseToUnity)
     ConvertToHistogram(InputWorkspace=wss,OutputWorkspace=wss)
     NormaliseToUnity(InputWorkspace=wss,OutputWorkspace=wss,**findopts('NormaliseToUnity',algs_opt))
+
   prunespectra(InputWorkspace=wss,indexes=indexes) # does nothing in indexes is empty
   if scale!=1.0: wss=Scale(wss,Factor=scale,Operation='Multiply')
+
   SaveNexus(InputWorkspace=wss, Filename=nxsname, **findopts('SaveNexus',algs_opt))
   return ws
 
