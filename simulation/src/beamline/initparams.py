@@ -8,8 +8,8 @@ Created on May 13, 2013
 
 from pdb import set_trace as trace # uncomment only for debugging purposes
 
-from kernel.logger import SimpleLogger
-g_log=SimpleLogger('initparams')
+from kernel.logger import CammLogger
+g_log=CammLogger('simulation.beamline.initparams')
 
 def modelB_freeE_C(modeltpl, elastic, convolved, expdata, initparfile=None):
   """Estimate initial beamline parameters for the modelB_freeE_C
