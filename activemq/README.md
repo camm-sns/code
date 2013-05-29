@@ -2,8 +2,8 @@ This directory is meant to contain Kepler-specific code and configuration for CA
 
 ## Pre-requisites
 - Install ActiveMQ ([http://activemq.apache.org/](http://activemq.apache.org/))
-- stomp.py (version 3.3.1 or higher) should be installed to enable ActiveMQ communication ([http://code.google.com/p/stomppy/](http://code.google.com/p/stomppy/))
-     
+- `stomp.py` (version 3.3.1 or higher) should be installed to enable ActiveMQ communication ([http://code.google.com/p/stomppy/](http://code.google.com/p/stomppy/))
+- `sns_utilities` is a package that contains base classes and utilities for ActiveMQ applications ([https://github.com/neutrons/sns_utilities](https://github.com/neutrons/sns_utilities))
      
 ## ActiveMQ Configuration
 ActiveMQ is configured with an XML file. The default location of that file is
@@ -58,10 +58,10 @@ used by CAMM. The following example adds basic authentication to all queues and 
 
 ## ActiveMQ Consumer Installation
 - Run `python setup.py install` in the `activemq` directory.  
-The setup.py script will not only install the `amq_kepler` module, but will
-also create a script named `kepler_consumer` at a location where it can be
+The setup.py script will not only install the `camm_amq` module, but will
+also create a script named `kepler_client` at a location where it can be
 used by all users.  
-In the event that the `kepler_consumer` script is not installed on the
+In the event that the `kepler_client` script is not installed on the
 system path, you can use the `--install-scripts` option when running 
 the installation script:
  
@@ -75,15 +75,15 @@ to your workflow and execute `/usr/local/bin/kepler_client` with it.
 The configuration file should be in JSON format and can contain the
 following parameters
  
-
     
         {  
             "brokers": [["localhost", 61613]],  
-            "amq_queues": ["foo.bar"],   
+            "queues": [],   
             "amq_user": "icat",  
             "amq_pwd": "icat",
             "params_ready_queue": "MY_DAKOTA_PARAMS_READY_QUEUE",
-            "results_ready_queue": "MY_DAKOTA_RESULTS_READY_QUEUE"
+            "results_ready_queue": "MY_DAKOTA_RESULTS_READY_QUEUE",
+            "kepler_executable": "full path of Kepler workflow executable"
         }
     
  
