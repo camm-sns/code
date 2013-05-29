@@ -31,9 +31,10 @@ class KeplerListener(Listener):
     
     def __init__(self, configuration=None):
         super(KeplerListener, self).__init__(configuration)
-        self.params_ready_queue = configuration.params_ready_queue
-        self.default_results_ready_queue = configuration.results_ready_queue
-        self.kepler_executable = configuration.kepler_executable
+        if configuration is not None:
+            self.params_ready_queue = configuration.params_ready_queue
+            self.default_results_ready_queue = configuration.results_ready_queue
+            self.kepler_executable = configuration.kepler_executable
         
         logging.info("Kepler executable: %s" % self.kepler_executable)
 

@@ -6,21 +6,38 @@ import os
 import sys
 import json
 import logging
-import threading
-from amq_consumer import Client, Configuration, Listener
+
+# Set log level set up log file handler
+logging.getLogger().setLevel(logging.INFO)
+ft = logging.Formatter('%(asctime)-15s %(message)s')
+fh = logging.FileHandler('dakota_client.log')
+fh.setLevel(logging.INFO)
+fh.setFormatter(ft)
+logging.getLogger().addHandler(fh)
+
+from sns_utilities.amq_connector.amq_consumer import Client, Listener
+from configuration import Configuration
 
 class DakotaListener(Listener):
     """
         ActiveMQ Listener for Dakota
         This class processes incoming messages
     """
+    
+    def __init__(self, configuration=None, results_ready_queue=None):
+        super(DakotaListener, self).__init__(configuration)
+        if results_ready_queue is not None:
+            self.results_ready_queue = results_ready_queue
+        else:
+            configuration.results_ready_queue
+
     def on_message(self, headers, message):
         """
             Process a message.
             @param headers: message headers
             @param message: JSON-encoded message content
         """
-        if headers['destination']=='/queue/'+self.RESULTS_READY_QUEUE:
+        if headers['destination']=='/queue/'+self.results_ready_queue:
             try:
                 data_dict = json.loads(message)
                 output_file = data_dict['output_file']
@@ -105,7 +122,7 @@ def setup_client(instance_number=None):
                      queues, "dakota_consumer")
     c.set_params_ready_queue(conf.params_ready_queue)
     c.set_results_ready_queue(results_queue)
-    c.set_listener(DakotaListener(conf, c, results_ready_queue=results_queue))
+    c.set_listener(DakotaListener(conf, results_ready_queue=results_queue))
     return c
     
     
