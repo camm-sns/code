@@ -12,6 +12,8 @@ class Configuration(configuration.Configuration):
     params_ready_queue = 'PARAMS.READY'
     results_ready_queue = 'RESULTS.READY'
     kepler_executable = '/usr/local/kepler/kepler.sh'
+    kepler_result_queue_flag = '-qName'
+    kepler_run_options = {}
     
     def __init__(self, config_file=None):
         super(Configuration, self).__init__(config_file)
@@ -32,5 +34,11 @@ class Configuration(configuration.Configuration):
                         
                     if config.has_key('kepler_executable'):
                         self.kepler_executable = config['kepler_executable']
+                    
+                    if config.has_key('kepler_result_queue_flag'):
+                        self.kepler_result_queue_flag = config['kepler_result_queue_flag']
+                        
+                    if config.has_key('kepler_run_options'):
+                        self.kepler_run_options = config['kepler_run_options']
             except:
                 logging.error("Could not read configuration file:\n  %s" % str(sys.exc_value))

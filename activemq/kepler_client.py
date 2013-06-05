@@ -35,9 +35,25 @@ class KeplerListener(Listener):
             self.params_ready_queue = configuration.params_ready_queue
             self.default_results_ready_queue = configuration.results_ready_queue
             self.kepler_executable = configuration.kepler_executable
+            self.kepler_result_queue_flag = configuration.kepler_result_queue_flag
+            self.kepler_run_options = configuration.kepler_run_options
         
-        logging.info("Kepler executable: %s" % self.kepler_executable)
+        logging.info("Kepler executable: %s | Found: %s" % (self.kepler_executable, str(os.path.isfile(self.kepler_executable))))
+        
+        # Print out the command for a sanity check
+        logging.info(str(self._build_command("TBD")))
 
+    def _build_command(self, result_queue):
+        """
+            Build the Kepler command
+            @param result_queue: name of the AMQ queue to reply to once the Kepler is completed
+        """
+        command = [self.kepler_executable, 
+                   self.kepler_result_queue_flag, result_queue]
+        for item in self.kepler_run_options:
+            command.extend([item, self.kepler_run_options[item]])
+        return command
+        
     def on_message(self, headers, message):
         """
             Process a message.
@@ -62,8 +78,7 @@ class KeplerListener(Listener):
             
             try:
                 logging.info("Rcv: %s | Result queue: %s" % (self.params_ready_queue, result_queue))
-                logging.error("%s %s" % (self.kepler_executable, str(os.path.isfile(self.kepler_executable))))
-                subprocess.Popen([self.kepler_executable, '-runwf', '/tmp/code/kepler/Strategist.xml', '-LocalWorkingDirectory', "/tmp/run_8", '-qName', result_queue])
+                subprocess.Popen(self._build_command(result_queue))
             except:
                 logging.error("Could not launch Kepler job")
                 logging.error(str(sys.exc_value))
