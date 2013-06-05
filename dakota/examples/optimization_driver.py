@@ -18,8 +18,11 @@ output_file = os.path.join(os.getcwd(), sys.argv[2])
 # for the Dakota process
 instance_number = sys.argv[3]
 
+# Get the working directory
+working_directory = os.path.dirname(__file__)
+
 # Set up a Dakota client
-dakota = dakota_client.setup_client(instance_number)
+dakota = dakota_client.setup_client(instance_number, working_directory)
 
 # Send the ActiveMQ message announcing new parameters
 dakota.params_ready(input_file, output_file)

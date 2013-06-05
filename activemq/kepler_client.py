@@ -36,20 +36,19 @@ class KeplerListener(Listener):
             self.default_results_ready_queue = configuration.results_ready_queue
             self.kepler_executable = configuration.kepler_executable
             self.kepler_result_queue_flag = configuration.kepler_result_queue_flag
+            self.kepler_work_dir_flag = configuration.kepler_work_dir_flag
             self.kepler_run_options = configuration.kepler_run_options
         
-        logging.info("Kepler executable: %s | Found: %s" % (self.kepler_executable, str(os.path.isfile(self.kepler_executable))))
-        
-        # Print out the command for a sanity check
-        logging.info(str(self._build_command("TBD")))
+        logging.info("Kepler executable: %s | Found: %s" % (self.kepler_executable, str(os.path.isfile(self.kepler_executable))))        
 
-    def _build_command(self, result_queue):
+    def _build_command(self, result_queue, work_directory):
         """
             Build the Kepler command
             @param result_queue: name of the AMQ queue to reply to once the Kepler is completed
         """
         command = [self.kepler_executable, 
-                   self.kepler_result_queue_flag, result_queue]
+                   self.kepler_result_queue_flag, result_queue,
+                   self.kepler_work_dir_flag, work_directory]
         for item in self.kepler_run_options:
             command.extend([item, self.kepler_run_options[item]])
         return command
@@ -77,9 +76,16 @@ class KeplerListener(Listener):
             else:
                 result_queue = self.default_results_ready_queue
             
+            if 'working_directory' in data_dict:
+                working_directory = data_dict['working_directory']
+            else:
+                working_directory = '/tmp'
+            
             try:
                 logging.info("Rcv: %s | Result queue: %s" % (self.params_ready_queue, result_queue))
-                subprocess.Popen(self._build_command(result_queue))
+                command = self._build_command(result_queue, working_directory)
+                logging.info("Kepler cmd: %s" % ' '.join(command))
+                subprocess.Popen(command)
             except:
                 logging.error("Could not launch Kepler job")
                 logging.error(str(sys.exc_value))

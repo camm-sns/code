@@ -6,6 +6,7 @@ import os
 import sys
 import json
 import logging
+import argparse
 
 # Set log level set up log file handler
 logging.getLogger().setLevel(logging.INFO)
@@ -38,20 +39,20 @@ class DakotaListener(Listener):
             @param message: JSON-encoded message content
         """
         if headers['destination']=='/queue/'+self.results_ready_queue:
+            
             try:
                 data_dict = json.loads(message)
                 output_file = data_dict['output_file']
+                
+                logging.info("Rcv: %s | Output file: %s" % (self.results_ready_queue, output_file))
+                
                 fd = open(output_file, 'w')
                 fd.write('%f\n' % data_dict['cost_function'])
                 fd.close()
             except:
                 logging.error("Could not process JSON message")
                 logging.error(str(sys.exc_value))
-            
-        fd = open(os.path.join(os.path.expanduser('~'), "dakota.out"), 'a')
-        fd.write(message+'\n')
-        fd.close()
-        self.connection.stop()
+
         
         
 class DakotaClient(Client):
@@ -81,6 +82,13 @@ class DakotaClient(Client):
         """
         self.PARAMS_READY_QUEUE = queue
         
+    def set_working_directory(self, working_directory):
+        """
+            Set the working directory in which Dakota will write
+            @param working_directory: directory for dakota to write parameter files
+        """
+        self.working_directory = working_directory
+        
     def params_ready(self, input_file, output_file):
         """
             Send an ActiveMQ message announcing new
@@ -95,6 +103,7 @@ class DakotaClient(Client):
                 message = {'params': params,
                            'output_file': output_file,
                            'amq_results_queue': self.RESULTS_READY_QUEUE,
+                           'working_directory': self.working_directory
                            }
                 json_message = json.dumps(message)
                 self.send(self.PARAMS_READY_QUEUE, json_message)
@@ -104,17 +113,26 @@ class DakotaClient(Client):
             logging.error("Parameter file %s does not exist" % input_file)
 
 
-def setup_client(instance_number=None):
+def setup_client(instance_number=None, 
+                 working_directory=None, 
+                 config_file='/etc/kepler_consumer.conf'):
     """
         Create an instance of the Dakota ActiveMQ consumer
         @param instance_number: instance number to use for 
                                 transient process communication
+        @param working_directory: directory for dakota to write parameter files
+        @param config_file: configuration file to use to setup the client
     """
     # Make sure we have an instance number
     if instance_number is None:
         instance_number = os.getppid()
+        
+    # Determine the working directory
+    if working_directory is None:
+        working_directory = os.path.expanduser('~')
+        
     # Look for configuration
-    conf = Configuration('/etc/kepler_consumer.conf')
+    conf = Configuration(config_file)
 
     results_queue = "%s.%s" % (conf.results_ready_queue, str(instance_number))
     queues = [results_queue]
@@ -122,6 +140,7 @@ def setup_client(instance_number=None):
                      queues, "dakota_consumer")
     c.set_params_ready_queue(conf.params_ready_queue)
     c.set_results_ready_queue(results_queue)
+    c.set_working_directory(working_directory)
     c.set_listener(DakotaListener(conf, results_ready_queue=results_queue))
     return c
     
@@ -130,7 +149,32 @@ def run():
     """
         Run an instance of the Dakota ActiveMQ consumer
     """
-    c = setup_client()
+    # Get the command line options
+    parser = argparse.ArgumentParser(description='Dakota AMQ client')
+    parser.add_argument('-c', metavar='configuration',
+                        default='/etc/kepler_consumer.conf',
+                        help='location of the configuration file',
+                        dest='config_file')
+    parser.add_argument('-d', metavar='work_directory',
+                        default='/tmp',
+                        help='location of the working directory',
+                        dest='work_directory')
+    parser.add_argument('-t',
+                        action='store_true',
+                        help='test execution',
+                        dest='is_test')
+    namespace = parser.parse_args()
+
+    c = setup_client(working_directory=namespace.work_directory,
+                     config_file=namespace.config_file)
+    
+    if namespace.is_test is True:
+        fd = open(namespace.work_directory+'/test_params.in', 'w')
+        fd.write("123.456")
+        fd.close()
+        c.params_ready(namespace.work_directory+'/test_params.in',
+                       namespace.work_directory+'/test_results.out')
+
     c.listen_and_wait(0.1)
 
 if __name__ == "__main__": 
