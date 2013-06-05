@@ -62,7 +62,8 @@ class KeplerListener(Listener):
             
             try:
                 logging.info("Rcv: %s | Result queue: %s" % (self.params_ready_queue, result_queue))
-                subprocess.Popen([self.kepler_executable, '-q', result_queue])
+                logging.error("%s %s" % (self.kepler_executable, str(os.path.isfile(self.kepler_executable))))
+                subprocess.Popen([self.kepler_executable, '-runwf', '/tmp/code/kepler/Strategist.xml', '-LocalWorkingDirectory', "/tmp/run_8", '-qName', result_queue])
             except:
                 logging.error("Could not launch Kepler job")
                 logging.error(str(sys.exc_value))

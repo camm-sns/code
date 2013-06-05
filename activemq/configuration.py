@@ -11,7 +11,7 @@ class Configuration(configuration.Configuration):
     """
     params_ready_queue = 'PARAMS.READY'
     results_ready_queue = 'RESULTS.READY'
-    kepler_executable = 'test/dummy_kepler_workflow.py'
+    kepler_executable = '/usr/local/kepler/kepler.sh'
     
     def __init__(self, config_file=None):
         super(Configuration, self).__init__(config_file)
