@@ -11422,7 +11422,7 @@
         <link port="Add or Subtract2.output" relation="relation2"/>
     </entity>
     <entity name="Expression" class="ptolemy.actor.lib.Expression">
-        <property name="expression" class="ptolemy.kernel.util.StringAttribute" value="python /tmp/code/activemq/send_amq.py qName resultsFile">
+        <property name="expression" class="ptolemy.kernel.util.StringAttribute" value="&quot;python &quot;+CammDirectory+&quot;/../../activemq/send_amq.py &quot;+qName+&quot; &quot;+resultsFile">
             <property name="_hide" class="ptolemy.data.expr.Parameter" value="true">
             </property>
         </property>
