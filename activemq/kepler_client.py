@@ -74,7 +74,8 @@ class KeplerListener(Listener):
             # queue upon completion
             if 'amq_results_queue' in data_dict:
                 result_queue = data_dict['amq_results_queue']
-            result_queue = self.default_results_ready_queue
+            else:
+                result_queue = self.default_results_ready_queue
             
             try:
                 logging.info("Rcv: %s | Result queue: %s" % (self.params_ready_queue, result_queue))
