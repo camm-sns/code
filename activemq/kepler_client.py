@@ -12,6 +12,13 @@ from sns_utilities.amq_connector.amq_consumer import Client, Listener
 from sns_utilities.amq_connector import listener_daemon
 from configuration import Configuration
 
+# Set log level set up log file handler
+logging.getLogger().setLevel(logging.INFO)
+ft = logging.Formatter('%(asctime)-15s %(message)s')
+fh = logging.FileHandler('/var/log/amq_listener_daemon.log')
+fh.setLevel(logging.INFO)
+fh.setFormatter(ft)
+logging.getLogger().addHandler(fh)
 
 class KeplerConfiguration(Configuration):
     """
