@@ -15,6 +15,7 @@ class Configuration(configuration.Configuration):
     kepler_result_queue_flag = '-qName'
     kepler_run_options = {}
     kepler_work_dir_flag = '-LocalWorkingDirectory'
+    kepler_workflow = ''
     
     def __init__(self, config_file=None):
         super(Configuration, self).__init__(config_file)
@@ -41,6 +42,9 @@ class Configuration(configuration.Configuration):
                         
                     if config.has_key('kepler_work_dir_flag'):
                         self.kepler_work_dir_flag = config['kepler_work_dir_flag']
+                        
+                    if config.has_key('kepler_workflow'):
+                        self.kepler_workflow = config['kepler_workflow']
                         
                     if config.has_key('kepler_run_options'):
                         self.kepler_run_options = config['kepler_run_options']

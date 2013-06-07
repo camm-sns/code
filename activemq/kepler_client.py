@@ -53,15 +53,13 @@ class KeplerListener(Listener):
             Build the Kepler command
             @param result_queue: name of the AMQ queue to reply to once the Kepler is completed
         """
-        command = [self.kepler_executable, 
+        command = [self.kepler_executable,
+                   "-runwf", 
                    self.kepler_result_queue_flag, result_queue,
                    self.kepler_work_dir_flag, work_directory]
-        if type(self.kepler_run_options) == dict:
-            for item in self.kepler_run_options:
-                command.extend([item, self.kepler_run_options[item]])
-        else:
-            for item in self.kepler_run_options:
-                command.extend(item)
+        for item in self.kepler_run_options:
+            command.append(item)
+        command.append(self.kepler_workflow)
         return command
         
     def on_message(self, headers, message):
