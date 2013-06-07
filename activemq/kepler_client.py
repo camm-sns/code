@@ -55,7 +55,7 @@ class KeplerListener(Listener):
             @param result_queue: name of the AMQ queue to reply to once the Kepler is completed
         """
         command = [self.kepler_executable,
-                   "-runwf", 
+                   "-runwf", "-nogui",
                    self.kepler_result_queue_flag, result_queue,
                    self.kepler_work_dir_flag, work_directory]
         for item in self.kepler_run_options:
