@@ -56,8 +56,12 @@ class KeplerListener(Listener):
         command = [self.kepler_executable, 
                    self.kepler_result_queue_flag, result_queue,
                    self.kepler_work_dir_flag, work_directory]
-        for item in self.kepler_run_options:
-            command.extend([item, self.kepler_run_options[item]])
+        if type(self.kepler_run_options) == dict:
+            for item in self.kepler_run_options:
+                command.extend([item, self.kepler_run_options[item]])
+        else:
+            for item in self.kepler_run_options:
+                command.extend(item)
         return command
         
     def on_message(self, headers, message):
