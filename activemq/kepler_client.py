@@ -45,6 +45,7 @@ class KeplerListener(Listener):
             self.kepler_result_queue_flag = configuration.kepler_result_queue_flag
             self.kepler_work_dir_flag = configuration.kepler_work_dir_flag
             self.kepler_run_options = configuration.kepler_run_options
+            self.kepler_workflow = configuration.kepler_workflow
         
         logging.info("Kepler executable: %s | Found: %s" % (self.kepler_executable, str(os.path.isfile(self.kepler_executable))))        
 
