@@ -7,6 +7,8 @@ import sys
 import json
 import logging
 import argparse
+import threading
+import time
 
 # Set log level set up log file handler
 logging.getLogger().setLevel(logging.INFO)
@@ -27,6 +29,9 @@ class DakotaListener(Listener):
     
     def __init__(self, configuration=None, results_ready_queue=None):
         super(DakotaListener, self).__init__(configuration)
+        
+        self._complete = False
+        self._transaction_complete = threading.Condition()
         if results_ready_queue is not None:
             self.results_ready_queue = results_ready_queue
         else:
@@ -49,10 +54,23 @@ class DakotaListener(Listener):
                 fd = open(output_file, 'w')
                 fd.write('%f\n' % data_dict['cost_function'])
                 fd.close()
+                
+                self._transaction_complete.acquire()
+                self._complete = True
+                self._transaction_complete.notify()
+                self._transaction_complete.release()
             except:
                 logging.error("Could not process JSON message")
                 logging.error(str(sys.exc_value))
 
+    def wait_on_transaction_complete(self):
+        """
+            Wait for the results ready message
+        """
+        self._transaction_complete.acquire()
+        while not self._complete == True:
+            self._transaction_complete.wait()
+        self._transaction_complete.release()         
         
         
 class DakotaClient(Client):
@@ -89,6 +107,39 @@ class DakotaClient(Client):
         """
         self.working_directory = working_directory
         
+    def listen_and_wait(self, waiting_period=1.0):
+        """
+            Listen for the next message from the brokers.
+            @param waiting_period: sleep time between connection to a broker
+        """       
+        listening = True
+        while(listening):
+            try:
+                if self._connection is None or self._connection.is_connected() is False:
+                    self.connect()                
+                time.sleep(waiting_period)
+                
+                # Wait for the listening thread to receive the results message
+                self._listener.wait_on_transaction_complete()
+                
+                # Once the results message has been received and dealt with,
+                # we can simply stop listening
+                logging.info("Unsubscribing to %s" % self.RESULTS_READY_QUEUE)
+                self._connection.unsubscribe(destination=self.RESULTS_READY_QUEUE)
+                if self._connection.get_listener(self._consumer_name) is not None:
+                    logging.info("Removing listener %s" % self._consumer_name)
+                    self._connection.remove_listener(self._consumer_name)
+                self._connection.stop()
+                listening = False
+            
+            # Catch Ctrl-C for interactive running
+            except KeyboardInterrupt:
+                sys.exit(0)
+            except:
+                logging.error("Problem connecting to AMQ broker")
+                logging.error("%s: %s" % (sys.exc_type,sys.exc_value))
+                time.sleep(5.0)
+
     def params_ready(self, input_file, output_file):
         """
             Send an ActiveMQ message announcing new

@@ -23,8 +23,8 @@ variables
 interface
   analysis_driver = 'opt_driver'
         fork
-            parameters_file 'inputs/params.in'
-            results_file 'results/results.out'
+            parameters_file 'params.in'
+            results_file 'results.out'
             file_tag
             file_save
 

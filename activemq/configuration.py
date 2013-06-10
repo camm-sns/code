@@ -15,6 +15,7 @@ class Configuration(configuration.Configuration):
     kepler_result_queue_flag = '-qName'
     kepler_run_options = {}
     kepler_work_dir_flag = '-LocalWorkingDirectory'
+    kepler_output_file_flag = '-OutputFile'
     kepler_workflow = ''
     
     def __init__(self, config_file=None):
@@ -48,5 +49,8 @@ class Configuration(configuration.Configuration):
                         
                     if config.has_key('kepler_run_options'):
                         self.kepler_run_options = config['kepler_run_options']
+
+                    if config.has_key('kepler_output_file_flag'):
+                        self.kepler_output_file_flag = config['kepler_output_file_flag']
             except:
                 logging.error("Could not read configuration file:\n  %s" % str(sys.exc_value))

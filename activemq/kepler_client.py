@@ -46,21 +46,24 @@ class KeplerListener(Listener):
             self.kepler_work_dir_flag = configuration.kepler_work_dir_flag
             self.kepler_run_options = configuration.kepler_run_options
             self.kepler_workflow = configuration.kepler_workflow
+            self.kepler_output_file_flag = configuration.kepler_output_file_flag
         
         logging.info("Kepler executable: %s | Found: %s" % (self.kepler_executable, str(os.path.isfile(self.kepler_executable))))        
 
-    def _build_command(self, result_queue, work_directory):
+    def _build_command(self, result_queue, work_directory, output_file):
         """
             Build the Kepler command
             @param result_queue: name of the AMQ queue to reply to once the Kepler is completed
+            @param work_directory: Dakota work directory
+            @param output_file: name of the results output file (example: results.out.2)
         """
         command = [self.kepler_executable,
-                   "-runwf", "-nogui",
-                   self.kepler_result_queue_flag, "\"%s\"" % result_queue,
-                   self.kepler_work_dir_flag, "\"%s\"" % work_directory]
+                   "-runwf", self.kepler_workflow, "-nogui", 
+                   self.kepler_result_queue_flag, result_queue,
+                   self.kepler_work_dir_flag, work_directory,
+                   self.kepler_output_file_flag, output_file]
         for item in self.kepler_run_options:
             command.append(item)
-        command.append(self.kepler_workflow)
         return command
         
     def on_message(self, headers, message):
@@ -91,9 +94,14 @@ class KeplerListener(Listener):
             else:
                 working_directory = '/tmp'
             
+            if 'output_file' in data_dict:
+                output_file = data_dict['output_file']
+            else:
+                output_file = 'results.out'
+            
             try:
                 logging.info("Rcv: %s | Result queue: %s" % (self.params_ready_queue, result_queue))
-                command = self._build_command(result_queue, working_directory)
+                command = self._build_command(result_queue, working_directory, output_file)
                 logging.info("Kepler cmd: %s" % ' '.join(command))
                 subprocess.Popen(command)
             except:
