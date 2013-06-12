@@ -51,9 +51,9 @@ class DakotaListener(Listener):
                 
                 logging.info("Rcv: %s | Output file: %s" % (self.results_ready_queue, output_file))
                 
-                fd = open(output_file, 'w')
-                fd.write('%f\n' % data_dict['cost_function'])
-                fd.close()
+                #fd = open(output_file, 'w')
+                #fd.write('%f\n' % data_dict['cost_function'])
+                #fd.close()
                 
                 self._transaction_complete.acquire()
                 self._complete = True
