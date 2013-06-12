@@ -13,6 +13,7 @@ class Configuration(configuration.Configuration):
     results_ready_queue = 'RESULTS.READY'
     kepler_executable = '/usr/local/kepler/kepler.sh'
     kepler_result_queue_flag = '-qName'
+    kepler_params_queue_flag = '-qParams'
     kepler_run_options = {}
     kepler_work_dir_flag = '-LocalWorkingDirectory'
     kepler_output_file_flag = '-OutputFile'
@@ -40,6 +41,9 @@ class Configuration(configuration.Configuration):
                     
                     if config.has_key('kepler_result_queue_flag'):
                         self.kepler_result_queue_flag = config['kepler_result_queue_flag']
+                        
+                    if config.has_key('kepler_params_queue_flag'):
+                        self.kepler_params_queue_flag = config['kepler_params_queue_flag']
                         
                     if config.has_key('kepler_work_dir_flag'):
                         self.kepler_work_dir_flag = config['kepler_work_dir_flag']

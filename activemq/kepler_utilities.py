@@ -123,7 +123,16 @@ def setup_client(instance_number,
     conf = Configuration(config_file)
 
     params_queue = "%s.%s" % (conf.params_ready_queue, str(instance_number))
-    queues = [params_queue]
+    
+    # Parse command arguments
+    parser = argparse.ArgumentParser(description='Dummy Kepler workflow')
+    parser.add_argument(conf.kepler_params_queue_flag, metavar='params_queue',
+                        default=params_queue,
+                        help='AMQ queue to receive new parameters from ',
+                        dest='params_queue')    
+    namespace = parser.parse_args()
+    
+    queues = [namespace.params_queue]
     c = KeplerJobClient(conf.brokers, conf.amq_user, conf.amq_pwd, 
                      queues, "dakota_consumer")
     c.set_params_ready_queue(params_queue)
