@@ -90,6 +90,7 @@ class DakotaClient(Client):
             announce new results
             @param queue: name of an ActiveMQ queue
         """
+        logging.info("Dakota client will listen for results on %s" % queue)
         self.RESULTS_READY_QUEUE = queue
         
     def set_params_ready_queue(self, queue):
@@ -98,6 +99,7 @@ class DakotaClient(Client):
             request new calculations/simulations
             @param queue: name of an ActiveMQ queue
         """
+        logging.info("Dakota client will send parameters to %s" % queue)
         self.PARAMS_READY_QUEUE = queue
         
     def set_working_directory(self, working_directory):
@@ -186,10 +188,11 @@ def setup_client(instance_number=None,
     conf = Configuration(config_file)
 
     results_queue = "%s.%s" % (conf.results_ready_queue, str(instance_number))
+    params_queue = "%s.%s" % (conf.params_ready_queue, str(instance_number))
     queues = [results_queue]
     c = DakotaClient(conf.brokers, conf.amq_user, conf.amq_pwd, 
-                     queues, "dakota_consumer")
-    c.set_params_ready_queue(conf.params_ready_queue)
+                     queues, "dakota_consumer.%s" % str(instance_number))
+    c.set_params_ready_queue(params_queue)
     c.set_results_ready_queue(results_queue)
     c.set_working_directory(working_directory)
     c.set_listener(DakotaListener(conf, results_ready_queue=results_queue))
