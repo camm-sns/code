@@ -40,8 +40,9 @@ class KeplerJobListener(Listener):
             @param headers: message headers
             @param message: JSON-encoded message content
         """
+        logging.info("Rcv: %s" % headers['destination'])
         if headers['destination']=='/queue/'+self.params_ready_queue:
-            logging.info("Rcv: %s" % headers['destination'])
+            logging.info("  -Ready to exit")
             try:               
                 self._transaction_complete.acquire()
                 self._complete = True
@@ -58,7 +59,6 @@ class KeplerJobListener(Listener):
         logging.info("Waiting for message")
         self._transaction_complete.acquire()
         while not self._complete == True:
-            logging.info("Message received")
             self._transaction_complete.wait()
         self._transaction_complete.release()         
         
@@ -126,6 +126,7 @@ def setup_client(instance_number,
     conf = Configuration(config_file)
 
     params_queue = "%s.%s" % (conf.params_ready_queue, str(instance_number))
+    logging.info("Parameter queue is %s" % params_queue)
     
     # Parse command arguments
     parser = argparse.ArgumentParser(description='Dummy Kepler workflow')
@@ -138,8 +139,8 @@ def setup_client(instance_number,
     queues = [namespace.params_queue]
     c = KeplerJobClient(conf.brokers, conf.amq_user, conf.amq_pwd, 
                      queues, "dakota_consumer")
-    c.set_params_ready_queue(params_queue)
-    c.set_listener(KeplerJobListener(params_queue))
+    c.set_params_ready_queue(namespace.params_queue)
+    c.set_listener(KeplerJobListener(namespace.params_queue))
     return c
  
 if __name__ == "__main__":
