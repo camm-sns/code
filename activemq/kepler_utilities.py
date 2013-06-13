@@ -41,6 +41,7 @@ class KeplerJobListener(Listener):
             @param message: JSON-encoded message content
         """
         if headers['destination']=='/queue/'+self.params_ready_queue:
+            logging.info("Rcv: %s" % headers['destination'])
             try:               
                 self._transaction_complete.acquire()
                 self._complete = True
@@ -54,8 +55,10 @@ class KeplerJobListener(Listener):
         """
             Wait for the results ready message
         """
+        logging.info("Waiting for message")
         self._transaction_complete.acquire()
         while not self._complete == True:
+            logging.info("Message received")
             self._transaction_complete.wait()
         self._transaction_complete.release()         
         
