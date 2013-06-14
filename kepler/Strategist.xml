@@ -2,7 +2,7 @@
 <!DOCTYPE entity PUBLIC "-//UC Berkeley//DTD MoML 1//EN"
     "http://ptolemy.eecs.berkeley.edu/xml/dtd/MoML_1.dtd">
 <entity name="Strategist" class="org.kepler.moml.CompositeClassEntity">
-    <property name="entityId" class="org.kepler.moml.NamedObjId" value="urn:lsid:kepler-project.org/ns/:40778:11:1006">
+    <property name="entityId" class="org.kepler.moml.NamedObjId" value="urn:lsid:kepler-project.org/ns/:40778:11:1129">
     </property>
     <property name="class" class="ptolemy.kernel.util.StringAttribute" value="org.kepler.moml.CompositeClassEntity">
         <property name="id" class="ptolemy.kernel.util.StringAttribute" value="null">
@@ -81,45 +81,9 @@
         </property>
         <property name="_editorFactory" class="ptolemy.vergil.toolbox.VisibleParameterEditorFactory">
         </property>
-        <property name="_location" class="ptolemy.kernel.util.Location" value="[185.0, 155.0]">
+        <property name="_location" class="ptolemy.kernel.util.Location" value="[185.0, 145.0]">
         </property>
         <property name="derivedFrom" class="org.kepler.moml.NamedObjIdReferralList" value="urn:lsid:kepler-project.org:actor:422:1">
-        </property>
-    </property>
-    <property name="LocalWorkingDirectory" class="ptolemy.data.expr.Parameter" value="&quot;/tmp/run_9&quot;">
-<property name="KeplerDocumentation" class="ptolemy.vergil.basic.KeplerDocumentationAttribute">
-<property name="description" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>null</configure></property>
-<property name="author" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>null</configure></property>
-<property name="version" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>null</configure></property>
-<property name="userLevelDocumentation" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>null</configure></property>
-</property>        <property name="entityId" class="org.kepler.moml.NamedObjId" value="urn:lsid:kepler-project.org/ns/:30354:165:3">
-        </property>
-        <property name="class" class="ptolemy.kernel.util.StringAttribute" value="ptolemy.data.expr.Parameter">
-            <property name="id" class="ptolemy.kernel.util.StringAttribute" value="urn:lsid:kepler-project.org:class:1184:1">
-            </property>
-        </property>
-        <property name="semanticType00" class="org.kepler.sms.SemanticType" value="urn:lsid:localhost:onto:1:1#Parameter">
-        </property>
-        <property name="semanticType11" class="org.kepler.sms.SemanticType" value="urn:lsid:localhost:onto:2:1#Parameter">
-        </property>
-        <property name="_hideName" class="ptolemy.kernel.util.SingletonAttribute">
-        </property>
-        <property name="_icon" class="ptolemy.vergil.icon.ValueIcon">
-            <property name="_color" class="ptolemy.actor.gui.ColorAttribute" value="{0.0, 0.0, 1.0, 1.0}">
-            </property>
-        </property>
-        <property name="_smallIconDescription" class="ptolemy.kernel.util.SingletonConfigurableAttribute">
-            <configure>
-      <svg>
-        <text x="20" style="font-size:14; font-family:SansSerif; fill:blue" y="20">-P-</text>
-      </svg>
-    </configure>
-        </property>
-        <property name="_editorFactory" class="ptolemy.vergil.toolbox.VisibleParameterEditorFactory">
-        </property>
-        <property name="_location" class="ptolemy.kernel.util.Location" value="[185.0, 80.0]">
-        </property>
-        <property name="derivedFrom" class="org.kepler.moml.NamedObjIdReferralList" value="urn:lsid:kepler-project.org:actor:420:1">
         </property>
     </property>
     <property name="PN Director" class="ptolemy.domains.pn.kernel.PNDirector">
@@ -147,42 +111,6 @@
         <property name="_location" class="ptolemy.kernel.util.Location" value="[75.0, 55.0]">
         </property>
     </property>
-    <property name="RemoteLogin" class="ptolemy.data.expr.Parameter" value="&quot;vel@chadwick.sns.gov&quot;">
-<property name="KeplerDocumentation" class="ptolemy.vergil.basic.KeplerDocumentationAttribute">
-<property name="description" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>null</configure></property>
-<property name="author" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>null</configure></property>
-<property name="version" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>null</configure></property>
-<property name="userLevelDocumentation" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>null</configure></property>
-</property>        <property name="entityId" class="org.kepler.moml.NamedObjId" value="urn:lsid:kepler-project.org/ns/:30354:165:2">
-        </property>
-        <property name="class" class="ptolemy.kernel.util.StringAttribute" value="ptolemy.data.expr.Parameter">
-            <property name="id" class="ptolemy.kernel.util.StringAttribute" value="urn:lsid:kepler-project.org:class:1184:1">
-            </property>
-        </property>
-        <property name="semanticType00" class="org.kepler.sms.SemanticType" value="urn:lsid:localhost:onto:1:1#Parameter">
-        </property>
-        <property name="semanticType11" class="org.kepler.sms.SemanticType" value="urn:lsid:localhost:onto:2:1#Parameter">
-        </property>
-        <property name="_hideName" class="ptolemy.kernel.util.SingletonAttribute">
-        </property>
-        <property name="_icon" class="ptolemy.vergil.icon.ValueIcon">
-            <property name="_color" class="ptolemy.actor.gui.ColorAttribute" value="{0.0, 0.0, 1.0, 1.0}">
-            </property>
-        </property>
-        <property name="_smallIconDescription" class="ptolemy.kernel.util.SingletonConfigurableAttribute">
-            <configure>
-      <svg>
-        <text x="20" style="font-size:14; font-family:SansSerif; fill:blue" y="20">-P-</text>
-      </svg>
-    </configure>
-        </property>
-        <property name="_editorFactory" class="ptolemy.vergil.toolbox.VisibleParameterEditorFactory">
-        </property>
-        <property name="_location" class="ptolemy.kernel.util.Location" value="[185.0, 105.0]">
-        </property>
-        <property name="derivedFrom" class="org.kepler.moml.NamedObjIdReferralList" value="urn:lsid:kepler-project.org:actor:420:1">
-        </property>
-    </property>
     <property name="_windowProperties" class="ptolemy.actor.gui.WindowPropertiesAttribute" value="{bounds={202, 360, 1693, 832}, maximized=false}">
     </property>
     <property name="_vergilSize" class="ptolemy.actor.gui.SizeAttribute" value="[1381, 676]">
@@ -191,54 +119,18 @@
     </property>
     <property name="_vergilCenter" class="ptolemy.data.expr.ExpertParameter" value="{690.5, 338.0}">
     </property>
-    <property name="CammDirectory" class="ptolemy.data.expr.Parameter" value="&quot;/tmp/code/simulation/src&quot;">
-<property name="KeplerDocumentation" class="ptolemy.vergil.basic.KeplerDocumentationAttribute">
-<property name="description" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>null</configure></property>
-<property name="author" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>null</configure></property>
-<property name="version" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>null</configure></property>
-<property name="userLevelDocumentation" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>null</configure></property>
-</property>        <property name="entityId" class="org.kepler.moml.NamedObjId" value="urn:lsid:kepler-project.org/ns/:30354:165:13">
-        </property>
-        <property name="class" class="ptolemy.kernel.util.StringAttribute" value="ptolemy.data.expr.Parameter">
-            <property name="id" class="ptolemy.kernel.util.StringAttribute" value="urn:lsid:kepler-project.org:class:1184:1">
-            </property>
-        </property>
-        <property name="semanticType00" class="org.kepler.sms.SemanticType" value="urn:lsid:localhost:onto:1:1#Parameter">
-        </property>
-        <property name="semanticType11" class="org.kepler.sms.SemanticType" value="urn:lsid:localhost:onto:2:1#Parameter">
-        </property>
-        <property name="_hideName" class="ptolemy.kernel.util.SingletonAttribute">
-        </property>
-        <property name="_icon" class="ptolemy.vergil.icon.ValueIcon">
-            <property name="_color" class="ptolemy.actor.gui.ColorAttribute" value="{0.0, 0.0, 1.0, 1.0}">
-            </property>
-        </property>
-        <property name="_smallIconDescription" class="ptolemy.kernel.util.SingletonConfigurableAttribute">
-            <configure>
-      <svg>
-        <text x="20" style="font-size:14; font-family:SansSerif; fill:blue" y="20">-P-</text>
-      </svg>
-    </configure>
-        </property>
-        <property name="_editorFactory" class="ptolemy.vergil.toolbox.VisibleParameterEditorFactory">
-        </property>
-        <property name="_location" class="ptolemy.kernel.util.Location" value="[185.0, 180.0]">
-        </property>
-        <property name="derivedFrom" class="org.kepler.moml.NamedObjIdReferralList" value="urn:lsid:kepler-project.org:actor:420:1">
-        </property>
-    </property>
     <property name="enableBackwardTypeInference" class="ptolemy.data.expr.Parameter" value="false">
     </property>
-    <property name="LocalUserName" class="ptolemy.data.expr.Parameter" value="&quot;vel&quot;">
+    <property name="LocalWorkingDirectory" class="ptolemy.data.expr.StringParameter" value="/tmp/run_9">
 <property name="KeplerDocumentation" class="ptolemy.vergil.basic.KeplerDocumentationAttribute">
 <property name="description" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>null</configure></property>
-<property name="author" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>null</configure></property>
+<property name="author" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>Edward A. Lee</configure></property>
 <property name="version" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>null</configure></property>
-<property name="userLevelDocumentation" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>null</configure></property>
-</property>        <property name="entityId" class="org.kepler.moml.NamedObjId" value="urn:lsid:kepler-project.org/ns/:40778:132:1">
+<property name="userLevelDocumentation" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>&lt;p&gt;StringParameter specifies a persistent string. &lt;/p&gt;&#10;&#10;&lt;p&gt;Change the name of the StringParameter to better identify the specified value (right-click the parameter and select &quot;Customize Name&quot; from the menu). Other actors may refer to the StringParameter using the $NAME syntax (e.g. $Parameter).&#10;&lt;/p&gt;</configure></property>
+</property>        <property name="entityId" class="org.kepler.moml.NamedObjId" value="urn:lsid:kepler-project.org/ns/:40778:161:1">
         </property>
-        <property name="class" class="ptolemy.kernel.util.StringAttribute" value="ptolemy.data.expr.Parameter">
-            <property name="id" class="ptolemy.kernel.util.StringAttribute" value="urn:lsid:kepler-project.org:class:1184:1">
+        <property name="class" class="ptolemy.kernel.util.StringAttribute" value="ptolemy.data.expr.StringParameter">
+            <property name="id" class="ptolemy.kernel.util.StringAttribute" value="urn:lsid:kepler-project.org:class:1185:1">
             </property>
         </property>
         <property name="semanticType00" class="org.kepler.sms.SemanticType" value="urn:lsid:localhost:onto:1:1#Parameter">
@@ -248,21 +140,137 @@
         <property name="_hideName" class="ptolemy.kernel.util.SingletonAttribute">
         </property>
         <property name="_icon" class="ptolemy.vergil.icon.ValueIcon">
-            <property name="_color" class="ptolemy.actor.gui.ColorAttribute" value="{0.0, 0.0, 1.0, 1.0}">
+            <property name="_color" class="ptolemy.actor.gui.ColorAttribute" value="{1.0, 0.0, 0.0, 1.0}">
             </property>
         </property>
         <property name="_smallIconDescription" class="ptolemy.kernel.util.SingletonConfigurableAttribute">
             <configure>
-      <svg>
-        <text x="20" style="font-size:14; font-family:SansSerif; fill:blue" y="20">-P-</text>
-      </svg>
-    </configure>
+        <svg>
+          <text x="20" style="font-size:14; font-family:SansSerif; fill:red" y="20">-S-</text>
+        </svg>
+      </configure>
         </property>
         <property name="_editorFactory" class="ptolemy.vergil.toolbox.VisibleParameterEditorFactory">
         </property>
-        <property name="_location" class="ptolemy.kernel.util.Location" value="[185.0, 60.0]">
+        <property name="_location" class="ptolemy.kernel.util.Location" value="[185.0, 80.0]">
         </property>
-        <property name="derivedFrom" class="org.kepler.moml.NamedObjIdReferralList" value="urn:lsid:kepler-project.org:actor:420:1:urn:lsid:kepler-project.org/ns/:30354:165:3">
+        <property name="derivedFrom" class="org.kepler.moml.NamedObjIdReferralList" value="urn:lsid:kepler-project.org:actor:421:1">
+        </property>
+        <property name="" class="ptolemy.vergil.basic.DocAttribute">
+            <property name="description" class="ptolemy.kernel.util.StringAttribute" value="&lt;p&gt;StringParameter specifies a persistent string. &lt;/p&gt;&#10;&#10;&lt;p&gt;Change the name of the StringParameter to better identify the specified value (right-click the parameter and select &quot;Customize Name&quot; from the menu). Other actors may refer to the StringParameter using the $NAME syntax (e.g. $Parameter).&#10;&lt;/p&gt;">
+            </property>
+            <property name="author" class="ptolemy.kernel.util.StringAttribute" value="Edward A. Lee">
+            </property>
+            <property name="version" class="ptolemy.kernel.util.StringAttribute" value="null">
+            </property>
+        </property>
+    </property>
+    <property name="LocalUserName" class="ptolemy.data.expr.StringParameter" value="vel">
+<property name="KeplerDocumentation" class="ptolemy.vergil.basic.KeplerDocumentationAttribute">
+<property name="description" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>null</configure></property>
+<property name="author" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>Edward A. Lee</configure></property>
+<property name="version" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>null</configure></property>
+<property name="userLevelDocumentation" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>&lt;p&gt;StringParameter specifies a persistent string. &lt;/p&gt;&#10;&#10;&lt;p&gt;Change the name of the StringParameter to better identify the specified value (right-click the parameter and select &quot;Customize Name&quot; from the menu). Other actors may refer to the StringParameter using the $NAME syntax (e.g. $Parameter).&#10;&lt;/p&gt;</configure></property>
+</property>        <property name="entityId" class="org.kepler.moml.NamedObjId" value="urn:lsid:kepler-project.org/ns/:40778:163:1">
+        </property>
+        <property name="class" class="ptolemy.kernel.util.StringAttribute" value="ptolemy.data.expr.StringParameter">
+            <property name="id" class="ptolemy.kernel.util.StringAttribute" value="urn:lsid:kepler-project.org:class:1185:1">
+            </property>
+        </property>
+        <property name="semanticType00" class="org.kepler.sms.SemanticType" value="urn:lsid:localhost:onto:1:1#Parameter">
+        </property>
+        <property name="semanticType11" class="org.kepler.sms.SemanticType" value="urn:lsid:localhost:onto:2:1#Parameter">
+        </property>
+        <property name="_hideName" class="ptolemy.kernel.util.SingletonAttribute">
+        </property>
+        <property name="_icon" class="ptolemy.vergil.icon.ValueIcon">
+            <property name="_color" class="ptolemy.actor.gui.ColorAttribute" value="{1.0, 0.0, 0.0, 1.0}">
+            </property>
+        </property>
+        <property name="_smallIconDescription" class="ptolemy.kernel.util.SingletonConfigurableAttribute">
+            <configure>
+        <svg>
+          <text x="20" style="font-size:14; font-family:SansSerif; fill:red" y="20">-S-</text>
+        </svg>
+      </configure>
+        </property>
+        <property name="_editorFactory" class="ptolemy.vergil.toolbox.VisibleParameterEditorFactory">
+        </property>
+        <property name="_location" class="ptolemy.kernel.util.Location" value="[185.0, 65.0]">
+        </property>
+        <property name="derivedFrom" class="org.kepler.moml.NamedObjIdReferralList" value="urn:lsid:kepler-project.org:actor:421:1">
+        </property>
+    </property>
+    <property name="RemoteLogin" class="ptolemy.data.expr.StringParameter" value="vel@chadwick.sns.gov">
+<property name="KeplerDocumentation" class="ptolemy.vergil.basic.KeplerDocumentationAttribute">
+<property name="description" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>null</configure></property>
+<property name="author" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>Edward A. Lee</configure></property>
+<property name="version" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>null</configure></property>
+<property name="userLevelDocumentation" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>&lt;p&gt;StringParameter specifies a persistent string. &lt;/p&gt;&#10;&#10;&lt;p&gt;Change the name of the StringParameter to better identify the specified value (right-click the parameter and select &quot;Customize Name&quot; from the menu). Other actors may refer to the StringParameter using the $NAME syntax (e.g. $Parameter).&#10;&lt;/p&gt;</configure></property>
+</property>        <property name="entityId" class="org.kepler.moml.NamedObjId" value="urn:lsid:kepler-project.org/ns/:40778:164:1">
+        </property>
+        <property name="class" class="ptolemy.kernel.util.StringAttribute" value="ptolemy.data.expr.StringParameter">
+            <property name="id" class="ptolemy.kernel.util.StringAttribute" value="urn:lsid:kepler-project.org:class:1185:1">
+            </property>
+        </property>
+        <property name="semanticType00" class="org.kepler.sms.SemanticType" value="urn:lsid:localhost:onto:1:1#Parameter">
+        </property>
+        <property name="semanticType11" class="org.kepler.sms.SemanticType" value="urn:lsid:localhost:onto:2:1#Parameter">
+        </property>
+        <property name="_hideName" class="ptolemy.kernel.util.SingletonAttribute">
+        </property>
+        <property name="_icon" class="ptolemy.vergil.icon.ValueIcon">
+            <property name="_color" class="ptolemy.actor.gui.ColorAttribute" value="{1.0, 0.0, 0.0, 1.0}">
+            </property>
+        </property>
+        <property name="_smallIconDescription" class="ptolemy.kernel.util.SingletonConfigurableAttribute">
+            <configure>
+        <svg>
+          <text x="20" style="font-size:14; font-family:SansSerif; fill:red" y="20">-S-</text>
+        </svg>
+      </configure>
+        </property>
+        <property name="_editorFactory" class="ptolemy.vergil.toolbox.VisibleParameterEditorFactory">
+        </property>
+        <property name="_location" class="ptolemy.kernel.util.Location" value="[185.0, 95.0]">
+        </property>
+        <property name="derivedFrom" class="org.kepler.moml.NamedObjIdReferralList" value="urn:lsid:kepler-project.org:actor:421:1">
+        </property>
+    </property>
+    <property name="CammDirectory" class="ptolemy.data.expr.StringParameter" value="/tmp/code/simulation/src">
+<property name="KeplerDocumentation" class="ptolemy.vergil.basic.KeplerDocumentationAttribute">
+<property name="description" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>null</configure></property>
+<property name="author" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>Edward A. Lee</configure></property>
+<property name="version" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>null</configure></property>
+<property name="userLevelDocumentation" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>&lt;p&gt;StringParameter specifies a persistent string. &lt;/p&gt;&#10;&#10;&lt;p&gt;Change the name of the StringParameter to better identify the specified value (right-click the parameter and select &quot;Customize Name&quot; from the menu). Other actors may refer to the StringParameter using the $NAME syntax (e.g. $Parameter).&#10;&lt;/p&gt;</configure></property>
+</property>        <property name="entityId" class="org.kepler.moml.NamedObjId" value="urn:lsid:kepler-project.org/ns/:40778:167:1">
+        </property>
+        <property name="class" class="ptolemy.kernel.util.StringAttribute" value="ptolemy.data.expr.StringParameter">
+            <property name="id" class="ptolemy.kernel.util.StringAttribute" value="urn:lsid:kepler-project.org:class:1185:1">
+            </property>
+        </property>
+        <property name="semanticType00" class="org.kepler.sms.SemanticType" value="urn:lsid:localhost:onto:1:1#Parameter">
+        </property>
+        <property name="semanticType11" class="org.kepler.sms.SemanticType" value="urn:lsid:localhost:onto:2:1#Parameter">
+        </property>
+        <property name="_hideName" class="ptolemy.kernel.util.SingletonAttribute">
+        </property>
+        <property name="_icon" class="ptolemy.vergil.icon.ValueIcon">
+            <property name="_color" class="ptolemy.actor.gui.ColorAttribute" value="{1.0, 0.0, 0.0, 1.0}">
+            </property>
+        </property>
+        <property name="_smallIconDescription" class="ptolemy.kernel.util.SingletonConfigurableAttribute">
+            <configure>
+        <svg>
+          <text x="20" style="font-size:14; font-family:SansSerif; fill:red" y="20">-S-</text>
+        </svg>
+      </configure>
+        </property>
+        <property name="_editorFactory" class="ptolemy.vergil.toolbox.VisibleParameterEditorFactory">
+        </property>
+        <property name="_location" class="ptolemy.kernel.util.Location" value="[185.0, 110.0]">
+        </property>
+        <property name="derivedFrom" class="org.kepler.moml.NamedObjIdReferralList" value="urn:lsid:kepler-project.org:actor:421:1">
         </property>
     </property>
     <entity name="Ramp" class="ptolemy.actor.lib.Ramp">
@@ -329,7 +337,7 @@
         </port>
     </entity>
     <entity name="RunSimulation" class="org.kepler.moml.CompositeClassEntity">
-        <property name="entityId" class="org.kepler.moml.NamedObjId" value="urn:lsid:kepler-project.org/ns/:40778:13:404">
+        <property name="entityId" class="org.kepler.moml.NamedObjId" value="urn:lsid:kepler-project.org/ns/:40778:13:450">
         </property>
         <property name="class" class="ptolemy.kernel.util.StringAttribute" value="org.kepler.moml.CompositeClassEntity">
             <property name="id" class="ptolemy.kernel.util.StringAttribute" value="null">
@@ -1470,7 +1478,7 @@
         <entity name="CreateConvolved" class="ptolemy.actor.TypedCompositeActor">
             <property name="_createdBy" class="ptolemy.kernel.attributes.VersionAttribute" value="8.1.devel">
             </property>
-            <property name="entityId" class="org.kepler.moml.NamedObjId" value="urn:lsid:kepler-project.org/ns/:40778:30:112">
+            <property name="entityId" class="org.kepler.moml.NamedObjId" value="urn:lsid:kepler-project.org/ns/:40778:30:127">
             </property>
             <property name="class" class="ptolemy.kernel.util.StringAttribute" value="ptolemy.actor.TypedCompositeActor">
                 <property name="id" class="ptolemy.kernel.util.StringAttribute" value="urn:lsid:kepler-project.org:class:449:1">
@@ -3119,7 +3127,7 @@
             <entity name="RemoteSimulationJob_SASSENA" class="ptolemy.actor.TypedCompositeActor">
                 <property name="_createdBy" class="ptolemy.kernel.attributes.VersionAttribute" value="8.1.devel">
                 </property>
-                <property name="entityId" class="org.kepler.moml.NamedObjId" value="urn:lsid:kepler-project.org/ns/:40778:29:7">
+                <property name="entityId" class="org.kepler.moml.NamedObjId" value="urn:lsid:kepler-project.org/ns/:40778:29:64">
                 </property>
                 <property name="class" class="ptolemy.kernel.util.StringAttribute" value="ptolemy.actor.TypedCompositeActor">
                     <property name="id" class="ptolemy.kernel.util.StringAttribute" value="urn:lsid:kepler-project.org:class:449:1">
@@ -3953,41 +3961,39 @@
                         <property name="input"/>
                     </port>
                 </entity>
-                <entity name="Display" class="ptolemy.actor.lib.gui.Display">
-                    <property name="_windowProperties" class="ptolemy.actor.gui.WindowPropertiesAttribute">
+                <entity name="Logger4" class="org.kepler.actor.Logger">
+                    <property name="logfile" class="ptolemy.data.expr.FileParameter" value="$LocalWorkingDirectory/kepler.log">
                     </property>
-                    <property name="_paneSize" class="ptolemy.actor.gui.SizeAttribute">
+                    <property name="header" class="ptolemy.data.expr.StringParameter" value="">
                     </property>
-                    <property name="rowsDisplayed" class="ptolemy.data.expr.Parameter" value="10">
-                    </property>
-                    <property name="columnsDisplayed" class="ptolemy.data.expr.Parameter" value="40">
-                    </property>
-                    <property name="suppressBlankLines" class="ptolemy.data.expr.Parameter" value="false">
-                    </property>
-                    <property name="title" class="ptolemy.data.expr.StringParameter" value="">
+                    <property name="format" class="ptolemy.data.expr.StringParameter" value="text">
                     </property>
 <property name="KeplerDocumentation" class="ptolemy.vergil.basic.KeplerDocumentationAttribute">
 <property name="description" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>null</configure></property>
-<property name="author" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>Yuhong Xiong, Edward A. Lee</configure></property>
-<property name="version" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>null</configure></property>
-<property name="userLevelDocumentation" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>&lt;p&gt;The Display actor reads tokens of any type via its input multiport, and displays each token on a separate line in a text display window.&lt;/p&gt;&#10;&#10;&lt;p&gt;Specify the size of the text display window with the rowsDisplayed and columnsDisplayed parameters. Simply resizing the window onscreen does not persistently change the size when the workflow is saved, closed, and then re-opened. &lt;/p&gt;&#10;&#10;&lt;p&gt;If the input is a string token, then the actor strips the surrounding quotation marks before displaying the value.&lt;/p&gt; &#10;&#10;&lt;p&gt;Select the suppressBlankLines parameter to specify that the actor not add blank lines to the display. By default, the actor will add blank lines.&lt;/p&gt;&#10;&#10;&lt;p&gt;Note: this actor can consume large amounts of memory. It is not advisable to use it to display large output streams.&lt;/p&gt;</configure></property>
-<property name="port:input" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>A multiport that accepts tokens of any type.</configure></property>
-<property name="prop:suppressBlankLines" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>Specify whether the actor should display blank lines (the default) or suppress them.</configure></property>
-<property name="prop:rowsDisplayed" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>The vertical size of the display, in rows. The value is an integer that defaults to 10.</configure></property>
-<property name="prop:columnsDisplayed" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>The horizontal size of the display, in columns. The value is an integer that defaults to 40.</configure></property>
-<property name="prop:title" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>The title of the text display window. If specified, the value will appear in the title bar of the text display window.</configure></property>
-</property>                    <property name="entityId" class="org.kepler.moml.NamedObjId" value="urn:lsid:kepler-project.org:actor:7:1">
+<property name="author" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>Norbert Podhorszki</configure></property>
+<property name="version" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>$Id: Logger.xml 30507 2012-08-22 23:51:26Z crawl $</configure></property>
+<property name="userLevelDocumentation" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>&#10;Log information directed into a file. All Logger actors can write into the&#10; same file, if their parameter points to the same file. Format as it is, or&#10; XML. text format: date: header: text XML format:&#10; &#10; &#10; If the text is empty (or only white spaces), nothing will be written. So you&#10; do not need to filter out e.g. empty stderr messages before connecting to&#10; this Logger actor.</configure></property>
+<property name="port:text" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>The text to be printed into the log. This port is expects strings.</configure></property>
+<property name="prop:logfile" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>The log file. It can be changed between firings. The file will be created if does not exists, otherwise text will be appended to the existing file.</configure></property>
+<property name="prop:format" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>The format of the logger. Currently &quot;text&quot; or &quot;xml&quot;. Other value will mean &quot;text&quot;. If different loggers use different format option for the same file, the output will be a mixture of different formats.</configure></property>
+<property name="prop:header" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>The header information to be printed with the log. Useful to provide an actor name, or some meaningful name. Date is printed independently to the log.</configure></property>
+</property>                    <property name="entityId" class="org.kepler.moml.NamedObjId" value="urn:lsid:kepler-project.org/ns/:40778:61:1">
                     </property>
-                    <property name="class" class="ptolemy.kernel.util.StringAttribute" value="ptolemy.actor.lib.gui.Display">
-                        <property name="id" class="ptolemy.kernel.util.StringAttribute" value="urn:lsid:kepler-project.org:class:883:1">
+                    <property name="class" class="ptolemy.kernel.util.StringAttribute" value="org.kepler.actor.Logger">
+                        <property name="id" class="ptolemy.kernel.util.StringAttribute" value="urn:lsid:kepler-project.org:class:1209:1">
                         </property>
-                    </property>
-                    <property name="semanticType00" class="org.kepler.sms.SemanticType" value="urn:lsid:localhost:onto:1:1#TextualOutputActor">
                     </property>
                     <property name="semanticType11" class="org.kepler.sms.SemanticType" value="urn:lsid:localhost:onto:2:1#TextualOutput">
                     </property>
-                    <property name="_location" class="ptolemy.kernel.util.Location" value="{800, 365}">
+                    <property name="_location" class="ptolemy.kernel.util.Location" value="[750.0, 365.0]">
                     </property>
+                    <property name="derivedFrom" class="org.kepler.moml.NamedObjIdReferralList" value="urn:lsid:kepler-project.org:actor:509:1">
+                    </property>
+                    <port name="text" class="ptolemy.actor.TypedIOPort">
+                        <property name="input"/>
+                        <property name="_showName" class="ptolemy.data.expr.Parameter" value="false">
+                        </property>
+                    </port>
                 </entity>
                 <relation name="relation" class="ptolemy.actor.TypedIORelation">
                 </relation>
@@ -4092,7 +4098,7 @@
                 <link port="Stop2.input" relation="relation25"/>
                 <link port="Expression3.output" relation="relation25"/>
                 <link port="Expression3.input" relation="relation3"/>
-                <link port="Display.input" relation="relation6"/>
+                <link port="Logger4.text" relation="relation6"/>
             </entity>
             <entity name="MantidFitting" class="ptolemy.actor.lib.Exec">
                 <property name="NONE" class="ptolemy.data.expr.Parameter" value="0">
@@ -4727,46 +4733,10 @@
                 <property name="input"/>
             </port>
         </entity>
-        <entity name="Display" class="ptolemy.actor.lib.gui.Display">
-            <property name="_windowProperties" class="ptolemy.actor.gui.WindowPropertiesAttribute">
-            </property>
-            <property name="_paneSize" class="ptolemy.actor.gui.SizeAttribute">
-            </property>
-            <property name="rowsDisplayed" class="ptolemy.data.expr.Parameter" value="10">
-            </property>
-            <property name="columnsDisplayed" class="ptolemy.data.expr.Parameter" value="40">
-            </property>
-            <property name="suppressBlankLines" class="ptolemy.data.expr.Parameter" value="false">
-            </property>
-            <property name="title" class="ptolemy.data.expr.StringParameter" value="">
-            </property>
-<property name="KeplerDocumentation" class="ptolemy.vergil.basic.KeplerDocumentationAttribute">
-<property name="description" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>null</configure></property>
-<property name="author" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>Yuhong Xiong, Edward A. Lee</configure></property>
-<property name="version" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>null</configure></property>
-<property name="userLevelDocumentation" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>&lt;p&gt;The Display actor reads tokens of any type via its input multiport, and displays each token on a separate line in a text display window.&lt;/p&gt;&#10;&#10;&lt;p&gt;Specify the size of the text display window with the rowsDisplayed and columnsDisplayed parameters. Simply resizing the window onscreen does not persistently change the size when the workflow is saved, closed, and then re-opened. &lt;/p&gt;&#10;&#10;&lt;p&gt;If the input is a string token, then the actor strips the surrounding quotation marks before displaying the value.&lt;/p&gt; &#10;&#10;&lt;p&gt;Select the suppressBlankLines parameter to specify that the actor not add blank lines to the display. By default, the actor will add blank lines.&lt;/p&gt;&#10;&#10;&lt;p&gt;Note: this actor can consume large amounts of memory. It is not advisable to use it to display large output streams.&lt;/p&gt;</configure></property>
-<property name="port:input" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>A multiport that accepts tokens of any type.</configure></property>
-<property name="prop:suppressBlankLines" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>Specify whether the actor should display blank lines (the default) or suppress them.</configure></property>
-<property name="prop:rowsDisplayed" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>The vertical size of the display, in rows. The value is an integer that defaults to 10.</configure></property>
-<property name="prop:columnsDisplayed" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>The horizontal size of the display, in columns. The value is an integer that defaults to 40.</configure></property>
-<property name="prop:title" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>The title of the text display window. If specified, the value will appear in the title bar of the text display window.</configure></property>
-</property>            <property name="entityId" class="org.kepler.moml.NamedObjId" value="urn:lsid:kepler-project.org:actor:7:1">
-            </property>
-            <property name="class" class="ptolemy.kernel.util.StringAttribute" value="ptolemy.actor.lib.gui.Display">
-                <property name="id" class="ptolemy.kernel.util.StringAttribute" value="urn:lsid:kepler-project.org:class:883:1">
-                </property>
-            </property>
-            <property name="semanticType00" class="org.kepler.sms.SemanticType" value="urn:lsid:localhost:onto:1:1#TextualOutputActor">
-            </property>
-            <property name="semanticType11" class="org.kepler.sms.SemanticType" value="urn:lsid:localhost:onto:2:1#TextualOutput">
-            </property>
-            <property name="_location" class="ptolemy.kernel.util.Location" value="[865.0, 585.0]">
-            </property>
-        </entity>
         <entity name="CreateConvolved2" class="ptolemy.actor.TypedCompositeActor">
             <property name="_createdBy" class="ptolemy.kernel.attributes.VersionAttribute" value="8.1.devel">
             </property>
-            <property name="entityId" class="org.kepler.moml.NamedObjId" value="urn:lsid:kepler-project.org/ns/:40778:30:108">
+            <property name="entityId" class="org.kepler.moml.NamedObjId" value="urn:lsid:kepler-project.org/ns/:40778:30:130">
             </property>
             <property name="class" class="ptolemy.kernel.util.StringAttribute" value="ptolemy.actor.TypedCompositeActor">
                 <property name="id" class="ptolemy.kernel.util.StringAttribute" value="urn:lsid:kepler-project.org:class:449:1">
@@ -6419,7 +6389,7 @@
             <entity name="RemoteSimulationJob_SASSENA" class="ptolemy.actor.TypedCompositeActor">
                 <property name="_createdBy" class="ptolemy.kernel.attributes.VersionAttribute" value="8.1.devel">
                 </property>
-                <property name="entityId" class="org.kepler.moml.NamedObjId" value="urn:lsid:kepler-project.org/ns/:40778:29:7">
+                <property name="entityId" class="org.kepler.moml.NamedObjId" value="urn:lsid:kepler-project.org/ns/:40778:29:69">
                 </property>
                 <property name="class" class="ptolemy.kernel.util.StringAttribute" value="ptolemy.actor.TypedCompositeActor">
                     <property name="id" class="ptolemy.kernel.util.StringAttribute" value="urn:lsid:kepler-project.org:class:449:1">
@@ -6436,7 +6406,7 @@
 <property name="author" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>Yuhong Xiong</configure></property>
 <property name="version" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>null</configure></property>
 <property name="userLevelDocumentation" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>&lt;p&gt;A Composite actor is an aggregation of actors. It may have a local director that is responsible for executing the contained actors. A Composite actor with a local director is called an opaque actor. Composite actors do not require a local director. Composite actors with no local director &quot;inherit&quot; the director from the containing workflow and are called non-opaque.&lt;/p&gt;&#10;&#10;&lt;p&gt;To create a composite actor, drag and drop the Composite actor onto the Workflow canvas. Right-click the actor and select Open Actor from the drop-down menu. A new Kepler application window will open for designing the composite.&lt;/p&gt;</configure></property>
-</property>                <property name="_location" class="ptolemy.kernel.util.Location" value="{845.0, 375.0}">
+</property>                <property name="_location" class="ptolemy.kernel.util.Location" value="[855.0, 370.0]">
                 </property>
                 <property name="derivedFrom" class="org.kepler.moml.NamedObjIdReferralList" value="urn:lsid:kepler-project.org:actor:449:1:urn:lsid:kepler-project.org/ns/:30354:1008:317">
                 </property>
@@ -7253,41 +7223,39 @@
                         <property name="input"/>
                     </port>
                 </entity>
-                <entity name="Display" class="ptolemy.actor.lib.gui.Display">
-                    <property name="_windowProperties" class="ptolemy.actor.gui.WindowPropertiesAttribute">
+                <entity name="Logger" class="org.kepler.actor.Logger">
+                    <property name="logfile" class="ptolemy.data.expr.FileParameter" value="$LocalWorkingDirectory/kepler.log">
                     </property>
-                    <property name="_paneSize" class="ptolemy.actor.gui.SizeAttribute">
+                    <property name="header" class="ptolemy.data.expr.StringParameter" value="">
                     </property>
-                    <property name="rowsDisplayed" class="ptolemy.data.expr.Parameter" value="10">
-                    </property>
-                    <property name="columnsDisplayed" class="ptolemy.data.expr.Parameter" value="40">
-                    </property>
-                    <property name="suppressBlankLines" class="ptolemy.data.expr.Parameter" value="false">
-                    </property>
-                    <property name="title" class="ptolemy.data.expr.StringParameter" value="">
+                    <property name="format" class="ptolemy.data.expr.StringParameter" value="text">
                     </property>
 <property name="KeplerDocumentation" class="ptolemy.vergil.basic.KeplerDocumentationAttribute">
 <property name="description" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>null</configure></property>
-<property name="author" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>Yuhong Xiong, Edward A. Lee</configure></property>
-<property name="version" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>null</configure></property>
-<property name="userLevelDocumentation" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>&lt;p&gt;The Display actor reads tokens of any type via its input multiport, and displays each token on a separate line in a text display window.&lt;/p&gt;&#10;&#10;&lt;p&gt;Specify the size of the text display window with the rowsDisplayed and columnsDisplayed parameters. Simply resizing the window onscreen does not persistently change the size when the workflow is saved, closed, and then re-opened. &lt;/p&gt;&#10;&#10;&lt;p&gt;If the input is a string token, then the actor strips the surrounding quotation marks before displaying the value.&lt;/p&gt; &#10;&#10;&lt;p&gt;Select the suppressBlankLines parameter to specify that the actor not add blank lines to the display. By default, the actor will add blank lines.&lt;/p&gt;&#10;&#10;&lt;p&gt;Note: this actor can consume large amounts of memory. It is not advisable to use it to display large output streams.&lt;/p&gt;</configure></property>
-<property name="port:input" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>A multiport that accepts tokens of any type.</configure></property>
-<property name="prop:suppressBlankLines" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>Specify whether the actor should display blank lines (the default) or suppress them.</configure></property>
-<property name="prop:rowsDisplayed" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>The vertical size of the display, in rows. The value is an integer that defaults to 10.</configure></property>
-<property name="prop:columnsDisplayed" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>The horizontal size of the display, in columns. The value is an integer that defaults to 40.</configure></property>
-<property name="prop:title" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>The title of the text display window. If specified, the value will appear in the title bar of the text display window.</configure></property>
-</property>                    <property name="entityId" class="org.kepler.moml.NamedObjId" value="urn:lsid:kepler-project.org:actor:7:1">
+<property name="author" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>Norbert Podhorszki</configure></property>
+<property name="version" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>$Id: Logger.xml 30507 2012-08-22 23:51:26Z crawl $</configure></property>
+<property name="userLevelDocumentation" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>&#10;Log information directed into a file. All Logger actors can write into the&#10; same file, if their parameter points to the same file. Format as it is, or&#10; XML. text format: date: header: text XML format:&#10; &#10; &#10; If the text is empty (or only white spaces), nothing will be written. So you&#10; do not need to filter out e.g. empty stderr messages before connecting to&#10; this Logger actor.</configure></property>
+<property name="port:text" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>The text to be printed into the log. This port is expects strings.</configure></property>
+<property name="prop:logfile" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>The log file. It can be changed between firings. The file will be created if does not exists, otherwise text will be appended to the existing file.</configure></property>
+<property name="prop:format" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>The format of the logger. Currently &quot;text&quot; or &quot;xml&quot;. Other value will mean &quot;text&quot;. If different loggers use different format option for the same file, the output will be a mixture of different formats.</configure></property>
+<property name="prop:header" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>The header information to be printed with the log. Useful to provide an actor name, or some meaningful name. Date is printed independently to the log.</configure></property>
+</property>                    <property name="entityId" class="org.kepler.moml.NamedObjId" value="urn:lsid:kepler-project.org/ns/:40778:61:1">
                     </property>
-                    <property name="class" class="ptolemy.kernel.util.StringAttribute" value="ptolemy.actor.lib.gui.Display">
-                        <property name="id" class="ptolemy.kernel.util.StringAttribute" value="urn:lsid:kepler-project.org:class:883:1">
+                    <property name="class" class="ptolemy.kernel.util.StringAttribute" value="org.kepler.actor.Logger">
+                        <property name="id" class="ptolemy.kernel.util.StringAttribute" value="urn:lsid:kepler-project.org:class:1209:1">
                         </property>
-                    </property>
-                    <property name="semanticType00" class="org.kepler.sms.SemanticType" value="urn:lsid:localhost:onto:1:1#TextualOutputActor">
                     </property>
                     <property name="semanticType11" class="org.kepler.sms.SemanticType" value="urn:lsid:localhost:onto:2:1#TextualOutput">
                     </property>
-                    <property name="_location" class="ptolemy.kernel.util.Location" value="{800, 365}">
+                    <property name="_location" class="ptolemy.kernel.util.Location" value="{804.0, 388.0}">
                     </property>
+                    <property name="derivedFrom" class="org.kepler.moml.NamedObjIdReferralList" value="urn:lsid:kepler-project.org:actor:509:1">
+                    </property>
+                    <port name="text" class="ptolemy.actor.TypedIOPort">
+                        <property name="input"/>
+                        <property name="_showName" class="ptolemy.data.expr.Parameter" value="false">
+                        </property>
+                    </port>
                 </entity>
                 <relation name="relation" class="ptolemy.actor.TypedIORelation">
                 </relation>
@@ -7392,7 +7360,7 @@
                 <link port="Stop2.input" relation="relation25"/>
                 <link port="Expression3.output" relation="relation25"/>
                 <link port="Expression3.input" relation="relation3"/>
-                <link port="Display.input" relation="relation6"/>
+                <link port="Logger.text" relation="relation6"/>
             </entity>
             <entity name="MantidFitting" class="ptolemy.actor.lib.Exec">
                 <property name="NONE" class="ptolemy.data.expr.Parameter" value="0">
@@ -7960,7 +7928,7 @@
         <entity name="CreateConvolved3" class="ptolemy.actor.TypedCompositeActor">
             <property name="_createdBy" class="ptolemy.kernel.attributes.VersionAttribute" value="8.1.devel">
             </property>
-            <property name="entityId" class="org.kepler.moml.NamedObjId" value="urn:lsid:kepler-project.org/ns/:40778:30:74">
+            <property name="entityId" class="org.kepler.moml.NamedObjId" value="urn:lsid:kepler-project.org/ns/:40778:30:124">
             </property>
             <property name="class" class="ptolemy.kernel.util.StringAttribute" value="ptolemy.actor.TypedCompositeActor">
                 <property name="id" class="ptolemy.kernel.util.StringAttribute" value="urn:lsid:kepler-project.org:class:449:1">
@@ -9609,7 +9577,7 @@
             <entity name="RemoteSimulationJob_SASSENA" class="ptolemy.actor.TypedCompositeActor">
                 <property name="_createdBy" class="ptolemy.kernel.attributes.VersionAttribute" value="8.1.devel">
                 </property>
-                <property name="entityId" class="org.kepler.moml.NamedObjId" value="urn:lsid:kepler-project.org/ns/:40778:29:7">
+                <property name="entityId" class="org.kepler.moml.NamedObjId" value="urn:lsid:kepler-project.org/ns/:40778:29:59">
                 </property>
                 <property name="class" class="ptolemy.kernel.util.StringAttribute" value="ptolemy.actor.TypedCompositeActor">
                     <property name="id" class="ptolemy.kernel.util.StringAttribute" value="urn:lsid:kepler-project.org:class:449:1">
@@ -10443,41 +10411,39 @@
                         <property name="input"/>
                     </port>
                 </entity>
-                <entity name="Display" class="ptolemy.actor.lib.gui.Display">
-                    <property name="_windowProperties" class="ptolemy.actor.gui.WindowPropertiesAttribute">
+                <entity name="Logger" class="org.kepler.actor.Logger">
+                    <property name="logfile" class="ptolemy.data.expr.FileParameter" value="$LocalWorkingDirectory/kepler.log">
                     </property>
-                    <property name="_paneSize" class="ptolemy.actor.gui.SizeAttribute">
+                    <property name="header" class="ptolemy.data.expr.StringParameter" value="">
                     </property>
-                    <property name="rowsDisplayed" class="ptolemy.data.expr.Parameter" value="10">
-                    </property>
-                    <property name="columnsDisplayed" class="ptolemy.data.expr.Parameter" value="40">
-                    </property>
-                    <property name="suppressBlankLines" class="ptolemy.data.expr.Parameter" value="false">
-                    </property>
-                    <property name="title" class="ptolemy.data.expr.StringParameter" value="">
+                    <property name="format" class="ptolemy.data.expr.StringParameter" value="text">
                     </property>
 <property name="KeplerDocumentation" class="ptolemy.vergil.basic.KeplerDocumentationAttribute">
 <property name="description" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>null</configure></property>
-<property name="author" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>Yuhong Xiong, Edward A. Lee</configure></property>
-<property name="version" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>null</configure></property>
-<property name="userLevelDocumentation" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>&lt;p&gt;The Display actor reads tokens of any type via its input multiport, and displays each token on a separate line in a text display window.&lt;/p&gt;&#10;&#10;&lt;p&gt;Specify the size of the text display window with the rowsDisplayed and columnsDisplayed parameters. Simply resizing the window onscreen does not persistently change the size when the workflow is saved, closed, and then re-opened. &lt;/p&gt;&#10;&#10;&lt;p&gt;If the input is a string token, then the actor strips the surrounding quotation marks before displaying the value.&lt;/p&gt; &#10;&#10;&lt;p&gt;Select the suppressBlankLines parameter to specify that the actor not add blank lines to the display. By default, the actor will add blank lines.&lt;/p&gt;&#10;&#10;&lt;p&gt;Note: this actor can consume large amounts of memory. It is not advisable to use it to display large output streams.&lt;/p&gt;</configure></property>
-<property name="port:input" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>A multiport that accepts tokens of any type.</configure></property>
-<property name="prop:suppressBlankLines" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>Specify whether the actor should display blank lines (the default) or suppress them.</configure></property>
-<property name="prop:rowsDisplayed" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>The vertical size of the display, in rows. The value is an integer that defaults to 10.</configure></property>
-<property name="prop:columnsDisplayed" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>The horizontal size of the display, in columns. The value is an integer that defaults to 40.</configure></property>
-<property name="prop:title" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>The title of the text display window. If specified, the value will appear in the title bar of the text display window.</configure></property>
-</property>                    <property name="entityId" class="org.kepler.moml.NamedObjId" value="urn:lsid:kepler-project.org:actor:7:1">
+<property name="author" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>Norbert Podhorszki</configure></property>
+<property name="version" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>$Id: Logger.xml 30507 2012-08-22 23:51:26Z crawl $</configure></property>
+<property name="userLevelDocumentation" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>&#10;Log information directed into a file. All Logger actors can write into the&#10; same file, if their parameter points to the same file. Format as it is, or&#10; XML. text format: date: header: text XML format:&#10; &#10; &#10; If the text is empty (or only white spaces), nothing will be written. So you&#10; do not need to filter out e.g. empty stderr messages before connecting to&#10; this Logger actor.</configure></property>
+<property name="port:text" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>The text to be printed into the log. This port is expects strings.</configure></property>
+<property name="prop:logfile" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>The log file. It can be changed between firings. The file will be created if does not exists, otherwise text will be appended to the existing file.</configure></property>
+<property name="prop:format" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>The format of the logger. Currently &quot;text&quot; or &quot;xml&quot;. Other value will mean &quot;text&quot;. If different loggers use different format option for the same file, the output will be a mixture of different formats.</configure></property>
+<property name="prop:header" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>The header information to be printed with the log. Useful to provide an actor name, or some meaningful name. Date is printed independently to the log.</configure></property>
+</property>                    <property name="entityId" class="org.kepler.moml.NamedObjId" value="urn:lsid:kepler-project.org/ns/:40778:61:1">
                     </property>
-                    <property name="class" class="ptolemy.kernel.util.StringAttribute" value="ptolemy.actor.lib.gui.Display">
-                        <property name="id" class="ptolemy.kernel.util.StringAttribute" value="urn:lsid:kepler-project.org:class:883:1">
+                    <property name="class" class="ptolemy.kernel.util.StringAttribute" value="org.kepler.actor.Logger">
+                        <property name="id" class="ptolemy.kernel.util.StringAttribute" value="urn:lsid:kepler-project.org:class:1209:1">
                         </property>
-                    </property>
-                    <property name="semanticType00" class="org.kepler.sms.SemanticType" value="urn:lsid:localhost:onto:1:1#TextualOutputActor">
                     </property>
                     <property name="semanticType11" class="org.kepler.sms.SemanticType" value="urn:lsid:localhost:onto:2:1#TextualOutput">
                     </property>
-                    <property name="_location" class="ptolemy.kernel.util.Location" value="{800, 365}">
+                    <property name="_location" class="ptolemy.kernel.util.Location" value="[800.0, 355.0]">
                     </property>
+                    <property name="derivedFrom" class="org.kepler.moml.NamedObjIdReferralList" value="urn:lsid:kepler-project.org:actor:509:1">
+                    </property>
+                    <port name="text" class="ptolemy.actor.TypedIOPort">
+                        <property name="input"/>
+                        <property name="_showName" class="ptolemy.data.expr.Parameter" value="false">
+                        </property>
+                    </port>
                 </entity>
                 <relation name="relation" class="ptolemy.actor.TypedIORelation">
                 </relation>
@@ -10582,7 +10548,7 @@
                 <link port="Stop2.input" relation="relation25"/>
                 <link port="Expression3.output" relation="relation25"/>
                 <link port="Expression3.input" relation="relation3"/>
-                <link port="Display.input" relation="relation6"/>
+                <link port="Logger.text" relation="relation6"/>
             </entity>
             <entity name="MantidFitting" class="ptolemy.actor.lib.Exec">
                 <property name="NONE" class="ptolemy.data.expr.Parameter" value="0">
@@ -11272,6 +11238,40 @@
                 <property name="input"/>
             </port>
         </entity>
+        <entity name="Logger3" class="org.kepler.actor.Logger">
+            <property name="logfile" class="ptolemy.data.expr.FileParameter" value="$LocalWorkingDirectory/kepler.log">
+            </property>
+            <property name="header" class="ptolemy.data.expr.StringParameter" value="">
+            </property>
+            <property name="format" class="ptolemy.data.expr.StringParameter" value="text">
+            </property>
+<property name="KeplerDocumentation" class="ptolemy.vergil.basic.KeplerDocumentationAttribute">
+<property name="description" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>null</configure></property>
+<property name="author" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>Norbert Podhorszki</configure></property>
+<property name="version" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>$Id: Logger.xml 30507 2012-08-22 23:51:26Z crawl $</configure></property>
+<property name="userLevelDocumentation" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>&#10;Log information directed into a file. All Logger actors can write into the&#10; same file, if their parameter points to the same file. Format as it is, or&#10; XML. text format: date: header: text XML format:&#10; &#10; &#10; If the text is empty (or only white spaces), nothing will be written. So you&#10; do not need to filter out e.g. empty stderr messages before connecting to&#10; this Logger actor.</configure></property>
+<property name="port:text" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>The text to be printed into the log. This port is expects strings.</configure></property>
+<property name="prop:logfile" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>The log file. It can be changed between firings. The file will be created if does not exists, otherwise text will be appended to the existing file.</configure></property>
+<property name="prop:format" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>The format of the logger. Currently &quot;text&quot; or &quot;xml&quot;. Other value will mean &quot;text&quot;. If different loggers use different format option for the same file, the output will be a mixture of different formats.</configure></property>
+<property name="prop:header" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>The header information to be printed with the log. Useful to provide an actor name, or some meaningful name. Date is printed independently to the log.</configure></property>
+</property>            <property name="entityId" class="org.kepler.moml.NamedObjId" value="urn:lsid:kepler-project.org/ns/:40778:61:1">
+            </property>
+            <property name="class" class="ptolemy.kernel.util.StringAttribute" value="org.kepler.actor.Logger">
+                <property name="id" class="ptolemy.kernel.util.StringAttribute" value="urn:lsid:kepler-project.org:class:1209:1">
+                </property>
+            </property>
+            <property name="semanticType11" class="org.kepler.sms.SemanticType" value="urn:lsid:localhost:onto:2:1#TextualOutput">
+            </property>
+            <property name="_location" class="ptolemy.kernel.util.Location" value="[840.0, 585.0]">
+            </property>
+            <property name="derivedFrom" class="org.kepler.moml.NamedObjIdReferralList" value="urn:lsid:kepler-project.org:actor:509:1">
+            </property>
+            <port name="text" class="ptolemy.actor.TypedIOPort">
+                <property name="input"/>
+                <property name="_showName" class="ptolemy.data.expr.Parameter" value="false">
+                </property>
+            </port>
+        </entity>
         <relation name="relation16" class="ptolemy.actor.TypedIORelation">
             <vertex name="vertex1" value="{85.0, 390.0}">
             </vertex>
@@ -11326,13 +11326,11 @@
         </relation>
         <relation name="relation7" class="ptolemy.actor.TypedIORelation">
         </relation>
-        <relation name="relation15" class="ptolemy.actor.TypedIORelation">
-            <vertex name="vertex1" value="{835.0, 625.0}">
-            </vertex>
-        </relation>
         <relation name="relation12" class="ptolemy.actor.TypedIORelation">
         </relation>
         <relation name="relation17" class="ptolemy.actor.TypedIORelation">
+        </relation>
+        <relation name="relation15" class="ptolemy.actor.TypedIORelation">
         </relation>
         <link port="in" relation="relation12"/>
         <link port="FileOut" relation="relation22"/>
@@ -11380,7 +11378,6 @@
         <link port="DakotaInputFile2.in" relation="relation"/>
         <link port="DakotaInputFile3.output" relation="relation4"/>
         <link port="DakotaInputFile3.in" relation="relation"/>
-        <link port="Display.input" relation="relation15"/>
         <link port="CreateConvolved2.nxs" relation="relation7"/>
         <link port="CreateConvolved2.in" relation="relation4"/>
         <link port="CreateConvolved3.nxs" relation="relation5"/>
@@ -11394,11 +11391,12 @@
         <link port="Expression.output" relation="relation16"/>
         <link port="Expression.in" relation="relation12"/>
         <link port="Expression.trigger" relation="relation17"/>
+        <link port="Logger3.text" relation="relation15"/>
     </entity>
     <entity name="ResultsReadyActiveMQ" class="ptolemy.actor.lib.Exec">
         <property name="NONE" class="ptolemy.data.expr.Parameter" value="0">
         </property>
-        <property name="command" class="ptolemy.actor.parameters.PortParameter" value="python /tmp/code/simulation/src/../../activemq/send_amq.py -qName DAKOTA_RESULTS_READY.15938&#10; -OutputFile /tmp/run_9/results.out.2&#10;">
+        <property name="command" class="ptolemy.actor.parameters.PortParameter" value="python /tmp/code/simulation/src/../../activemq/send_amq.py -qName DAKOTA_RESULTS_READY.25517&#10; -OutputFile /tmp/run_9/results.out.2&#10;">
         </property>
         <property name="directory" class="ptolemy.data.expr.FileParameter" value="$CWD">
             <property name="allowFiles" class="ptolemy.data.expr.Parameter" value="false">
@@ -11484,7 +11482,7 @@
     <entity name="ParamsReadyActiveMQ" class="ptolemy.actor.lib.Exec">
         <property name="NONE" class="ptolemy.data.expr.Parameter" value="0">
         </property>
-        <property name="command" class="ptolemy.actor.parameters.PortParameter" value="python /tmp/code/simulation/src/../../activemq/kepler_utilities.py -qParams DAKOTA_PARAMS_READY.15938&#10;&#10;">
+        <property name="command" class="ptolemy.actor.parameters.PortParameter" value="python /tmp/code/simulation/src/../../activemq/kepler_utilities.py -qParams DAKOTA_PARAMS_READY.25517&#10;&#10;">
         </property>
         <property name="directory" class="ptolemy.data.expr.FileParameter" value="$LocalWorkingDirectory">
             <property name="allowFiles" class="ptolemy.data.expr.Parameter" value="false">
