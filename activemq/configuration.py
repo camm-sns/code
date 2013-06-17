@@ -5,6 +5,8 @@ import logging
 
 from sns_utilities.amq_connector import configuration
 
+DEFAULT_CONFIG='/etc/kepler_consumer.conf'
+
 class Configuration(configuration.Configuration):
     """
        Configuration class for CAMM 
@@ -19,7 +21,7 @@ class Configuration(configuration.Configuration):
     kepler_output_file_flag = '-OutputFile'
     kepler_workflow = ''
     
-    def __init__(self, config_file=None):
+    def __init__(self, config_file=DEFAULT_CONFIG):
         super(Configuration, self).__init__(config_file)
         
         # Look for configuration

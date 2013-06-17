@@ -112,38 +112,62 @@ class KeplerJobClient(Client):
                 logging.error("Problem connecting to AMQ broker")
                 logging.error("%s: %s" % (sys.exc_type,sys.exc_value))
                 time.sleep(5.0)
-
-
-def setup_client(instance_number,
-                 config_file='/etc/kepler_consumer.conf'):
+ 
+ 
+def run_kepler_client():
     """
-        Create an instance of the Kepler job ActiveMQ consumer
-        @param instance_number: instance number to use for 
-                                transient process communication
-        @param config_file: configuration file to use to setup the client
-    """ 
-    # Look for configuration
-    conf = Configuration(config_file)
+        Entry point for kepler_client console script.
+        Starts an AMQ client for Kepler.
+    """
+    # Create a configuration object
+    conf = Configuration()
 
-    params_queue = "%s.%s" % (conf.params_ready_queue, str(instance_number))
-    
-    # Parse command arguments
-    parser = argparse.ArgumentParser(description='Dummy Kepler workflow')
+    parser = argparse.ArgumentParser(description='Kepler workflow client')
     parser.add_argument(conf.kepler_params_queue_flag, metavar='params_queue',
-                        default=params_queue,
+                        required=True,
                         help='AMQ queue to receive new parameters from ',
                         dest='params_queue')    
     namespace = parser.parse_args()
+
+    params_queue = "%s.%s" % (conf.params_ready_queue, str(os.getpid()))
 
     logging.info("Parameter queue is %s" % namespace.params_queue)
     
     queues = [namespace.params_queue]
     c = KeplerJobClient(conf.brokers, conf.amq_user, conf.amq_pwd, 
-                     queues, "dakota_consumer")
+                     queues, "kepler_consumer")
     c.set_params_ready_queue(namespace.params_queue)
     c.set_listener(KeplerJobListener(namespace.params_queue))
-    return c
- 
-if __name__ == "__main__":
-    c=setup_client(os.getpid())
     c.listen_and_wait()
+    
+    
+def send_amq_results_ready():
+    """
+        Entry point for console script to send a results-ready message to AMQ
+    """
+    # Create a configuration object
+    conf = Configuration()
+    
+    # Parse command arguments
+    parser = argparse.ArgumentParser(description='Kepler workflow communication')
+    parser.add_argument(conf.kepler_result_queue_flag, metavar='return_queue',
+                        required=True,
+                        help='AMQ queue to send results to',
+                        dest='return_queue')
+    parser.add_argument(conf.kepler_output_file_flag, metavar='output_file',
+                        default='results.out',
+                        help='Kepler output file',
+                        dest='output_file')
+    namespace = parser.parse_args()
+
+    # Setup the AMQ client
+    c = Client(conf.brokers, conf.amq_user, conf.amq_pwd)
+
+    # Send a simple message to the return queue
+    message = {'output_file': namespace.output_file}
+    c.send(destination='/queue/'+namespace.return_queue, message=json.dumps(message))
+    c._disconnect()
+
+    
+if __name__ == "__main__":
+    run_kepler_client()
