@@ -51,10 +51,6 @@ class DakotaListener(Listener):
                 
                 logging.info("Rcv: %s | Output file: %s" % (self.results_ready_queue, output_file))
                 
-                #fd = open(output_file, 'w')
-                #fd.write('%f\n' % data_dict['cost_function'])
-                #fd.close()
-                
                 self._transaction_complete.acquire()
                 self._complete = True
                 self._transaction_complete.notify()
@@ -80,9 +76,9 @@ class DakotaClient(Client):
         starts the listening thread.
     """
     ## Input queue used to trigger a new calculation
-    PARAMS_READY_QUEUE = "PARAMS.READY"
+    params_ready_queue = "PARAMS.READY"
     ## Output queue to announce results
-    RESULTS_READY_QUEUE = "RESULTS.READY"
+    results_ready_queue = "RESULTS.READY"
     
     def set_results_ready_queue(self, queue):
         """ 
@@ -91,7 +87,7 @@ class DakotaClient(Client):
             @param queue: name of an ActiveMQ queue
         """
         logging.info("Dakota client will listen for results on %s" % queue)
-        self.RESULTS_READY_QUEUE = queue
+        self.results_ready_queue = queue
         
     def set_params_ready_queue(self, queue):
         """ 
@@ -100,7 +96,7 @@ class DakotaClient(Client):
             @param queue: name of an ActiveMQ queue
         """
         logging.info("Dakota client will send parameters to %s" % queue)
-        self.PARAMS_READY_QUEUE = queue
+        self.params_ready_queue = queue
         
     def set_working_directory(self, working_directory):
         """
@@ -126,8 +122,8 @@ class DakotaClient(Client):
                 
                 # Once the results message has been received and dealt with,
                 # we can simply stop listening
-                logging.info("Unsubscribing to %s" % self.RESULTS_READY_QUEUE)
-                self._connection.unsubscribe(destination=self.RESULTS_READY_QUEUE)
+                logging.info("Unsubscribing to %s" % self.results_ready_queue)
+                self._connection.unsubscribe(destination=self.results_ready_queue)
                 if self._connection.get_listener(self._consumer_name) is not None:
                     logging.info("Removing listener %s" % self._consumer_name)
                     self._connection.remove_listener(self._consumer_name)
@@ -155,11 +151,11 @@ class DakotaClient(Client):
                 params = fd.read()
                 message = {'params': params,
                            'output_file': output_file,
-                           'amq_results_queue': self.RESULTS_READY_QUEUE,
+                           'amq_results_queue': self.results_ready_queue,
                            'working_directory': self.working_directory
                            }
                 json_message = json.dumps(message)
-                self.send(self.PARAMS_READY_QUEUE, json_message)
+                self.send(self.params_ready_queue, json_message)
             except:
                 logging.error("Could not read %s file: %s" % (input_file, sys.exc_value))
         else:
