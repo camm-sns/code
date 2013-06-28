@@ -281,6 +281,7 @@ cp /data/jbq/projects/research/LiCl/watBox30/Hq.II/Q42/T290/equilibrate/init.xsc
 cp ../equilibrate.conf . 
 cp ../production.conf . 
 $MPIRUN -n $tasks_per_job -hostfile ../nodefile1 $NAMD equilibrate.conf > equilibrate.log &
+center_pid=$!
 cd ../backward
 #equilibrium run
 cp /data/jbq/projects/research/LiCl/watBox30/Hq.II/Q42/toppar/crd.md18_vmd_autopsf.pdb  toppar
@@ -289,6 +290,7 @@ cp /data/jbq/projects/research/LiCl/watBox30/Hq.II/Q42/T290/equilibrate/init.xsc
 cp ../equilibrate.conf . 
 cp ../production.conf . 
 $MPIRUN -n $tasks_per_job -hostfile ../nodefile2 $NAMD equilibrate.conf > equilibrate.log &
+backward_pid=$!
 cd ../forward
 #equilibrium run
 cp /data/jbq/projects/research/LiCl/watBox30/Hq.II/Q42/toppar/crd.md18_vmd_autopsf.pdb  toppar
@@ -297,8 +299,23 @@ cp /data/jbq/projects/research/LiCl/watBox30/Hq.II/Q42/T290/equilibrate/init.xsc
 cp ../equilibrate.conf . 
 cp ../production.conf . 
 $MPIRUN -n $tasks_per_job -hostfile ../nodefile3 $NAMD equilibrate.conf > equilibrate.log &
+forward_pid=$!
 
-wait
+wait $forward_pid
+if [ $? -ne 0 ]; then
+    cd ../forward
+    $MPIRUN -n $tasks_per_job -hostfile ../nodefile3 $NAMD equilibrate.conf > equilibrate.log &
+fi
+wait $backward_pid
+if [ $? -ne 0 ]; then
+    cd ../backward
+    $MPIRUN -n $tasks_per_job -hostfile ../nodefile2 $NAMD equilibrate.conf > equilibrate.log &
+fi
+wait $center_pid
+if [ $? -ne 0 ]; then
+    cd ../center
+    $MPIRUN -n $tasks_per_job -hostfile ../nodefile1 $NAMD equilibrate.conf > equilibrate.log &
+fi
 
 cd ../center
 #production run
@@ -306,17 +323,34 @@ mv equilibrate.restart.coor production00.restart.coor
 mv equilibrate.restart.vel production00.restart.vel 
 mv equilibrate.restart.xsc production00.restart.xsc 
 $MPIRUN -n $tasks_per_job -hostfile ../nodefile1 $NAMD production.conf > production.log &
+center_pid=$!
 cd ../backward
 #production run
 mv equilibrate.restart.coor production00.restart.coor 
 mv equilibrate.restart.vel production00.restart.vel 
 mv equilibrate.restart.xsc production00.restart.xsc 
 $MPIRUN -n $tasks_per_job -hostfile ../nodefile2 $NAMD production.conf > production.log &
+backward_pid=$!
 cd ../forward
 #production run
 mv equilibrate.restart.coor production00.restart.coor 
 mv equilibrate.restart.vel production00.restart.vel 
 mv equilibrate.restart.xsc production00.restart.xsc 
 $MPIRUN -n $tasks_per_job -hostfile ../nodefile3 $NAMD production.conf > production.log &
+forward_pid=$!
 
-wait
+wait $forward_pid
+if [ $? -ne 0 ]; then
+    cd ../forward
+    $MPIRUN -n $tasks_per_job -hostfile ../nodefile3 $NAMD equilibrate.conf > equilibrate.log &
+fi
+wait $backward_pid
+if [ $? -ne 0 ]; then
+    cd ../backward
+    $MPIRUN -n $tasks_per_job -hostfile ../nodefile2 $NAMD equilibrate.conf > equilibrate.log &
+fi
+wait $center_pid
+if [ $? -ne 0 ]; then
+    cd ../center
+    $MPIRUN -n $tasks_per_job -hostfile ../nodefile1 $NAMD equilibrate.conf > equilibrate.log &
+fi
