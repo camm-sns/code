@@ -342,15 +342,15 @@ forward_pid=$!
 wait $forward_pid
 if [ $? -ne 0 ]; then
     cd ../forward
-    $MPIRUN -n $tasks_per_job -hostfile ../nodefile3 $NAMD equilibrate.conf > equilibrate.log &
+    $MPIRUN -n $tasks_per_job -hostfile ../nodefile3 $NAMD production.conf > production.log &
 fi
 wait $backward_pid
 if [ $? -ne 0 ]; then
     cd ../backward
-    $MPIRUN -n $tasks_per_job -hostfile ../nodefile2 $NAMD equilibrate.conf > equilibrate.log &
+    $MPIRUN -n $tasks_per_job -hostfile ../nodefile2 $NAMD production.conf > production.log &
 fi
 wait $center_pid
 if [ $? -ne 0 ]; then
     cd ../center
-    $MPIRUN -n $tasks_per_job -hostfile ../nodefile1 $NAMD equilibrate.conf > equilibrate.log &
+    $MPIRUN -n $tasks_per_job -hostfile ../nodefile1 $NAMD production.conf > production.log &
 fi
