@@ -1,19 +1,13 @@
 #!/bin/bash
 #PBS -A m1503
 #PBS -q regular
-#PBS -l mppwidth=144
+#PBS -l mppwidth=48
 #PBS -l walltime=6:00:00
 #PBS -N namdTest
 #PBS -j oe
 #PBS -V
 
-#Run 3 jobs simultaneously, each with one third cores
-NCPU=`wc -l < $PBS_NODEFILE`
-let num_jobs=3
-let tasks_per_job=$NCPU/$num_jobs
-
-
-MPIRUN="aprun -n $tasks_per_job"
+MPIRUN="aprun -n 48"
 NAMD=/usr/common/usg/namd/2.9/bin/namd2
 
 cd $PBS_O_WORKDIR
@@ -261,56 +255,18 @@ outputTiming        1000
 firsttimestep         0            ;# reset frame counter
 run 4000000  ;# 4ns
 @PRODEOF
-mkdir -p center/toppar
-mkdir -p backward/toppar
-mkdir -p forward/toppar
-mv Q42_*b.psf backward/toppar/Q42.psf
-mv Q42_*f.psf forward/toppar/Q42.psf
-mv Q42_*.psf center/toppar/Q42.psf
-cd center
+mkdir -p toppar
+mv Q42_*.psf toppar/Q42.psf
 #equilibrium run
 cp /global/project/projectdirs/m1503/camm/Q42/toppar/crd.md18_vmd_autopsf.pdb  toppar
 cp /global/project/projectdirs/m1503/camm/Q42/toppar/par_all27_prot_lipid.inp toppar
 cp /global/project/projectdirs/m1503/camm/Q42/T290/equilibrate/init.xsc . 
 cp ../equilibrate.conf . 
 cp ../production.conf . 
-$MPIRUN $NAMD equilibrate.conf > equilibrate.log &
-cd ../backward
-#equilibrium run
-cp /global/project/projectdirs/m1503/camm/Q42/toppar/crd.md18_vmd_autopsf.pdb  toppar
-cp /global/project/projectdirs/m1503/camm/Q42/toppar/par_all27_prot_lipid.inp toppar
-cp /global/project/projectdirs/m1503/camm/Q42/T290/equilibrate/init.xsc . 
-cp ../equilibrate.conf . 
-cp ../production.conf . 
-$MPIRUN $NAMD equilibrate.conf > equilibrate.log &
-cd ../forward
-#equilibrium run
-cp /global/project/projectdirs/m1503/camm/Q42/toppar/crd.md18_vmd_autopsf.pdb  toppar
-cp /global/project/projectdirs/m1503/camm/Q42/toppar/par_all27_prot_lipid.inp toppar
-cp /global/project/projectdirs/m1503/camm/Q42/T290/equilibrate/init.xsc . 
-cp ../equilibrate.conf . 
-cp ../production.conf . 
-$MPIRUN $NAMD equilibrate.conf > equilibrate.log &
+$MPIRUN $NAMD equilibrate.conf > equilibrate.log
 
-wait
-
-cd ../center
 #production run
 mv equilibrate.restart.coor production00.restart.coor 
 mv equilibrate.restart.vel production00.restart.vel 
 mv equilibrate.restart.xsc production00.restart.xsc 
-$MPIRUN $NAMD production.conf > production.log &
-cd ../backward
-#production run
-mv equilibrate.restart.coor production00.restart.coor 
-mv equilibrate.restart.vel production00.restart.vel 
-mv equilibrate.restart.xsc production00.restart.xsc 
-$MPIRUN $NAMD production.conf > production.log &
-cd ../forward
-#production run
-mv equilibrate.restart.coor production00.restart.coor 
-mv equilibrate.restart.vel production00.restart.vel 
-mv equilibrate.restart.xsc production00.restart.xsc 
-$MPIRUN $NAMD production.conf > production.log &
-
-wait
+$MPIRUN $NAMD production.conf > production.log

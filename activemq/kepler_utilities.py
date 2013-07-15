@@ -120,8 +120,9 @@ def run_kepler_client():
         Starts an AMQ client for Kepler.
     """
     # Create a configuration object
+    print sys.argv
     conf = Configuration()
-
+    logging.error(str(sys.argv))
     parser = argparse.ArgumentParser(description='Kepler workflow client')
     parser.add_argument(conf.kepler_params_queue_flag, metavar='params_queue',
                         required=True,

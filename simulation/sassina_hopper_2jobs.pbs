@@ -1,0 +1,31 @@
+#!/bin/bash
+#PBS -A m1503
+#PBS -q regular
+#PBS -l mppwidth=48
+#PBS -l walltime=6:00:00
+#PBS -N sassenaTest
+#PBS -j oe
+#PBS -V
+
+cd $PBS_O_WORKDIR
+
+SASSINA=/global/project/projectdirs/m1503/camm/sassena-v1.4.1/builds/head/sassena
+MPIRUN="aprun"
+
+#Run 2 jobs simultaneously, each with one sixth cores
+NCPU=`wc -l < $PBS_NODEFILE`
+let num_jobs=2
+let tasks_per_job=$NCPU/$num_jobs
+
+mkdir -p toppar
+
+cp /global/project/projectdirs/m1503/camm/Q42/toppar/crd.md18_vmd_autopsf.pdb  toppar
+cp $NAMD_DIR/production.dcd  production_single.dcd
+cp /global/project/projectdirs/m1503/camm/Q42/T290/production/db*.xml .
+cp -R /global/project/projectdirs/m1503/camm/Q42/T290/production/database .
+cp /global/project/projectdirs/m1503/camm/sassenaInc.xml .
+cp /global/project/projectdirs/m1503/camm/sassenaCoh.xml .
+$MPIRUN -n $tasks_per_job $SASSINA --config=sassenaInc.xml > sassina_inc.log &
+$MPIRUN -n $tasks_per_job $SASSINA --config=sassenaCoh.xml > sassina_coh.log &
+
+wait
