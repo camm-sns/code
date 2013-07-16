@@ -1,13 +1,13 @@
 #!/bin/bash
 #PBS -A m1503
 #PBS -q regular
-#PBS -l mppwidth=72
+#PBS -l mppwidth=48
 #PBS -l walltime=6:00:00
 #PBS -N namdTest
 #PBS -j oe
 #PBS -V
 
-MPIRUN="aprun -n 72"
+MPIRUN="aprun -n 48"
 NAMD=/usr/common/usg/namd/2.9/bin/namd2
 
 cd $PBS_O_WORKDIR
@@ -261,8 +261,6 @@ mv Q42_*.psf toppar/Q42.psf
 cp /global/project/projectdirs/m1503/camm/Q42/toppar/crd.md18_vmd_autopsf.pdb  toppar
 cp /global/project/projectdirs/m1503/camm/Q42/toppar/par_all27_prot_lipid.inp toppar
 cp /global/project/projectdirs/m1503/camm/Q42/T290/equilibrate/init.xsc . 
-cp ../equilibrate.conf . 
-cp ../production.conf . 
 $MPIRUN $NAMD equilibrate.conf > equilibrate.log
 
 #production run
