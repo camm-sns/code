@@ -1,62 +1,17 @@
 #!/bin/bash
-#PBS -l nodes=12:ppn=16
-#PBS -l walltime=100:00:00
-#PBS -j oe
+#PBS -l nodes=4:ppn=16
+#PBS -l walltime=4:00:00
 #PBS -N sassinaTest
 #PBS -M lynchve@ornl.gov
 #PBS -V
 
 cd $PBS_O_WORKDIR
-
-SASSINA=/shared/local/sassena/sassena-v1.4.1/builds/shared/sassena
-MPIRUN="/shared/openmpi/gcc/bin/mpirun"
-
-#Run 6 jobs simultaneously, each with one third cores
-NCPU=`wc -l < $PBS_NODEFILE`
-let num_jobs=6
-let tasks_per_job=$NCPU/$num_jobs
-
-#Assume jobs run in separate directories, job1, job2, ...
-for i in $(seq $num_jobs)
-do
-    #write hostfile for i-th job to use
-    let lstart=($i-1)*${tasks_per_job}+1
-    let lend=${lstart}+${tasks_per_job}-1
-    sed -n ${lstart},${lend}'p' < $PBS_NODEFILE >nodefile$i
-done
-
-mkdir -p center/toppar
-mkdir -p backward/toppar
-mkdir -p forward/toppar
-
-cd center
+mkdir toppar
 cp /data/jbq/projects/research/LiCl/watBox30/Hq.II/Q42/toppar/crd.md18_vmd_autopsf.pdb  toppar
-cp $NAMD_DIR/center/production.dcd  production_single.dcd
+cp $NAMD_DIR/production_single.dcd  production_single.dcd
 cp /data/jbq/projects/research/LiCl/watBox30/Hq.II/Q42/T290/production/db*.xml .
 cp -R /data/jbq/projects/research/LiCl/watBox30/Hq.II/Q42/T290/production/database .
 cp /data/jbq/sassena_test/sassenaInc_10Qpoints.xml ./sassenaInc.xml
 cp /data/jbq/sassena_test/sassenaCoh_10Qpoints.xml ./sassenaCoh.xml
-$MPIRUN -n $tasks_per_job -hostfile ../nodefile1 $SASSINA --config=sassenaInc.xml > sassina_inc.log &
-$MPIRUN -n $tasks_per_job -hostfile ../nodefile2 $SASSINA --config=sassenaCoh.xml > sassina_coh.log &
-
-cd ../backward
-cp /data/jbq/projects/research/LiCl/watBox30/Hq.II/Q42/toppar/crd.md18_vmd_autopsf.pdb  toppar
-cp $NAMD_DIR/backward/production.dcd  production_single.dcd
-cp /data/jbq/projects/research/LiCl/watBox30/Hq.II/Q42/T290/production/db*.xml .
-cp -R /data/jbq/projects/research/LiCl/watBox30/Hq.II/Q42/T290/production/database .
-cp /data/jbq/sassena_test/sassenaInc_10Qpoints.xml ./sassenaInc.xml
-cp /data/jbq/sassena_test/sassenaCoh_10Qpoints.xml ./sassenaCoh.xml
-$MPIRUN -n $tasks_per_job -hostfile ../nodefile3 $SASSINA --config=sassenaInc.xml > sassina_inc.log &
-$MPIRUN -n $tasks_per_job -hostfile ../nodefile4 $SASSINA --config=sassenaCoh.xml > sassina_coh.log &
-
-cd ../forward
-cp /data/jbq/projects/research/LiCl/watBox30/Hq.II/Q42/toppar/crd.md18_vmd_autopsf.pdb  toppar
-cp $NAMD_DIR/forward/production.dcd  production_single.dcd
-cp /data/jbq/projects/research/LiCl/watBox30/Hq.II/Q42/T290/production/db*.xml .
-cp -R /data/jbq/projects/research/LiCl/watBox30/Hq.II/Q42/T290/production/database .
-cp /data/jbq/sassena_test/sassenaInc_10Qpoints.xml ./sassenaInc.xml
-cp /data/jbq/sassena_test/sassenaCoh_10Qpoints.xml ./sassenaCoh.xml
-$MPIRUN -n $tasks_per_job -hostfile ../nodefile5 $SASSINA --config=sassenaInc.xml > sassina_inc.log &
-$MPIRUN -n $tasks_per_job -hostfile ../nodefile6 $SASSINA --config=sassenaCoh.xml > sassina_coh.log &
-
-wait
+/shared/openmpi/gcc/bin/mpirun -machinefile $PBS_NODEFILE -np 64 /shared/local/sassena/sassena-v1.4.1/builds/shared/sassena --config=sassenaInc.xml
+/shared/openmpi/gcc/bin/mpirun -machinefile $PBS_NODEFILE -np 64 /shared/local/sassena/sassena-v1.4.1/builds/shared/sassena --config=sassenaCoh.xml

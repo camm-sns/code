@@ -1,28 +1,14 @@
 #!/bin/bash
-#PBS -l nodes=12:ppn=16
-#PBS -l walltime=100:00:00
-#PBS -j oe
+#PBS -l nodes=4:ppn=16
+#PBS -l walltime=50:00:00
 #PBS -N namdTest
 
-cd $PBS_O_WORKDIR
-
-MPIRUN="/shared/openmpi/gcc/bin/mpirun"
+MPIRUN=/shared/openmpi/gcc/bin/mpirun
 NAMD=/shared/local/namd/NAMD_2.9_Linux-x86_64-mpi_shared/Linux-x86_64-g++/namd2
 
-#Run 3 jobs simultaneously, each with one third cores
-
-let total_tasks=$(wc -l $PBS_NODEFILE | awk '{print $1}')
-let num_jobs=3
-let tasks_per_job=$total_tasks/$num_jobs
-
-#Assume jobs run in separate directories, job1, job2, ...
-for i in $(seq $num_jobs)
-do
-    #write hostfile for i-th job to use
-    let lstart=($i-1)*${tasks_per_job}+1
-    let lend=${lstart}+${tasks_per_job}-1
-    sed -n ${lstart},${lend}'p' < $PBS_NODEFILE >nodefile$i 
-done
+cd $PBS_O_WORKDIR
+mkdir toppar
+mv *psf toppar/Q42.psf
 
 #Eq config file
 cat > equilibrate.conf <<'@EQEOF'
@@ -147,7 +133,7 @@ run 5000  ;# 5ps
 @EQEOF
 
 #Production config file
-cat > production.conf <<'@PRODEOF'
+cat > production_single.conf <<'@PRODEOF'
 #############################################################
 ## JOB DESCRIPTION                                         ##
 #############################################################
@@ -163,7 +149,7 @@ set temperature     290 ;# initial temperature, in Kelvin
 set charge        42 ;# hydrogen charge
 set pressure      1.01325  ;#  in bar -> 1 atm
 set inputname  production00 ;# prefix for input files
-set outputname production ;# prefix for output files
+set outputname production_single ;# prefix for output files
 
 #############################################################
 ## SIMULATION PARAMETERS                                   ##
@@ -267,90 +253,21 @@ outputTiming        1000
 firsttimestep         0            ;# reset frame counter
 run 400000  ;# 400ps
 @PRODEOF
-mkdir -p center/toppar
-mkdir -p backward/toppar
-mkdir -p forward/toppar
-mv Q42_*b.psf backward/toppar/Q42.psf
-mv Q42_*f.psf forward/toppar/Q42.psf
-mv Q42_*.psf center/toppar/Q42.psf
-cd center
 #equilibrium run
+#cp /data/jbq/projects/research/LiCl/watBox30/Hq.II/Q42/T290/equilibrate/equilibrate.conf .
 cp /data/jbq/projects/research/LiCl/watBox30/Hq.II/Q42/toppar/crd.md18_vmd_autopsf.pdb  toppar
 cp /data/jbq/projects/research/LiCl/watBox30/Hq.II/Q42/toppar/par_all27_prot_lipid.inp toppar
 cp /data/jbq/projects/research/LiCl/watBox30/Hq.II/Q42/T290/equilibrate/init.xsc . 
-cp ../equilibrate.conf . 
-cp ../production.conf . 
-$MPIRUN -n $tasks_per_job -hostfile ../nodefile1 $NAMD equilibrate.conf > equilibrate.log &
-center_pid=$!
-cd ../backward
-#equilibrium run
-cp /data/jbq/projects/research/LiCl/watBox30/Hq.II/Q42/toppar/crd.md18_vmd_autopsf.pdb  toppar
-cp /data/jbq/projects/research/LiCl/watBox30/Hq.II/Q42/toppar/par_all27_prot_lipid.inp toppar
-cp /data/jbq/projects/research/LiCl/watBox30/Hq.II/Q42/T290/equilibrate/init.xsc . 
-cp ../equilibrate.conf . 
-cp ../production.conf . 
-$MPIRUN -n $tasks_per_job -hostfile ../nodefile2 $NAMD equilibrate.conf > equilibrate.log &
-backward_pid=$!
-cd ../forward
-#equilibrium run
-cp /data/jbq/projects/research/LiCl/watBox30/Hq.II/Q42/toppar/crd.md18_vmd_autopsf.pdb  toppar
-cp /data/jbq/projects/research/LiCl/watBox30/Hq.II/Q42/toppar/par_all27_prot_lipid.inp toppar
-cp /data/jbq/projects/research/LiCl/watBox30/Hq.II/Q42/T290/equilibrate/init.xsc . 
-cp ../equilibrate.conf . 
-cp ../production.conf . 
-$MPIRUN -n $tasks_per_job -hostfile ../nodefile3 $NAMD equilibrate.conf > equilibrate.log &
-forward_pid=$!
-
-wait $forward_pid
-if [ $? -ne 0 ]; then
-    cd ../forward
-    $MPIRUN -n $tasks_per_job -hostfile ../nodefile3 $NAMD equilibrate.conf > equilibrate.log &
-fi
-wait $backward_pid
-if [ $? -ne 0 ]; then
-    cd ../backward
-    $MPIRUN -n $tasks_per_job -hostfile ../nodefile2 $NAMD equilibrate.conf > equilibrate.log &
-fi
-wait $center_pid
-if [ $? -ne 0 ]; then
-    cd ../center
-    $MPIRUN -n $tasks_per_job -hostfile ../nodefile1 $NAMD equilibrate.conf > equilibrate.log &
-fi
-
-cd ../center
+$MPIRUN -machinefile $PBS_NODEFILE -np 64 $NAMD equilibrate.conf > equilibrate_64cores.log
+while [ $? -ne 0 ] ; do
+    $MPIRUN -machinefile $PBS_NODEFILE -np 64 $NAMD equilibrate.conf > equilibrate_64cores.log
+done
 #production run
+#cp /data/jbq/projects/research/LiCl/watBox30/Hq.II/Q42/T290/production/production_single.conf .
 mv equilibrate.restart.coor production00.restart.coor 
 mv equilibrate.restart.vel production00.restart.vel 
 mv equilibrate.restart.xsc production00.restart.xsc 
-$MPIRUN -n $tasks_per_job -hostfile ../nodefile1 $NAMD production.conf > production.log &
-center_pid=$!
-cd ../backward
-#production run
-mv equilibrate.restart.coor production00.restart.coor 
-mv equilibrate.restart.vel production00.restart.vel 
-mv equilibrate.restart.xsc production00.restart.xsc 
-$MPIRUN -n $tasks_per_job -hostfile ../nodefile2 $NAMD production.conf > production.log &
-backward_pid=$!
-cd ../forward
-#production run
-mv equilibrate.restart.coor production00.restart.coor 
-mv equilibrate.restart.vel production00.restart.vel 
-mv equilibrate.restart.xsc production00.restart.xsc 
-$MPIRUN -n $tasks_per_job -hostfile ../nodefile3 $NAMD production.conf > production.log &
-forward_pid=$!
-
-wait $forward_pid
-if [ $? -ne 0 ]; then
-    cd ../forward
-    $MPIRUN -n $tasks_per_job -hostfile ../nodefile3 $NAMD equilibrate.conf > equilibrate.log &
-fi
-wait $backward_pid
-if [ $? -ne 0 ]; then
-    cd ../backward
-    $MPIRUN -n $tasks_per_job -hostfile ../nodefile2 $NAMD equilibrate.conf > equilibrate.log &
-fi
-wait $center_pid
-if [ $? -ne 0 ]; then
-    cd ../center
-    $MPIRUN -n $tasks_per_job -hostfile ../nodefile1 $NAMD equilibrate.conf > equilibrate.log &
-fi
+$MPIRUN -machinefile $PBS_NODEFILE -np 64 $NAMD production_single.conf > production_single_64cores.log
+while [ $? -ne 0 ] ; do
+    $MPIRUN -machinefile $PBS_NODEFILE -np 64 $NAMD production_single.conf > production_single_64cores.log
+done
