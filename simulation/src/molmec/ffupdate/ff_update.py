@@ -5,6 +5,7 @@ import re
 import argparse
 import csv
 import os.path
+import shutil
 
 from simulation.src.molmec.fftpl.psf import FFParam
 
@@ -29,11 +30,13 @@ def getParams(paramsFile):
   nparm=int( re.compile('(\d+)\s+variable').search(pf.readline()).group(1) )
   # initialize dictionary containing values for the parameters
   parms={}
+  parmstr={}
   for line in islice(pf,nparm):
     val,name=line.split()
     parms[name]=float(val)
+    parmstr[name]=val
   pf.close()
-  return parms
+  return parms,parmstr
 
 def updateTemplate(template,params):
   """ Insert actual values for the parameters in the template.
@@ -56,7 +59,7 @@ if __name__ == "__main__":
   parser.add_argument('--pout',help='name of the output parameter file Ex: --pout=output.csv')
   args = parser.parse_args()
 
-  dakota_vals = getParams(args.dak) # read in Dakota params file
+  dakota_vals,dakota_valstr = getParams(args.dak) # read in Dakota params file
   if args.pout is not None:
     data = {}
     if os.path.isfile(args.pout):
@@ -76,6 +79,18 @@ if __name__ == "__main__":
       w.writerow([key, val])
     g.close()
 
+  fwd_file = open(args.dak+'f','w')
+  old_file = open(args.dak)
+  for line in old_file:
+      fwd_file.write(line.replace(str(dakota_valstr["FF1"]), str(1.01*dakota_vals["FF1"])))
+  fwd_file.close()
+  old_file.close()
+  bck_file = open(args.dak+'b','w')
+  old_file = open(args.dak)
+  for line in old_file:
+      bck_file.write(line.replace(str(dakota_valstr["FF1"]), str(0.99*dakota_vals["FF1"])))
+  bck_file.close()
+  old_file.close()
   params,template=loadFFtpl(args.fftpl) # read in force field template file
   free_params=[param for param in params if param.isFree()]
   for param in free_params: param._value=1.01*dakota_vals[param._name] # Update free param values
