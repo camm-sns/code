@@ -41,6 +41,8 @@ class KeplerJobListener(Listener):
             @param headers: message headers
             @param message: JSON-encoded message content
         """
+        send_status_info(str(os.getpid()), 'start_iteration')
+
         logging.info("Rcv: %s" % headers['destination'])
         if headers['destination']=='/queue/'+self.params_ready_queue:
             logging.info("  -Ready to exit")
@@ -140,7 +142,6 @@ def run_kepler_client():
                      queues, "kepler_consumer")
     c.set_params_ready_queue(namespace.params_queue)
     c.set_listener(KeplerJobListener(namespace.params_queue))
-    send_status_info(str(os.getpid()), 'start_iteration')
     c.listen_and_wait()
     
         
