@@ -13,8 +13,8 @@ install: check camm
 
 amq:
 	# Install AMQ python package
-	cd activemq; python setup.py clean
-	cd activemq; python setup.py install
+	python setup.py clean
+	python setup.py install
 	     
 camm: amq
 	# Make sure the install directories exist
