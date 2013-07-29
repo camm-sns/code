@@ -20,6 +20,7 @@ logging.getLogger().addHandler(fh)
 
 from sns_utilities.amq_connector.amq_consumer import Client, Listener
 from configuration import Configuration
+from camm_monitor import send_status_info
 
 class KeplerJobListener(Listener):
     """
@@ -139,9 +140,10 @@ def run_kepler_client():
                      queues, "kepler_consumer")
     c.set_params_ready_queue(namespace.params_queue)
     c.set_listener(KeplerJobListener(namespace.params_queue))
+    send_status_info(str(os.getpid()), 'start_iteration')
     c.listen_and_wait()
     
-    
+        
 def send_amq_results_ready():
     """
         Entry point for console script to send a results-ready message to AMQ
@@ -169,6 +171,7 @@ def send_amq_results_ready():
     c.send(destination='/queue/'+namespace.return_queue, message=json.dumps(message))
     c._disconnect()
 
-    
+    send_status_info(str(os.getpid()), 'stop_iteration')
+
 if __name__ == "__main__":
     run_kepler_client()
