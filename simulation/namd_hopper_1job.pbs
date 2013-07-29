@@ -1,8 +1,8 @@
 #!/bin/bash
 #PBS -A m1503
-#PBS -q regular
+#PBS -q debug
 #PBS -l mppwidth=48
-#PBS -l walltime=6:00:00
+#PBS -l walltime=30:00
 #PBS -N namdTest
 #PBS -j oe
 #PBS -V
@@ -131,11 +131,12 @@ outputTiming        5000
 #minimize            1000 ;# perform 1000 minimization steps
 
 firsttimestep         0            ;# reset frame counter
-run 500000  ;# 500ps
+run 5000  ;# 5ps
+#run 500000  ;# 500ps
 @EQEOF
 
 #Production config file
-cat > production.conf <<'@PRODEOF'
+cat > production_single.conf <<'@PRODEOF'
 #############################################################
 ## JOB DESCRIPTION                                         ##
 #############################################################
@@ -253,7 +254,8 @@ outputTiming        1000
 #minimize            1000 ;# perform 1000 minimization steps
 
 firsttimestep         0            ;# reset frame counter
-run 4000000  ;# 4ns
+run 400000  ;# 400ps
+#run 4000000  ;# 4ns
 @PRODEOF
 mkdir -p toppar
 mv Q42_*.psf toppar/Q42.psf
@@ -267,4 +269,4 @@ $MPIRUN $NAMD equilibrate.conf > equilibrate.log
 mv equilibrate.restart.coor production00.restart.coor 
 mv equilibrate.restart.vel production00.restart.vel 
 mv equilibrate.restart.xsc production00.restart.xsc 
-$MPIRUN $NAMD production.conf > production.log
+$MPIRUN $NAMD production_single.conf > production.log
