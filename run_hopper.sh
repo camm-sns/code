@@ -1,5 +1,5 @@
 rm params* results* assembly* fit* Q*psf *log output.csv dakota.rst nohup.out
-CAMM=/tmp/code
+CAMM=/usr/local/camm
 cp $CAMM/dakota/dakota.in .
 cp $CAMM/dakota/opt* .
 nohup dakota dakota.in &
