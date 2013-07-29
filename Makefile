@@ -23,6 +23,8 @@ camm: amq
 	# Install application code
 	cp -R * $(prefix)
 	
+	@echo /usr/local/camm > `python -c "from distutils.sysconfig import get_python_lib; print(get_python_lib())"`/camm.pth
+	
 .PHONY: check
 .PHONY: install
 .PHONY: amq

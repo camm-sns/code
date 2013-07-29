@@ -22,8 +22,3 @@ setup(
                                        "camm_status = camm_amq.camm_monitor:send_status_info_command",
                                        "camm_monitor = camm_amq.camm_monitor:run",]},
     )   
-
-
-fd = open(os.path.join(site.getsitepackages()[0], 'camm.pth'), 'w')
-fd.write('/usr/local/camm')
-fd.close()
