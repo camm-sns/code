@@ -10,14 +10,6 @@ import argparse
 import threading
 import time
 
-# Set log level set up log file handler
-logging.getLogger().setLevel(logging.INFO)
-ft = logging.Formatter('%(asctime)-15s %(message)s')
-fh = logging.FileHandler('kepler_job.log')
-fh.setLevel(logging.INFO)
-fh.setFormatter(ft)
-logging.getLogger().addHandler(fh)
-
 from sns_utilities.amq_connector.amq_consumer import Client, Listener
 from configuration import Configuration
 from camm_monitor import send_status_info
@@ -122,8 +114,15 @@ def run_kepler_client():
         Entry point for kepler_client console script.
         Starts an AMQ client for Kepler.
     """
+    # Set log level set up log file handler
+    logging.getLogger().setLevel(logging.ERROR)
+    ft = logging.Formatter('%(asctime)-15s %(message)s')
+    fh = logging.FileHandler('kepler_job.log')
+    fh.setLevel(logging.ERROR)
+    fh.setFormatter(ft)
+    logging.getLogger().addHandler(fh)
+
     # Create a configuration object
-    print sys.argv
     conf = Configuration()
     logging.error(str(sys.argv))
     parser = argparse.ArgumentParser(description='Kepler workflow client')

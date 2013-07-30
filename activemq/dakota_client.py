@@ -10,14 +10,6 @@ import argparse
 import threading
 import time
 
-# Set log level set up log file handler
-logging.getLogger().setLevel(logging.INFO)
-ft = logging.Formatter('%(asctime)-15s %(message)s')
-fh = logging.FileHandler('dakota_client.log')
-fh.setLevel(logging.INFO)
-fh.setFormatter(ft)
-logging.getLogger().addHandler(fh)
-
 from sns_utilities.amq_connector.amq_consumer import Client, Listener
 from configuration import Configuration
 
@@ -199,6 +191,15 @@ def run():
     """
         Run an instance of the Dakota ActiveMQ consumer
     """
+    
+    # Set log level set up log file handler
+    logging.getLogger().setLevel(logging.INFO)
+    ft = logging.Formatter('%(asctime)-15s %(message)s')
+    fh = logging.FileHandler('dakota_client.log')
+    fh.setLevel(logging.INFO)
+    fh.setFormatter(ft)
+    logging.getLogger().addHandler(fh)
+
     # Get the command line options
     parser = argparse.ArgumentParser(description='Dakota AMQ client')
     parser.add_argument('-c', metavar='configuration',

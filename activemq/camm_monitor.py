@@ -13,14 +13,6 @@ from configuration import Configuration
 
 import logging
 
-# Set log level set up log file handler
-logging.getLogger().setLevel(logging.INFO)
-ft = logging.Formatter('%(asctime)-15s %(message)s')
-fh = logging.FileHandler('camm_listener.log')
-fh.setLevel(logging.INFO)
-fh.setFormatter(ft)
-logging.getLogger().addHandler(fh)
-
 def send_status_info_command():
     """
         Entry point for console script to send status information to AMQ
@@ -113,6 +105,15 @@ def run():
     """
         Console script entry point
     """
+
+    # Set log level set up log file handler
+    logging.getLogger().setLevel(logging.INFO)
+    ft = logging.Formatter('%(asctime)-15s %(message)s')
+    fh = logging.FileHandler('camm_listener.log')
+    fh.setLevel(logging.INFO)
+    fh.setFormatter(ft)
+    logging.getLogger().addHandler(fh)
+
     parser = argparse.ArgumentParser(description='CAMM listener')
     subparsers = parser.add_subparsers(dest='command', help='available sub-commands')
     subparsers.add_parser('start', help='Start daemon [-h for help]')
