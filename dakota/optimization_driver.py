@@ -7,7 +7,7 @@
 import sys
 import os
 from camm_amq import dakota_client
-from camm_monitor import send_status_info
+from camm_amq.camm_monitor import send_status_info
 
 # Get the parameter input file path
 input_file = os.path.join(os.getcwd(), sys.argv[1])
