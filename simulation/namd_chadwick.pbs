@@ -1,14 +1,10 @@
 #!/bin/bash
-#PBS -A m1503
-#PBS -q debug
-#PBS -l mppwidth=48
-#PBS -l walltime=30:00
+#PBS -l nodes=4:ppn=16
+#PBS -l walltime=50:00:00
 #PBS -N namdTest
-#PBS -j oe
-#PBS -V
 
-MPIRUN="aprun -n 48"
-NAMD=/usr/common/usg/namd/2.9/bin/namd2
+MPIRUN=/shared/openmpi/gcc/bin/mpirun
+NAMD=/shared/local/namd/NAMD_2.9_Linux-x86_64-mpi_shared/Linux-x86_64-g++/namd2
 
 cd $PBS_O_WORKDIR
 
@@ -131,8 +127,7 @@ outputTiming        5000
 #minimize            1000 ;# perform 1000 minimization steps
 
 firsttimestep         0            ;# reset frame counter
-run 5000  ;# 5ps
-#run 500000  ;# 500ps
+run 500000  ;# 500ps
 @EQEOF
 
 #Production config file
@@ -254,19 +249,26 @@ outputTiming        1000
 #minimize            1000 ;# perform 1000 minimization steps
 
 firsttimestep         0            ;# reset frame counter
-run 400000  ;# 400ps
-#run 4000000  ;# 4ns
+run 4000000  ;# 4ns
 @PRODEOF
 mkdir -p toppar
 mv Q42_*.psf toppar/Q42.psf
 #equilibrium run
-cp /global/project/projectdirs/m1503/camm/Q42/toppar/crd.md18_vmd_autopsf.pdb  toppar
-cp /global/project/projectdirs/m1503/camm/Q42/toppar/par_all27_prot_lipid.inp toppar
-cp /global/project/projectdirs/m1503/camm/Q42/T290/equilibrate/init.xsc . 
-$MPIRUN $NAMD equilibrate.conf > equilibrate.log
-
+#cp /data/jbq/projects/research/LiCl/watBox30/Hq.II/Q42/T290/equilibrate/equilibrate.conf .
+cp /data/jbq/projects/research/LiCl/watBox30/Hq.II/Q42/toppar/crd.md18_vmd_autopsf.pdb  toppar
+cp /data/jbq/projects/research/LiCl/watBox30/Hq.II/Q42/toppar/par_all27_prot_lipid.inp toppar
+cp /data/jbq/projects/research/LiCl/watBox30/Hq.II/Q42/T290/equilibrate/init.xsc . 
+$MPIRUN -machinefile $PBS_NODEFILE -np 64 $NAMD equilibrate.conf > equilibrate_64cores.log
+while [ $? -ne 0 ] ; do
+    $MPIRUN -machinefile $PBS_NODEFILE -np 64 $NAMD equilibrate.conf > equilibrate_64cores.log
+done
 #production run
-mv equilibrate.restart.coor production00.restart.coor 
-mv equilibrate.restart.vel production00.restart.vel 
-mv equilibrate.restart.xsc production00.restart.xsc 
-$MPIRUN $NAMD production_single.conf > production.log
+#cp /data/jbq/projects/research/LiCl/watBox30/Hq.II/Q42/T290/production/production_single.conf .
+mv equilibrate.restart.coor production00.restart.coor
+mv equilibrate.restart.vel production00.restart.vel
+mv equilibrate.restart.xsc production00.restart.xsc
+$MPIRUN -machinefile $PBS_NODEFILE -np 64 $NAMD production_single.conf > production_single_64cores.log
+while [ $? -ne 0 ] ; do
+    $MPIRUN -machinefile $PBS_NODEFILE -np 64 $NAMD production_single.conf > production_single_64cores.log
+done
+

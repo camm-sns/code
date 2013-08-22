@@ -33,38 +33,37 @@ if __name__ == '__main__':
   args = parser.parse_args()
 
   #Dakota input template file
-  template="""strategy,
-  single_method
-  graphics,tabular_graphics_data
+  template="""
+# DAKOTA INPUT FILE: nohup dakota dakota.in &
 
 method,
-  dot_mmfd,
-  max_iterations = 20,
-  convergence_tolerance = 1e-4
+        nl2sol
+          initial_trust_radius = 100
+          function_precision = 1e-3
+          output debug
 
 variables,
-  continuous_design = _NVAR_
-  descriptors_DESCRIPTORS_
-  initial_point_INITIAL_POINT_
-  lower_bounds_LOWER_BOUNDS_
-  upper_bounds_UPPER_BOUNDS_
-  max_step_MAX_STEP_
+        continuous_state = 1
+          initial_state 0.0
+          descriptors  'b1'
+        continuous_design = 7
+          cdv_initial_point 7.261128286320040e-01 1.000000000000000e-08 5.509589221505974e-02 4.438857367328487e-02 3.659833517176896e-02 2.206616918284543e-04 4.170000000000000e-01
+          cdv_lower_bounds   0.25 1e-8 0.0 0.0 0.0 -4.e-4 0.3
+          cdv_upper_bounds   2.0 2e-4 0.1 0.1 0.1 4.e-4 0.5
+          cdv_descriptors    'c0' 'b0' 'e0.0' 'e0.1' 'e0.2' 'eshift' 'FF1'
 
 interface,
-  fork
-  results_file = 'results.in'
-  input_filter = 'readResultsFile.py'
-  analysis_driver = 'intelScript.py'
-  output_filter = 'writeParametersFile.py'
-  parameters_file = 'parameters.in'
+        fork
+          analysis_driver = 'opt_driver'
+            parameters_file = 'params.in'
+            results_file = 'results.out'
+            file_tag
+            file_save
 
 responses,
-  objective_functions = 1
-  numerical_gradients
-  method_source dakota
-  interval_type central
-  fd_gradient_step_size = 1.e-4
-  no_hessians
+        calibration_terms = 1500
+        analytic_gradients
+        no_hessians
 """
 
   from molmec.ffupdate.ff_update import loadFFtpl

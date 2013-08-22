@@ -1,8 +1,8 @@
 #!/bin/bash
 #PBS -A m1503
-#PBS -q debug
-#PBS -l mppwidth=48
-#PBS -l walltime=30:00
+#PBS -q regular
+#PBS -l mppwidth=288
+#PBS -l walltime=6:00:00
 #PBS -N sassenaTest
 #PBS -j oe
 #PBS -V

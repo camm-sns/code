@@ -7,7 +7,7 @@
 import sys
 import os
 from camm_amq import dakota_client
-from camm_amq.camm_monitor import send_status_info
+#from camm_amq.camm_monitor import send_status_info
 
 # Get the parameter input file path
 input_file = os.path.join(os.getcwd(), sys.argv[1])
@@ -27,8 +27,8 @@ dakota = dakota_client.setup_client(instance_number, working_directory)
 
 # Send the ActiveMQ message announcing new parameters
 dakota.params_ready(input_file, output_file)
-send_status_info(str(instance_number), 'dakota_start')
+#send_status_info(str(instance_number), 'dakota_start')
 
 # Listen and wait for the results
 dakota.listen_and_wait()
-send_status_info(str(instance_number), 'dakota_stop')
+#send_status_info(str(instance_number), 'dakota_stop')
