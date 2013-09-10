@@ -299,7 +299,7 @@ def genSQE(hdfname,nxsname,wsname=None,indexes=[],rebinQ=None,scale=1.0, **kwarg
   SassenaFFT(ws,**findopts('SassenaFFT',algs_opt))
   wss=wsname+'_sqw'
 
-  if algs_opt['NormaliseToUnity']:
+  if 'NormaliseToUnity' in algs_opt.keys():
     from mantid.simpleapi import (ConvertToHistogram, NormaliseToUnity)
     ConvertToHistogram(InputWorkspace=wss,OutputWorkspace=wss)
     NormaliseToUnity(InputWorkspace=wss,OutputWorkspace=wss,**findopts('NormaliseToUnity',algs_opt))
