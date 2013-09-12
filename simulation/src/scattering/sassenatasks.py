@@ -68,6 +68,54 @@ def addVersionStamp(filename,stamp):
   f.attrs['sassena_version']=stamp
   f.close()
 
+def isOrderedByQmodulus(filename):
+  """ Check list of structure factors is ordered by increasing modulus of momentum transfer
+
+  Arguments:
+    filename: a Sassena output file
+
+  Returns:
+   True if qvectors dataset is ordered by increasing modulus of
+        momentum transfer. Otherwise returns False
+  """
+  from h5py import File
+  import numpy
+  f=File(filename,'r')
+  ds_q = numpy.array(f["qvectors"]) # shape==(nvectors,3)
+  f.close()
+  moduli=numpy.square(ds_q).sum(axis=1) # moduli-squared of the Q-vectors
+  return all(x<=y for x, y in zip(moduli, moduli[1:]))
+
+def orderByQmodulus(filename,outfile=None):
+  """ Sassena does not enforce any ordering of the structure factors.
+  Here we order by increasing value of modulus of Q-vectors. """
+  from h5py import File
+  import numpy
+  from tempdir import mkstemp
+  f=File(filename,'r')
+  overwrite=False
+  if not outfile:
+    handle,outfile=mkstemp(dir='/tmp') # temporaty output file
+    overwrite=True
+  g=File(outfile,'w')
+  ds_q = numpy.array(f["qvectors"]) # shape==(nvectors,3)
+  moduli=numpy.square(ds_q).sum(axis=1) # moduli-squared of the Q-vectors
+  rank=numpy.argsort(moduli) # rank from smallest to greatest
+  for dset in ('qvectors', 'fqt', 'fq', 'fq0', 'fq2'):
+    if dset in f.keys(): 
+      x=numpy.array(f[dset])
+      if not outfile:
+        del f[dset]
+        f[dset]=x[rank]
+      else:
+        g[dset]=x[rank]
+  for key,val in f.attrs.items(): g.attrs[key]=val
+  g.close()
+  f.close()
+  if overwrite:
+    os.system('/bin/mv %s %s'%(outfile,filename))
+  return None
+
 def calculateIQ(qlist, pdbfile):
   """Calculate both the static coherent and static incoherent intermediate structure factors
   Arguments:
@@ -275,13 +323,17 @@ def genSQE(hdfname,nxsname,wsname=None,indexes=[],rebinQ=None,scale=1.0, **kwarg
   wsname=wsname or splitext(basename(nxsname))[0]
   algs_opt=locals()['kwargs']
   hdfs=hdfname.split() # list of sassena output files serving as input
+  if not isOrderedByQmodulus(hdfs[0]):
+    orderByQmodulus(hdfs[0])
   ws=LoadSassena(Filename=hdfs[0], OutputWorkspace=wsname, **findopts('LoadSassena',algs_opt)) # initialize the first
-  SortByQVectors(ws)
+  #SortByQVectors(ws)
 
   if len(hdfs)>1: # add remaining sassena output files
     for hdf in hdfs[1:]:
+      if not isOrderedByQmodulus(hdf):
+        orderByQmodulus(hdf)
       ws1=LoadSassena(Filename=hdf, **findopts('LoadSassena',algs_opt))
-      SortByQVectors(ws1)
+      #SortByQVectors(ws1)
       if CheckWorkspacesMatch(Workspace1=wsname+'_qvectors',Workspace2=ws1.getName()+'_qvectors'):
         for wstype in ('_fq0','_fqt.Re','_fqt.Im'):
           Plus(LHSWorkspace=wsname+wstype,RHSWorkspace=ws1.getName()+wstype,OutputWorkspace=wsname+wstype)
