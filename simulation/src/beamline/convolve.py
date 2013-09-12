@@ -44,7 +44,6 @@ def camm_convolve(signal,response,mode='same'):
   g=response[::-1] # numpy convolve uses the definition of convolution of math textbooks, which does E --> -E
   return convolve(signal,g,mode=mode)
 
-
 def convolution(simulated, resolution, expdata, convolved, dak=None, norm2one=False):
   """Convolve a simulated S(Q,E) with a resolution file
 
@@ -56,17 +55,30 @@ def convolution(simulated, resolution, expdata, convolved, dak=None, norm2one=Fa
   Returns:
     workspace for the convolution
   """
-  from mantid.simpleapi import (LoadNexus, Rebin, ConvertToHistogram, NormaliseToUnity, SaveNexus, AddSampleLog)
+  from mantid.simpleapi import (LoadNexus, Rebin, ConvertToHistogram, NormaliseToUnity, SaveNexus, SaveAscii, AddSampleLog)
   wss=LoadNexus(Filename=simulated,OutputWorkspace='simulated')
   width=wss.readX(0)[1]-wss.readX(0)[0] # rebin resolution as simulated
   wsr=LoadNexus(Filename=resolution,OutputWorkspace='resolution')
-  wsr=Rebin(InputWorkspace='resolution', Params=(wsr.readX(0)[0], width, wsr.readX(0)[-1]), OutputWorkspace='resolution')
+
+  #symmetrize the domain of the resolution function. Otherwise the
+  #convolution results in a function with its peak shifted from the origin
+  min=wsr.readX(0)[0]
+  max=wsr.readX(0)[-1]
+  delta=min+max
+  if delta<0:
+    wsr=Rebin(wsr, Params=(-max,width,max))
+  elif delta>0:
+    wsr=Rebin(wsr, Params=(min,width,-min))
+  else:
+    wsr=Rebin(wsr, Params=(min,width,max))
+
   # convolve now, overwriting simulateds
   for i in range(wss.getNumberHistograms()):
     v=wsr.readY(i)
     w=wss.readY(i)
     x=camm_convolve(w,v,mode='same')
     wss.setY(i,x)
+    
   wse=LoadNexus(Filename=expdata,OutputWorkspace='expdata')
   width=wse.readX(0)[1]-wse.readX(0)[0] # rebin simulated as expdata
   Rebin(InputWorkspace='simulated', Params=(wse.readX(0)[0],width,wse.readX(0)[-1]), OutputWorkspace='convolved')
