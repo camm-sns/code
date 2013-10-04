@@ -19,15 +19,20 @@ class DakotaListener(Listener):
         This class processes incoming messages
     """
     
-    def __init__(self, configuration=None, results_ready_queue=None):
+    def __init__(self, configuration=None, 
+                 results_ready_queue=None,
+                 catalog_results_ready_queue=None):
         super(DakotaListener, self).__init__(configuration)
         
+        self._conf = configuration
+        self._connection = None
         self._complete = False
         self._transaction_complete = threading.Condition()
         if results_ready_queue is not None:
             self.results_ready_queue = results_ready_queue
         else:
-            configuration.results_ready_queue
+            self.results_ready_queue = configuration.results_ready_queue
+        self.catalog_results_ready_queue = catalog_results_ready_queue
 
     def on_message(self, headers, message):
         """
@@ -50,6 +55,10 @@ class DakotaListener(Listener):
             except:
                 logging.error("Could not process JSON message")
                 logging.error(str(sys.exc_value))
+                
+            # If we have a cataloging queue, send a message to it
+            if self.catalog_results_ready_queue is not None:
+                self.send(self.catalog_results_ready_queue, message)
 
     def wait_on_transaction_complete(self):
         """
@@ -58,7 +67,41 @@ class DakotaListener(Listener):
         self._transaction_complete.acquire()
         while not self._complete == True:
             self._transaction_complete.wait()
-        self._transaction_complete.release()         
+        self._transaction_complete.release()
+        
+    def _disconnect(self):
+        """
+            Clean disconnect
+        """
+        if self._connection is not None and self._connection.is_connected():
+            self._connection.disconnect()
+        self._connection = None
+
+    def get_connection(self):
+        """
+            Establish and return a connection to ActiveMQ
+        """
+        logging.info("[Dakota Listener] Attempting to connect to ActiveMQ broker")
+        conn = stomp.Connection(host_and_ports=self._conf.brokers, 
+                                user=self._conf.amq_user,
+                                passcode=self._conf.amq_pwd, 
+                                wait_on_receipt=True)
+        conn.start()
+        conn.connect()
+        # Give the connection threads a little breather
+        time.sleep(0.5)
+        return conn
+        
+    def send(self, destination, message, persistent='true'):
+        """
+            Send a message to a queue
+            @param destination: name of the queue
+            @param message: message content
+        """
+        if self._connection is None or not self._connection.is_connected():
+            self._disconnect()
+            self._connection = self.get_connection()
+        self._connection.send(destination=destination, message=message, persistent=persistent)
         
         
 class DakotaClient(Client):
@@ -71,6 +114,10 @@ class DakotaClient(Client):
     params_ready_queue = "PARAMS.READY"
     ## Output queue to announce results
     results_ready_queue = "RESULTS.READY"
+    ## Input queue used to catalog input parameters
+    catalog_params_ready_queue = "CATALOG_PARAMS.READY"
+    ## Output queue to announce results
+    catalog_results_ready_queue = "CATALOG_RESULTS.READY"
     
     def set_results_ready_queue(self, queue):
         """ 
@@ -80,6 +127,7 @@ class DakotaClient(Client):
         """
         logging.info("Dakota client will listen for results on %s" % queue)
         self.results_ready_queue = queue
+        self.catalog_results_ready_queue = "CATALOG_%s" % self.results_ready_queue
         
     def set_params_ready_queue(self, queue):
         """ 
@@ -89,6 +137,7 @@ class DakotaClient(Client):
         """
         logging.info("Dakota client will send parameters to %s" % queue)
         self.params_ready_queue = queue
+        self.catalog_params_ready_queue = "CATALOG_%s" % self.params_ready_queue
         
     def set_working_directory(self, working_directory):
         """
@@ -148,6 +197,7 @@ class DakotaClient(Client):
                            }
                 json_message = json.dumps(message)
                 self.send(self.params_ready_queue, json_message)
+                self.send(self.catalog_params_ready_queue, json_message)
             except:
                 logging.error("Could not read %s file: %s" % (input_file, sys.exc_value))
         else:
@@ -183,7 +233,8 @@ def setup_client(instance_number=None,
     c.set_params_ready_queue(params_queue)
     c.set_results_ready_queue(results_queue)
     c.set_working_directory(working_directory)
-    c.set_listener(DakotaListener(conf, results_ready_queue=results_queue))
+    c.set_listener(DakotaListener(conf, results_ready_queue=results_queue,
+                                  catalog_results_ready_queue=c.catalog_results_ready_queue))
     return c
     
     
