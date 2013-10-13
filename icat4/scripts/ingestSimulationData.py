@@ -7,8 +7,8 @@ from datetime import datetime
 from nxs import NeXusError
 
 def usage():
-  print 'Usage: python ingestDakota.py <jobId> <inputFileDirectory> <outputFileDirectory>'
-  print 'Example: python ingestDakota.py 872.fermi-mgmt3.ornl.gov /tmp/data/Dakota_input /tmp/data/Dakota_output'
+  print 'Usage: python ingestSimulationData.py <datafileDirectory>'
+  print 'Example: python ingestSimulationData.py /tmp/camm_data'
   sys.exit(-1)
 
 def ingestSimulationData(datafileDir, sessionId, service, factory):

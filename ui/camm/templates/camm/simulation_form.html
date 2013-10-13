@@ -1,0 +1,48 @@
+{% load staticfiles %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'camm/style.css' %}"
+
+<div style="text-align:center"><img src="{% static "camm/images/NScD.png" %}" alt="image"/></div>
+
+    <div id="page-wrap">
+        {% if error_message %}
+		<p style="color:red">Missing required fields: "{{ error_message }}"</p>
+		{% else %}
+		<p>For " <strong>{{ choice }}</strong> " simulation, please enter the following parameters: </p>
+		{% endif %}
+		<div id="form-area">
+			
+			<form action="/camm/submit/" method="get">
+			
+				<label for="Title">title:</label>
+				<input type="text" name="title" id="title" value={{ title }}>
+				
+				<label for="User name">User name:</label>
+				<input type="text" name="user" id="user" value={{ user }}>
+				
+				<label for="Remote Machine">Remote Machine:</label>
+				<select name="remote_machine">
+					<option value="fermi.ornl.gov">fermi.ornl.gov</option>
+					<option value="chadwick.sns.gov">chadwick.sns.gov</option>
+				</select>
+	
+				<label for="Scratch directory">Scratch directory:</label>
+				<input type="text" name="scratch_dir" id="scratch_dir" value={{ scratch_dir }}>
+				
+				<label for="Experiment data">Experiment data:</label>
+				<input type="text" name="experiment_data" id="experiment_data" value={{ experiment_data }}><br>
+		
+				
+				<hr><br>
+				
+				<input type="submit" name="stop" value="Stop" class="submit-button" />
+				<input type="submit" name="resume" value="Resume" class="submit-button" />
+				<input type="submit" name="pause" value="Pause" class="submit-button" />
+				<input type="submit" name="go" value="Go" class="submit-button" />
+				
+			</form>
+		
+		</div>
+	
+	</div>
+

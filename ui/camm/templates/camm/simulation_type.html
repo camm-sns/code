@@ -1,0 +1,26 @@
+{% load staticfiles %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'camm/style.css' %}"
+
+<div style="text-align:center"><img src="{% static "camm/images/NScD.png" %}" alt="image"/></div>
+
+{% if simulation_list %}
+
+<div id="page-wrap">
+
+<form style="text-align:center" action="/camm/simulation_form" method="get">
+  <p>Select a simulation type:</p>
+  {% for choice in simulation_list %}
+    <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.name }}" />
+    <label for="choice{{ forloop.counter }}">{{ choice.name }}</label><br/>
+  {% endfor %}
+  </br>
+  <input type="submit" value="Submit"/>
+</form>
+
+</div>
+
+{% else %}
+    <p>No simulations are available.</p>
+{% endif %}
+</br></br>

@@ -1,0 +1,15 @@
+{% load staticfiles %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'camm/style.css' %}"
+
+<div style="text-align:center"><img src="{% static "camm/images/NScD.png" %}" alt="image"/></div>
+
+<div id="page-wrap">
+
+<p>Your job is submitted: </p>
+<p>"user: " {{ user }}</p>
+<p>"title: " {{ title }}</p>
+<p>"remote_machine: " {{ remote_machine }}</p>
+<p>"status: " {{ execute }}</p>
+
+</div>
