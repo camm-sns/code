@@ -11,6 +11,16 @@ sassexec=None
 sassdb=None
 catdcd=None
 
+def tempfile():
+  try:
+    from tempdir import mkstemp
+    handle,outfile=mkstemp(dir='/tmp') # temporaty output file
+  except:
+    import datetime, calendar
+    timestamp=calendar.timegm( datetime.datetime.now().utctimetuple())
+    outfile='/tmp/tmp.'+str(timestamp)
+  return outfile
+
 def setDataBasePath(sassena_libray):
   """ Set the directory where the Sassena database is located """
   sassdb=sassena_library
@@ -95,7 +105,7 @@ def orderByQmodulus(filename,outfile=None):
   f=File(filename,'r')
   overwrite=False
   if not outfile:
-    handle,outfile=mkstemp(dir='/tmp') # temporaty output file
+    outfile=tempfile() # temporaty output file
     overwrite=True
   g=File(outfile,'w')
   ds_q = numpy.array(f["qvectors"]) # shape==(nvectors,3)
