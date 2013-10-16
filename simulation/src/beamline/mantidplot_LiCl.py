@@ -12,15 +12,16 @@ try:
 except ImportError:
   pass
 
-LiCl=Load(Filename="/usr/local/camm/simulation/test/beamline/LiCl_290K.nxs")
+LiCl=Load(Filename="/SNS/users/vel/camm-sns/code/simulation/test/beamline/LiCl_190K.nxs")
 for wi in xrange(mtd["LiCl"].getNumberHistograms()):	
-        graph_spec = plotSpectrum ("Simulation", wi)
+        graph_spec = plotSpectrum ("assembled_1", wi)
         l = graph_spec.activeLayer()
-	l.setAxisScale(Layer.Left,0.00001,0.01,Layer.Log10)
+	l.setAxisScale(Layer.Left,1e-6,0.1,Layer.Log10)
+	#l.setAxisScale(Layer.Left,0.000001,0.1,Layer.Log10)
 #	l.insertCurve("Simulation2",wi)
 #	l.setAxisScale(Layer.Left,0.00001,0.01,Layer.Log10)
 	l.insertCurve("LiCl", wi, True, 1)
-	l.setAxisScale(Layer.Left,0.00001,0.01,Layer.Log10)
+	#l.setAxisScale(Layer.Left,0.000001,0.1,Layer.Log10)
 	s = PlotSymbol()
 	s.setSize(QtCore.QSize(2, 2)) # or s.setSize(7)
 	s.setBrush(QtGui.QBrush(Qt.darkYellow))
@@ -32,6 +33,7 @@ for wi in xrange(mtd["LiCl"].getNumberHistograms()):
 #	l.setCurveLineWidth(1,2.0)
 	#l.setCurveLineColor(0,3)
         l.setCurveAxes(1,1,1)
+	l.setAxisScale(Layer.Left,1e-6,0.1,Layer.Log10)
 	
 	if wi == 0:
 		l.setTitle("Q=0.5")

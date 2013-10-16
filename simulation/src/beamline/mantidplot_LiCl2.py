@@ -12,15 +12,15 @@ try:
 except ImportError:
   pass
 
-LiCl=Load(Filename="/usr/local/camm/simulation/test/beamline/LiCl_290K.nxs")
+LiCl=Load(Filename="/SNS/users/vel/camm-sns/code/simulation/test/beamline/LiCl_260K.nxs")
 for wi in xrange(mtd["LiCl"].getNumberHistograms()):	
         graph_spec = plotSpectrum ("Simulation_0.417", wi)
         l = graph_spec.activeLayer()
-	l.setAxisScale(Layer.Left,0.00001,0.01,Layer.Log10)
-	l.insertCurve("Simulation_0.433",wi)
-	l.setAxisScale(Layer.Left,0.00001,0.01,Layer.Log10)
+	l.setAxisScale(Layer.Left,1e-6,0.1,Layer.Log10)
+	l.insertCurve("Simulation_0.443",wi)
+	l.setAxisScale(Layer.Left,1e-6,0.1,Layer.Log10)
 	l.insertCurve("LiCl", wi, True, 1)
-	l.setAxisScale(Layer.Left,0.00001,0.01,Layer.Log10)
+	l.setAxisScale(Layer.Left,1e-6,0.1,Layer.Log10)
 	s = PlotSymbol()
 	s.setSize(QtCore.QSize(2, 2)) # or s.setSize(7)
 	s.setBrush(QtGui.QBrush(Qt.darkYellow))

@@ -25,7 +25,7 @@ cat > equilibrate.conf <<'@EQEOF'
 #############################################################
 ## ADJUSTABLE PARAMETERS                                   ##
 #############################################################
-set temperature     290 ;# initial temperature, in Kelvin
+set temperature     TEMP ;# initial temperature, in Kelvin
 set charge        42 ;# hydrogen charge
 set pressure      1.01325  ;#  in bar -> 1 atm
 set inputname          init ;# prefix for input files
@@ -90,7 +90,7 @@ langevinDamping     1.0   ;# damping coefficient (gamma) of 1/ps
 langevinHydrogen    off   ;# don't couple langevin bath to hydrogens
   # Control parameters for annealing
   #reassignFreq       3000   ;# number of timesteps between temperature reassignment
-  #reassignTemp        290   ;# new temperature when reassignment happens
+  #reassignTemp        TEMP   ;# new temperature when reassignment happens
   #reassignIncr       -1.0   ;# temperature increment when reassignment happens
   #reassignHold       10.0   ;# target or limit temperature
 
@@ -147,7 +147,7 @@ cat > production_single.conf <<'@PRODEOF'
 #############################################################
 ## ADJUSTABLE PARAMETERS                                   ##
 #############################################################
-set temperature     290 ;# initial temperature, in Kelvin
+set temperature     TEMP ;# initial temperature, in Kelvin
 set charge        42 ;# hydrogen charge
 set pressure      1.01325  ;#  in bar -> 1 atm
 set inputname  production00 ;# prefix for input files
@@ -212,7 +212,7 @@ langevinDamping     1.0   ;# damping coefficient (gamma) of 1/ps
 langevinHydrogen    off   ;# don't couple langevin bath to hydrogens
   # Control parameters for annealing
   #reassignFreq       3000   ;# number of timesteps between temperature reassignment
-  #reassignTemp        290   ;# new temperature when reassignment happens
+  #reassignTemp        TEMP   ;# new temperature when reassignment happens
   #reassignIncr       -1.0   ;# temperature increment when reassignment happens
   #reassignHold       10.0   ;# target or limit temperature
 
@@ -255,6 +255,8 @@ outputTiming        1000
 firsttimestep         0            ;# reset frame counter
 run 4000000  ;# 4ns
 @PRODEOF
+sed -i -e 's/TEMP/'"$TEMP"'/g' equilibrate.conf
+sed -i -e 's/TEMP/'"$TEMP"'/g' production_single.conf
 mkdir -p toppar
 mv Q42_*.psf toppar/Q42.psf
 #equilibrium run
