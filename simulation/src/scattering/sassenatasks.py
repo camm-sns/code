@@ -369,6 +369,7 @@ def genSQE(hdfname,nxsname,wsname=None,indexes=[],rebinQ=None,scale=1.0, **kwarg
   if scale!=1.0: wss=Scale(wss,Factor=scale,Operation='Multiply')
 
   SaveNexus(InputWorkspace=wss, Filename=nxsname, **findopts('SaveNexus',algs_opt))
+  #trace()
   return ws
 
 # Use as a script
