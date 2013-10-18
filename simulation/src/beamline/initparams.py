@@ -79,7 +79,7 @@ if __name__ == "__main__":
 
   import argparse
   import sys
-  from sets import Set
+  if sys.version_info < (2,6): from sets import Set as set
 
   p=argparse.ArgumentParser(description='Provider for services involving initialization of model beamline parameters. Available models are: modelB_freeE_C')
   p.add_argument('service', help='name of the service to invoke')

@@ -104,7 +104,7 @@ def convolution(simulated, resolution, expdata, convolved, dak=None, norm2one=Fa
 if __name__ == "__main__":
   import argparse
   import sys
-  from sets import Set
+  if sys.version_info < (2,6): from sets import Set as set
   p=argparse.ArgumentParser(description='Provider for services involving convolution of simulated S(Q,E) with a model beamline. Available services are: lowTresolution.')
   p.add_argument('service', help='name of the service to invoke')
   p.add_argument('-explain', action='store_true', help='print message explaining the arguments to pass for the particular service')

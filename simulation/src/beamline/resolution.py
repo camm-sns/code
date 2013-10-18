@@ -33,7 +33,7 @@ def elasticLineLowTemp(insqe, outres=None):
 if __name__ == "__main__":
   import argparse
   import sys
-  from sets import Set
+  if sys.version_info < (2,6): from sets import Set as set
   p=argparse.ArgumentParser(description='Provider for services involving the production of a resolution function. Available services are: elasticLineLowTemp')
   p.add_argument('service', help='name of the service to invoke')
   p.add_argument('-explain', action='store_true', help='print message explaining the arguments to pass for the particular service')

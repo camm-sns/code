@@ -141,7 +141,6 @@ def sortQvectors(hdfile, args):
   Returns:
    ws1 (mantid group workspace) Workspace holding the contents of the HDF5 file
   """
-  trace()
   from sys import version_info # python version
   if version_info < (2,7):
     ws1 = mti.LoadSassena( Filename=hdfile, **args )
@@ -357,7 +356,6 @@ def genSQE(hdfname,nxsname,wsname=None,indexes=[],rebinQ=None,scale=1.0, **kwarg
   wsname=wsname or splitext(basename(nxsname))[0]
   algs_opt=locals()['kwargs']
   hdfs=hdfname.split() # list of sassena output files serving as input
-  #trace()
   ws = sortQvectors( hdfs[0], findopts('LoadSassena',algs_opt) )
 
   if len(hdfs)>1: # add remaining sassena output files
@@ -395,11 +393,11 @@ if __name__ == '__main__':
   import argparse
   import sys
   from mantidhelper.algorithm import getDictFromArgparse
-  from sets import Set
+  if sys.version_info < (2,6): from sets import Set as set
   p=argparse.ArgumentParser(description='Provider for services involving Sassena IO. Available services are: genSQE, SassenaVersion ')
   p.add_argument('service', help='name of the function in this module to call')
   p.add_argument('-explain', action='store_true', help='print message explaining the arguments to pass for the particular service')
-  if Set(['-h', '-help', '--help']).intersection(Set(sys.argv)): args=p.parse_args() # check if help message is requested
+  if set(['-h', '-help', '--help']).intersection(set(sys.argv)): args=p.parse_args() # check if help message is requested
   if 'SassenaVersion' in sys.argv:
     p.description='Loads Sassena output (HDF5 file) and adds Sassena Version number.' # update help message
     for action in p._actions:
