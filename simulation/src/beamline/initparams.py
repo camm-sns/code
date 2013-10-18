@@ -84,7 +84,7 @@ if __name__ == "__main__":
   p=argparse.ArgumentParser(description='Provider for services involving initialization of model beamline parameters. Available models are: modelB_freeE_C')
   p.add_argument('service', help='name of the service to invoke')
   p.add_argument('-explain', action='store_true', help='print message explaining the arguments to pass for the particular service')
-  if Set(['-h', '-help', '--help']).intersection(Set(sys.argv)): args=p.parse_args() # check if help message is requested
+  if set(['-h', '-help', '--help']).intersection(set(sys.argv)): args=p.parse_args() # check if help message is requested
 
   if 'modelB_freeE_C' in sys.argv:
     p.description='''Estimate initial beamline parameters for the modelB_freeE_C

@@ -108,7 +108,7 @@ if __name__ == "__main__":
   p=argparse.ArgumentParser(description='Provider for services involving convolution of simulated S(Q,E) with a model beamline. Available services are: lowTresolution.')
   p.add_argument('service', help='name of the service to invoke')
   p.add_argument('-explain', action='store_true', help='print message explaining the arguments to pass for the particular service')
-  if Set(['-h', '-help', '--help']).intersection(Set(sys.argv)): args=p.parse_args() # check if help message is requested
+  if set(['-h', '-help', '--help']).intersection(set(sys.argv)): args=p.parse_args() # check if help message is requested
   if 'convolution' in sys.argv:
     p.description='Convolve simulated S(Q,E) with a resolution Nexus file. Generates a Nexus file containing the convolution.' # update help message
     for action in p._actions:

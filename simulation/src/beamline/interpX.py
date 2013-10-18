@@ -38,7 +38,7 @@ if __name__ == "__main__":
   p=argparse.ArgumentParser(description='Provider for services involving shift of calculated S(Q,E) model Available services are: itp_simple')
   p.add_argument('service', help='name of the service to invoke')
   p.add_argument('-explain', action='store_true', help='print message explaining the arguments to pass for the particular service')
-  if Set(['-h', '-help', '--help']).intersection(Set(sys.argv)): args=p.parse_args() # check if help message is requested
+  if set(['-h', '-help', '--help']).intersection(set(sys.argv)): args=p.parse_args() # check if help message is requested
 
   if 'itp_simple' in sys.argv:
     p.description='For all spectra of a mantid workspace, shift a small amount and interpolate through Mantid::Rebin' # update help message
