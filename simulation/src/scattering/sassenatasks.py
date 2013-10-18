@@ -6,6 +6,7 @@ Created on Mar 8, 2013
 
 from pdb import set_trace as trace # uncomment only for debugging purposes
 import os
+import mantid.simpleapi as mti
 
 sassexec=None
 sassdb=None
@@ -125,6 +126,32 @@ def orderByQmodulus(filename,outfile=None):
     os.system('/bin/mv %s %s'%(outfile,filename))
   return None
 
+
+def sortQvectors(hdfile, args):
+  """Sort rows by Qvector modulus
+
+  If python version < 2.7, then use Mantid algorithm
+  SortByQVectors. Otherwise check if the rows are already ordered and
+  use orderByQmodulus if needed.
+
+  Arguments:
+   hdfile (string) HDF5 file
+   args  (dictionary) extra arguments for LoadSassena algorithm
+
+  Returns:
+   ws1 (mantid group workspace) Workspace holding the contents of the HDF5 file
+  """
+  trace()
+  from sys import version_info # python version
+  if version_info < (2,7):
+    ws1 = mti.LoadSassena( Filename=hdfile, **args )
+    mti.SortByQVectors(ws1)
+  else:
+    if not isOrderedByQmodulus(hdfile): orderByQmodulus(hdf)
+    ws1 = mti.LoadSassena( Filename=hdfile, **args )
+  return ws1
+
+
 def calculateIQ(qlist, pdbfile):
   """Calculate both the static coherent and static incoherent intermediate structure factors
   Arguments:
@@ -137,7 +164,6 @@ def calculateIQ(qlist, pdbfile):
   import sys
   from tempfile import mkdtemp
   from os.path import exists
-  from mantid.simpleapi import LoadSassena,SortByQVectors,mtd
 
   inc_template='''<root>
 <sample>
@@ -280,13 +306,13 @@ def calculateIQ(qlist, pdbfile):
   os.system('%s --config=%s/sassena_coh.xml'%(sassexec,workdir))
   addVersionStamp(os.path.join(workdir,'fq_coh.h5'),'1.4.1')
 
-  LoadSassena(Filename=os.path.join(workdir,'fq_inc.h5'),OutputWorkspace='inc')
-  SortByQVectors(InputWorkspace='inc')
-  LoadSassena(Filename=os.path.join(workdir,'fq_coh.h5'),OutputWorkspace='coh')
-  SortByQVectors(InputWorkspace='coh')
+  mti.LoadSassena(Filename=os.path.join(workdir,'fq_inc.h5'),OutputWorkspace='inc')
+  mti.SortByQVectors(InputWorkspace='inc')
+  mti.LoadSassena(Filename=os.path.join(workdir,'fq_coh.h5'),OutputWorkspace='coh')
+  mti.SortByQVectors(InputWorkspace='coh')
 
   os.system('/bin/rm -rf '+workdir)
-  return mtd['inc'],mtd['coh']
+  return mti.mtd['inc'],mti.mtd['coh']
 
 def genSQE(hdfname,nxsname,wsname=None,indexes=[],rebinQ=None,scale=1.0, **kwargs):
   """ Generate S(Q,E)
@@ -328,47 +354,39 @@ def genSQE(hdfname,nxsname,wsname=None,indexes=[],rebinQ=None,scale=1.0, **kwarg
   from mantidhelper.algorithm import findopts
   from mantidhelper.workspace import prunespectra
   from os.path import basename,splitext
-  from mantid.simpleapi import LoadSassena,SortByQVectors,CheckWorkspacesMatch,Plus,SassenaFFT,SaveNexus,Scale
   wsname=wsname or splitext(basename(nxsname))[0]
   algs_opt=locals()['kwargs']
   hdfs=hdfname.split() # list of sassena output files serving as input
-  if not isOrderedByQmodulus(hdfs[0]):
-    orderByQmodulus(hdfs[0])
-  ws=LoadSassena(Filename=hdfs[0], OutputWorkspace=wsname, **findopts('LoadSassena',algs_opt)) # initialize the first
-  #SortByQVectors(ws)
+  #trace()
+  ws = sortQvectors( hdfs[0], findopts('LoadSassena',algs_opt) )
 
   if len(hdfs)>1: # add remaining sassena output files
     for hdf in hdfs[1:]:
-      if not isOrderedByQmodulus(hdf):
-        orderByQmodulus(hdf)
-      ws1=LoadSassena(Filename=hdf, **findopts('LoadSassena',algs_opt))
-      #SortByQVectors(ws1)
-      if CheckWorkspacesMatch(Workspace1=wsname+'_qvectors',Workspace2=ws1.getName()+'_qvectors'):
+      ws1 = sortQvectors( hdf, **findopts('LoadSassena',algs_opt) )
+      if mti.CheckWorkspacesMatch(Workspace1=wsname+'_qvectors',Workspace2=ws1.getName()+'_qvectors'):
         for wstype in ('_fq0','_fqt.Re','_fqt.Im'):
-          Plus(LHSWorkspace=wsname+wstype,RHSWorkspace=ws1.getName()+wstype,OutputWorkspace=wsname+wstype)
+          mti.Plus(LHSWorkspace=wsname+wstype,RHSWorkspace=ws1.getName()+wstype,OutputWorkspace=wsname+wstype)
       else:
         print 'Workspaces do not match'
 
   if rebinQ: # rebin in Q space
     rebinQ=','.join(rebinQ.split()) #substitute separators, from space to comma
-    from mantid.simpleapi import (Transpose, Rebin)
-    Rebin(InputWorkspace=wsname+'_fq0',Params=rebinQ,OutputWorkspace=wsname+'_fq0')
+    mti.Rebin(InputWorkspace=wsname+'_fq0',Params=rebinQ,OutputWorkspace=wsname+'_fq0')
     for wstype in ('_fqt.Re','_fqt.Im'):
-      Transpose(InputWorkspace=wsname+wstype,OutputWorkspace=wsname+wstype)
-      Rebin(InputWorkspace=wsname+wstype,Params=rebinQ,OutputWorkspace=wsname+wstype)
-      Transpose(InputWorkspace=wsname+wstype,OutputWorkspace=wsname+wstype)
-  SassenaFFT(ws,**findopts('SassenaFFT',algs_opt))
+      mti.Transpose(InputWorkspace=wsname+wstype,OutputWorkspace=wsname+wstype)
+      mti.Rebin(InputWorkspace=wsname+wstype,Params=rebinQ,OutputWorkspace=wsname+wstype)
+      mti.Transpose(InputWorkspace=wsname+wstype,OutputWorkspace=wsname+wstype)
+  mti.SassenaFFT(ws,**findopts('SassenaFFT',algs_opt))
   wss=wsname+'_sqw'
 
   if 'NormaliseToUnity' in algs_opt.keys():
-    from mantid.simpleapi import (ConvertToHistogram, NormaliseToUnity)
-    ConvertToHistogram(InputWorkspace=wss,OutputWorkspace=wss)
-    NormaliseToUnity(InputWorkspace=wss,OutputWorkspace=wss,**findopts('NormaliseToUnity',algs_opt))
+    mti.ConvertToHistogram(InputWorkspace=wss,OutputWorkspace=wss)
+    mti.NormaliseToUnity(InputWorkspace=wss,OutputWorkspace=wss,**findopts('NormaliseToUnity',algs_opt))
 
   prunespectra(InputWorkspace=wss,indexes=indexes) # does nothing in indexes is empty
-  if scale!=1.0: wss=Scale(wss,Factor=scale,Operation='Multiply')
+  if scale!=1.0: wss=mti.Scale(wss,Factor=scale,Operation='Multiply')
 
-  SaveNexus(InputWorkspace=wss, Filename=nxsname, **findopts('SaveNexus',algs_opt))
+  mti.SaveNexus(InputWorkspace=wss, Filename=nxsname, **findopts('SaveNexus',algs_opt))
   #trace()
   return ws
 
