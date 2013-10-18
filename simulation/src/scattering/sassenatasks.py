@@ -4,7 +4,7 @@ Created on Mar 8, 2013
 @author: jmborr
 '''
 
-from pdb import set_trace as trace # uncomment only for debugging purposes
+#from pdb import set_trace as trace # uncomment only for debugging purposes
 import os
 import mantid.simpleapi as mti
 
@@ -139,16 +139,16 @@ def sortQvectors(hdfile, args):
    args  (dictionary) extra arguments for LoadSassena algorithm
 
   Returns:
-   ws1 (mantid group workspace) Workspace holding the contents of the HDF5 file
+   ws (mantid group workspace) Workspace holding the contents of the HDF5 file
   """
   from sys import version_info # python version
   if version_info < (2,7):
-    ws1 = mti.LoadSassena( Filename=hdfile, **args )
-    mti.SortByQVectors(ws1)
+    ws = mti.LoadSassena( Filename=hdfile, **args )
+    mti.SortByQVectors(ws)
   else:
     if not isOrderedByQmodulus(hdfile): orderByQmodulus(hdf)
-    ws1 = mti.LoadSassena( Filename=hdfile, **args )
-  return ws1
+    ws = mti.LoadSassena( Filename=hdfile, **args )
+  return ws
 
 
 def calculateIQ(qlist, pdbfile):
@@ -356,11 +356,12 @@ def genSQE(hdfname,nxsname,wsname=None,indexes=[],rebinQ=None,scale=1.0, **kwarg
   wsname=wsname or splitext(basename(nxsname))[0]
   algs_opt=locals()['kwargs']
   hdfs=hdfname.split() # list of sassena output files serving as input
-  ws = sortQvectors( hdfs[0], findopts('LoadSassena',algs_opt) )
+  sassopt=findopts('LoadSassena',algs_opt).copy(); sassopt.update({'OutputWorkspace':wsname})
+  ws = sortQvectors( hdfs[0], sassopt)
 
   if len(hdfs)>1: # add remaining sassena output files
     for hdf in hdfs[1:]:
-      ws1 = sortQvectors( hdf, **findopts('LoadSassena',algs_opt) )
+      ws1 = sortQvectors( hdf, findopts('LoadSassena',algs_opt) )
       if mti.CheckWorkspacesMatch(Workspace1=wsname+'_qvectors',Workspace2=ws1.getName()+'_qvectors'):
         for wstype in ('_fq0','_fqt.Re','_fqt.Im'):
           mti.Plus(LHSWorkspace=wsname+wstype,RHSWorkspace=ws1.getName()+wstype,OutputWorkspace=wsname+wstype)
@@ -385,7 +386,6 @@ def genSQE(hdfname,nxsname,wsname=None,indexes=[],rebinQ=None,scale=1.0, **kwarg
   if scale!=1.0: wss=mti.Scale(wss,Factor=scale,Operation='Multiply')
 
   mti.SaveNexus(InputWorkspace=wss, Filename=nxsname, **findopts('SaveNexus',algs_opt))
-  #trace()
   return ws
 
 # Use as a script
