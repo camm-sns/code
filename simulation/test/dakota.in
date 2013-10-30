@@ -1,32 +1,31 @@
-strategy,
-  single_method
-  graphics,tabular_graphics_data
+
+# DAKOTA INPUT FILE: nohup dakota dakota.in &
 
 method,
-  dot_mmfd,
-  max_iterations = 20,
-  convergence_tolerance = 1e-4
+        nl2sol
+          initial_trust_radius = 100
+          function_precision = 1e-3
+          output debug
 
 variables,
-  continuous_design = 2
-  descriptors	FF1	FF2
-  initial_point	0.45	0.4
-  lower_bounds	0.3	0.3
-  upper_bounds	0.6	0.6
-  max_step	0.01	0.01
+        continuous_state = 1
+          initial_state 	0.0
+          descriptors  	b1
+        continuous_design = 7
+          cdv_initial_point 	0.45	1e-06	1.0	1.0	1.0	1.0	0.0002
+          cdv_lower_bounds   	0.3	0.0	1e-06	0.0	0.0	0.0	-0.0004
+          cdv_upper_bounds   	0.6	0.0	10000.0	1000.0	1000.0	1000.0	0.0004
+          cdv_descriptors   	FF1'	'b0'	'c0'	'e0.0'	'e0.1'	'e0.2'	'eshift
 
 interface,
-  fork
-  results_file = 'results.in'
-  input_filter = 'readResultsFile.py'
-  analysis_driver = 'intelScript.py'
-  output_filter = 'writeParametersFile.py'
-  parameters_file = 'parameters.in'
+        fork
+          analysis_driver = 'opt_driver'
+            parameters_file = 'params.in'
+            results_file = 'results.out'
+            file_tag
+            file_save
 
 responses,
-  objective_functions = 1
-  numerical_gradients
-  method_source dakota
-  interval_type central
-  fd_gradient_step_size = 1.e-4
-  no_hessians
+        calibration_terms = 1500
+        analytic_gradients
+        no_hessians
