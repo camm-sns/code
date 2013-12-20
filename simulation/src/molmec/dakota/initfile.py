@@ -12,7 +12,7 @@ def populate_variables(template,free_params):
   """
   names=[param._name for param in free_params]
   template=template.replace('_NVAR_',str(len(names)))
-  template=template.replace( '_DESCRIPTORS_', "\t"+"\'\t\'".join(sorted(names)) )
+  template=template.replace( '_DESCRIPTORS_', "\t\'" + "\'\t\'".join(sorted(names)) + "\'" )
   order=sorted(range(len(names)), key = names.__getitem__) #python magic :)
   fields={'_init':'_INITIAL_POINT_',
           '_minimum':'_LOWER_BOUNDS_',
@@ -31,9 +31,12 @@ def populate_fixed(template,free_params):
   """
   names=[param._name for param in free_params]
   template=template.replace('_NFIX_',str(len(names)))
-  template=template.replace( '_FIXDESCRIPTORS_', "\t"+"\t".join(sorted(names)) )
+  if len(names) > 0:
+    template=template.replace( '_FIXDESCRIPTORS_', "\t\t\'" + "\'\t\'".join(sorted(names)) + "\'" )
+  else:
+    template=template.replace( '_FIXDESCRIPTORS_', "" )
   order=sorted(range(len(names)), key = names.__getitem__) #python magic :)
-  fields={'_tie':'_FIXINITIAL_POINT_',
+  fields={'_init':'_FIXINITIAL_POINT_',
           '_tolerance':'_MAX_STEP_',
           }
   for attribute,field in fields.items():
@@ -47,7 +50,10 @@ if __name__ == '__main__':
   parser.add_argument('--conf', help='configuration file') #this instead of the future GUI
   parser.add_argument('--fftpl',help='name of the XML force field template file')
   parser.add_argument('--outf', help='name of the output Dakota input file')
-  args = parser.parse_args()
+  parser.add_argument('--paramexclude', help='optional, string containing space-separated parameters which will not be optimized')
+  args=parser.parse_args()
+  paramexclude=[]
+  if args.paramexclude: paramexclude=args.paramexclude.split()
 
   #Dakota input template file
   template="""
@@ -85,9 +91,9 @@ responses,
 
   from molmec.ffupdate.ff_update import loadFFtpl
   params=loadFFtpl(args.fftpl)[0] #list of FFParam objects
-  free_params=[param for param in params if param.isFree()]
+  free_params=[param for param in params if not param._name in paramexclude]
   template=populate_variables(template,free_params)
-  free_params=[param for param in params if not param.isFree()]
+  free_params=[param for param in params if param._name in paramexclude]
   template=populate_fixed(template,free_params)
 
   open(args.outf,'w').write(template)
