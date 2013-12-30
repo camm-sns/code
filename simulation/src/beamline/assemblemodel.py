@@ -105,9 +105,9 @@ def modelB_freeE_C(model, resolution, convolved, assembled, expdata=None, costfi
   if 'FF1' not in derivexclude:
     derivparnames.append('FF1')
     # difference in FF1 workspaces
-    convolvedf=convolved.replace('.nxs','f.nxs')
+    convolvedf=convolved.replace('.nxs','_1.nxs')
     wscf=LoadNexus(Filename=convolvedf,OutputWorkspace='convolvedf')
-    convolvedb=convolved.replace('.nxs','b.nxs')
+    convolvedb=convolved.replace('.nxs','_0.nxs')
     wscb=LoadNexus(Filename=convolvedb,OutputWorkspace='convolvedb')
     wksp_diff=wscf-wscb
  

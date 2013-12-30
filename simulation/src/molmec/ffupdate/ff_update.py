@@ -79,13 +79,13 @@ if __name__ == "__main__":
       w.writerow([key, val])
     g.close()
 
-  fwd_file = open(args.dak+'f','w')
+  fwd_file = open(args.dak+'_1','w')
   old_file = open(args.dak)
   for line in old_file:
       fwd_file.write(line.replace(str(dakota_valstr["FF1"]), str(1.01*dakota_vals["FF1"])))
   fwd_file.close()
   old_file.close()
-  bck_file = open(args.dak+'b','w')
+  bck_file = open(args.dak+'_0','w')
   old_file = open(args.dak)
   for line in old_file:
       bck_file.write(line.replace(str(dakota_valstr["FF1"]), str(0.99*dakota_vals["FF1"])))
@@ -97,7 +97,7 @@ if __name__ == "__main__":
   for param in params:
     if not param.isFree(): param.resolveTie(free_params) # Update non-free param values
   template=updateTemplate(template,params)
-  ffoutf=args.ffout.replace('.psf','f.psf')
+  ffoutf=args.ffout.replace('.psf','_1.psf')
   open(ffoutf,'w').write(template)
 
   params,template=loadFFtpl(args.fftpl) # read in force field template file
@@ -106,7 +106,7 @@ if __name__ == "__main__":
   for param in params:
     if not param.isFree(): param.resolveTie(free_params) # Update non-free param values
   template=updateTemplate(template,params)
-  ffoutb=args.ffout.replace('.psf','b.psf')
+  ffoutb=args.ffout.replace('.psf','_0.psf')
   open(ffoutb,'w').write(template)
   
   params,template=loadFFtpl(args.fftpl) # read in force field template file
