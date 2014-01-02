@@ -2,13 +2,10 @@
 #PBS -A MAT049
 #PBS -N namdTest
 #PBS -j oe
-#PBS -l walltime=6:00:00,nodes=126
+#PBS -l walltime=2:00:00,nodes=3
 #PBS -l gres=widow2%widow3
 
-MPIRUN="aprun -n 504"
-NAMD=/sw/xk6/namd/2.8/cle4.0_gnu4.5.3/CRAY-XT-g++/namd2
-
-cd /tmp/work/vel/camm
+cd $PBS_O_WORKDIR
 
 #Eq config file
 cat > equilibrate.conf <<'@EQEOF'
@@ -23,7 +20,7 @@ cat > equilibrate.conf <<'@EQEOF'
 #############################################################
 ## ADJUSTABLE PARAMETERS                                   ##
 #############################################################
-set temperature     290 ;# initial temperature, in Kelvin
+set temperature     TEMP ;# initial temperature, in Kelvin
 set charge        42 ;# hydrogen charge
 set pressure      1.01325  ;#  in bar -> 1 atm
 set inputname          init ;# prefix for input files
@@ -88,7 +85,7 @@ langevinDamping     1.0   ;# damping coefficient (gamma) of 1/ps
 langevinHydrogen    off   ;# don't couple langevin bath to hydrogens
   # Control parameters for annealing
   #reassignFreq       3000   ;# number of timesteps between temperature reassignment
-  #reassignTemp        290   ;# new temperature when reassignment happens
+  #reassignTemp        TEMP   ;# new temperature when reassignment happens
   #reassignIncr       -1.0   ;# temperature increment when reassignment happens
   #reassignHold       10.0   ;# target or limit temperature
 
@@ -133,7 +130,7 @@ run 500000  ;# 500ps
 @EQEOF
 
 #Production config file
-cat > production.conf <<'@PRODEOF'
+cat > production_single.conf <<'@PRODEOF'
 #############################################################
 ## JOB DESCRIPTION                                         ##
 #############################################################
@@ -145,7 +142,7 @@ cat > production.conf <<'@PRODEOF'
 #############################################################
 ## ADJUSTABLE PARAMETERS                                   ##
 #############################################################
-set temperature     290 ;# initial temperature, in Kelvin
+set temperature     TEMP ;# initial temperature, in Kelvin
 set charge        42 ;# hydrogen charge
 set pressure      1.01325  ;#  in bar -> 1 atm
 set inputname  production00 ;# prefix for input files
@@ -210,7 +207,7 @@ langevinDamping     1.0   ;# damping coefficient (gamma) of 1/ps
 langevinHydrogen    off   ;# don't couple langevin bath to hydrogens
   # Control parameters for annealing
   #reassignFreq       3000   ;# number of timesteps between temperature reassignment
-  #reassignTemp        290   ;# new temperature when reassignment happens
+  #reassignTemp        TEMP   ;# new temperature when reassignment happens
   #reassignIncr       -1.0   ;# temperature increment when reassignment happens
   #reassignHold       10.0   ;# target or limit temperature
 
@@ -251,58 +248,34 @@ outputTiming        1000
 #minimize            1000 ;# perform 1000 minimization steps
 
 firsttimestep         0            ;# reset frame counter
-run 4000000  ;# 4ns
+run 3000000  ;# 4ns
 @PRODEOF
-mkdir -p center/toppar
-mkdir -p backward/toppar
-mkdir -p forward/toppar
-mv Q42_*b.psf backward/toppar/Q42.psf
-mv Q42_*f.psf forward/toppar/Q42.psf
-mv Q42_*.psf center/toppar/Q42.psf
-cd center
+sed -i -e 's/TEMP/'"$TEMP"'/g' equilibrate.conf
+sed -i -e 's/TEMP/'"$TEMP"'/g' production_single.conf
+mkdir -p toppar
+mv Q42_*.psf toppar/Q42.psf
 #equilibrium run
-cp /tmp/work/vel/camm/toppar/crd.md18_vmd_autopsf.pdb  toppar
-cp /tmp/work/vel/camm/toppar/par_all27_prot_lipid.inp toppar
-cp /tmp/work/vel/camm/init.xsc . 
-cp ../equilibrate.conf . 
-cp ../production.conf . 
-$MPIRUN $NAMD equilibrate.conf > equilibrate.log &
-cd ../backward
-#equilibrium run
-cp /tmp/work/vel/camm/toppar/crd.md18_vmd_autopsf.pdb  toppar
-cp /tmp/work/vel/camm/toppar/par_all27_prot_lipid.inp toppar
-cp /tmp/work/vel/camm/init.xsc . 
-cp ../equilibrate.conf . 
-cp ../production.conf . 
-$MPIRUN $NAMD equilibrate.conf > equilibrate.log &
-cd ../forward
-#equilibrium run
-cp /tmp/work/vel/camm/toppar/crd.md18_vmd_autopsf.pdb  toppar
-cp /tmp/work/vel/camm/toppar/par_all27_prot_lipid.inp toppar
-cp /tmp/work/vel/camm/init.xsc . 
-cp ../equilibrate.conf . 
-cp ../production.conf . 
-$MPIRUN $NAMD equilibrate.conf > equilibrate.log &
+cp /tmp/work/vel/camm/crd.md18_vmd_autopsf.pdb  toppar
+cp /tmp/work/vel/camm/par_all27_prot_lipid.inp toppar
+cp /tmp/work/vel/camm/equilibrate/init.xsc . 
+source /opt/modules/3.2.6.6/init/tcsh
+module swap PrgEnv-pgi PrgEnv-gnu
+module load craype-hugepages8M
+module list
 
-wait
+setenv HUGETLB_DEFAULT_PAGE_SIZE 8M
+setenv HUGETLB_MORECORE no
 
-cd ../center
+echo PBS opts:  walltime=02:00:00,nodes=3
+echo aprun opts:  -n 3 -N 1 -d 8 -r 1
+echo NAMD opts:  +ppn 7 +pemap 2-14:2 +commap 0
+echo conf file:  production_single.conf
+echo log file:  production_single.log
+
+aprun -n 3 -N 1 -d 8 -r 1 /lustre/atlas1/bio024/world-shared/NAMD_binaries/titan/NAMD_build_2013-Sep-27-64875/NAMD_2.9_CRAY-XT-ugni-smp-Titan-CUDA/namd2 +ppn 7 +pemap 2-14:2 +commap 0  equilibrate.conf >& equilibrate.log
+
 #production run
 mv equilibrate.restart.coor production00.restart.coor 
 mv equilibrate.restart.vel production00.restart.vel 
 mv equilibrate.restart.xsc production00.restart.xsc 
-$MPIRUN $NAMD production.conf > production.log &
-cd ../backward
-#production run
-mv equilibrate.restart.coor production00.restart.coor 
-mv equilibrate.restart.vel production00.restart.vel 
-mv equilibrate.restart.xsc production00.restart.xsc 
-$MPIRUN $NAMD production.conf > production.log &
-cd ../forward
-#production run
-mv equilibrate.restart.coor production00.restart.coor 
-mv equilibrate.restart.vel production00.restart.vel 
-mv equilibrate.restart.xsc production00.restart.xsc 
-$MPIRUN $NAMD production.conf > production.log &
-
-wait
+aprun -n 3 -N 1 -d 8 -r 1 /lustre/atlas1/bio024/world-shared/NAMD_binaries/titan/NAMD_build_2013-Sep-27-64875/NAMD_2.9_CRAY-XT-ugni-smp-Titan-CUDA/namd2 +ppn 7 +pemap 2-14:2 +commap 0  production_single.conf >& production_single.log
