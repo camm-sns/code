@@ -2,7 +2,7 @@
 <!DOCTYPE entity PUBLIC "-//UC Berkeley//DTD MoML 1//EN"
     "http://ptolemy.eecs.berkeley.edu/xml/dtd/MoML_1.dtd">
 <entity name="Strategist" class="org.kepler.moml.CompositeClassEntity">
-    <property name="entityId" class="org.kepler.moml.NamedObjId" value="urn:lsid:kepler-project.org/ns/:47622:92:1010">
+    <property name="entityId" class="org.kepler.moml.NamedObjId" value="urn:lsid:kepler-project.org/ns/:47622:92:1049">
     </property>
     <property name="class" class="ptolemy.kernel.util.StringAttribute" value="org.kepler.moml.CompositeClassEntity">
         <property name="id" class="ptolemy.kernel.util.StringAttribute" value="null">
@@ -121,7 +121,7 @@
     </property>
     <property name="enableBackwardTypeInference" class="ptolemy.data.expr.Parameter" value="false">
     </property>
-    <property name="LocalWorkingDirectory" class="ptolemy.data.expr.StringParameter" value="/scratch/test">
+    <property name="LocalWorkingDirectory" class="ptolemy.data.expr.StringParameter" value="/scratch/LiClinit">
 <property name="KeplerDocumentation" class="ptolemy.vergil.basic.KeplerDocumentationAttribute">
 <property name="description" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>null</configure></property>
 <property name="author" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>Edward A. Lee</configure></property>
@@ -163,42 +163,6 @@
             </property>
             <property name="version" class="ptolemy.kernel.util.StringAttribute" value="null">
             </property>
-        </property>
-    </property>
-    <property name="LocalUserName" class="ptolemy.data.expr.StringParameter" value="vel">
-<property name="KeplerDocumentation" class="ptolemy.vergil.basic.KeplerDocumentationAttribute">
-<property name="description" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>null</configure></property>
-<property name="author" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>Edward A. Lee</configure></property>
-<property name="version" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>null</configure></property>
-<property name="userLevelDocumentation" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>&lt;p&gt;StringParameter specifies a persistent string. &lt;/p&gt;&#10;&#10;&lt;p&gt;Change the name of the StringParameter to better identify the specified value (right-click the parameter and select &quot;Customize Name&quot; from the menu). Other actors may refer to the StringParameter using the $NAME syntax (e.g. $Parameter).&#10;&lt;/p&gt;</configure></property>
-</property>        <property name="entityId" class="org.kepler.moml.NamedObjId" value="urn:lsid:kepler-project.org/ns/:40778:163:1">
-        </property>
-        <property name="class" class="ptolemy.kernel.util.StringAttribute" value="ptolemy.data.expr.StringParameter">
-            <property name="id" class="ptolemy.kernel.util.StringAttribute" value="urn:lsid:kepler-project.org:class:1185:1">
-            </property>
-        </property>
-        <property name="semanticType00" class="org.kepler.sms.SemanticType" value="urn:lsid:localhost:onto:1:1#Parameter">
-        </property>
-        <property name="semanticType11" class="org.kepler.sms.SemanticType" value="urn:lsid:localhost:onto:2:1#Parameter">
-        </property>
-        <property name="_hideName" class="ptolemy.kernel.util.SingletonAttribute">
-        </property>
-        <property name="_icon" class="ptolemy.vergil.icon.ValueIcon">
-            <property name="_color" class="ptolemy.actor.gui.ColorAttribute" value="{1.0, 0.0, 0.0, 1.0}">
-            </property>
-        </property>
-        <property name="_smallIconDescription" class="ptolemy.kernel.util.SingletonConfigurableAttribute">
-            <configure>
-        <svg>
-          <text x="20" style="font-size:14; font-family:SansSerif; fill:red" y="20">-S-</text>
-        </svg>
-      </configure>
-        </property>
-        <property name="_editorFactory" class="ptolemy.vergil.toolbox.VisibleParameterEditorFactory">
-        </property>
-        <property name="_location" class="ptolemy.kernel.util.Location" value="[185.0, 85.0]">
-        </property>
-        <property name="derivedFrom" class="org.kepler.moml.NamedObjIdReferralList" value="urn:lsid:kepler-project.org:actor:421:1">
         </property>
     </property>
     <property name="RemoteLogin" class="ptolemy.data.expr.StringParameter" value="vlynch@hopper.nersc.gov">
@@ -346,7 +310,7 @@
         <property name="derivedFrom" class="org.kepler.moml.NamedObjIdReferralList" value="urn:lsid:kepler-project.org:actor:422:1:urn:lsid:kepler-project.org/ns/:30354:133:8">
         </property>
     </property>
-    <property name="ExcludeParams" class="ptolemy.data.expr.StringParameter" value="b1">
+    <property name="ExcludeParams" class="ptolemy.data.expr.StringParameter" value="FF1">
 <property name="KeplerDocumentation" class="ptolemy.vergil.basic.KeplerDocumentationAttribute">
 <property name="description" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>null</configure></property>
 <property name="author" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>Edward A. Lee</configure></property>
@@ -484,7 +448,7 @@
     <entity name="ResultsReadyActiveMQ" class="ptolemy.actor.lib.Exec">
         <property name="NONE" class="ptolemy.data.expr.Parameter" value="0">
         </property>
-        <property name="command" class="ptolemy.actor.parameters.PortParameter" value="python /SNS/users/vel/camm-sns/code/simulation/src/../../activemq/send_amq.py -qName DAKOTA_RESULTS_READY.44101 -OutputFile /scratch/LiClinit/results.out.2&#10;">
+        <property name="command" class="ptolemy.actor.parameters.PortParameter" value="python /SNS/users/vel/camm-sns/code/simulation/src/../../activemq/send_amq.py -qName DAKOTA_RESULTS_READY.23147 -OutputFile /scratch/LiClinit/results.out.3&#10;">
         </property>
         <property name="directory" class="ptolemy.data.expr.FileParameter" value="$CWD">
             <property name="allowFiles" class="ptolemy.data.expr.Parameter" value="false">
@@ -570,7 +534,7 @@
     <entity name="ParamsReadyActiveMQ" class="ptolemy.actor.lib.Exec">
         <property name="NONE" class="ptolemy.data.expr.Parameter" value="0">
         </property>
-        <property name="command" class="ptolemy.actor.parameters.PortParameter" value="python /SNS/users/vel/camm-sns/code/simulation/src/../../activemq/kepler_utilities.py -qParams DAKOTA_PARAMS_READY.6480&#10;">
+        <property name="command" class="ptolemy.actor.parameters.PortParameter" value="python /SNS/users/vel/camm-sns/code/simulation/src/../../activemq/kepler_utilities.py -qParams DAKOTA_PARAMS_READY.23147&#10;">
         </property>
         <property name="directory" class="ptolemy.data.expr.FileParameter" value="$LocalWorkingDirectory">
             <property name="allowFiles" class="ptolemy.data.expr.Parameter" value="false">
@@ -763,7 +727,7 @@
     <entity name="StopIfDakotaStopped" class="ptolemy.actor.TypedCompositeActor">
         <property name="_createdBy" class="ptolemy.kernel.attributes.VersionAttribute" value="9.1.devel">
         </property>
-        <property name="entityId" class="org.kepler.moml.NamedObjId" value="urn:lsid:kepler-project.org/ns/:47622:106:3">
+        <property name="entityId" class="org.kepler.moml.NamedObjId" value="urn:lsid:kepler-project.org/ns/:47622:106:120">
         </property>
         <property name="class" class="ptolemy.kernel.util.StringAttribute" value="ptolemy.actor.TypedCompositeActor">
             <property name="id" class="ptolemy.kernel.util.StringAttribute" value="urn:lsid:kepler-project.org:class:449:1">
@@ -797,7 +761,7 @@
         <entity name="FindPID" class="ptolemy.actor.lib.Exec">
             <property name="NONE" class="ptolemy.data.expr.Parameter" value="0">
             </property>
-            <property name="command" class="ptolemy.actor.parameters.PortParameter" value="kill -0  44101&#10;">
+            <property name="command" class="ptolemy.actor.parameters.PortParameter" value="kill -0  23147&#10;">
             </property>
             <property name="directory" class="ptolemy.data.expr.FileParameter" value="$LocalWorkingDirectory">
                 <property name="allowFiles" class="ptolemy.data.expr.Parameter" value="false">
@@ -1034,7 +998,7 @@
             </property>
             <property name="semanticType11" class="org.kepler.sms.SemanticType" value="urn:lsid:localhost:onto:2:1#WorkflowControl">
             </property>
-            <property name="_location" class="ptolemy.kernel.util.Location" value="[705.0, 360.0]">
+            <property name="_location" class="ptolemy.kernel.util.Location" value="[1015.0, 420.0]">
             </property>
         </entity>
         <entity name="TrueForStop" class="ptolemy.actor.lib.Expression">
@@ -1065,7 +1029,7 @@
                 <property name="displayWidth" class="ptolemy.data.expr.Parameter" value="60">
                 </property>
             </property>
-            <property name="_location" class="ptolemy.kernel.util.Location" value="[780.0, 310.0]">
+            <property name="_location" class="ptolemy.kernel.util.Location" value="[925.0, 510.0]">
             </property>
             <property name="derivedFrom" class="org.kepler.moml.NamedObjIdReferralList" value="urn:lsid:kepler-project.org:actor:75:1:urn:lsid:kepler-project.org/ns/:30354:344:8">
             </property>
@@ -1137,6 +1101,224 @@
                 </property>
             </port>
         </entity>
+        <entity name="ParamsReadyActiveMQ" class="ptolemy.actor.lib.Exec">
+            <property name="NONE" class="ptolemy.data.expr.Parameter" value="0">
+            </property>
+            <property name="command" class="ptolemy.actor.parameters.PortParameter" value="grep Confidence /scratch/LiClinit/dakota.log&#10;">
+            </property>
+            <property name="directory" class="ptolemy.data.expr.FileParameter" value="$LocalWorkingDirectory">
+                <property name="allowFiles" class="ptolemy.data.expr.Parameter" value="false">
+                </property>
+                <property name="allowDirectories" class="ptolemy.data.expr.Parameter" value="true">
+                </property>
+            </property>
+            <property name="environment" class="ptolemy.data.expr.Parameter" value="{{name = &quot;&quot;, value = &quot;&quot;}}">
+            </property>
+            <property name="ignoreIOExceptionReadErrors" class="ptolemy.data.expr.Parameter" value="true">
+            </property>
+            <property name="prependPlatformDependentShellCommand" class="ptolemy.data.expr.Parameter" value="false">
+            </property>
+            <property name="throwExceptionOnNonZeroReturn" class="ptolemy.data.expr.Parameter" value="false">
+            </property>
+            <property name="waitForProcess" class="ptolemy.data.expr.Parameter" value="true">
+            </property>
+            <property name="firingCountLimit" class="ptolemy.data.expr.Parameter" value="0">
+            </property>
+<property name="KeplerDocumentation" class="ptolemy.vergil.basic.KeplerDocumentationAttribute">
+<property name="description" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>null</configure></property>
+<property name="author" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>Xiaojun Liu, Edward A. Lee, Steve Neuendorffer</configure></property>
+<property name="version" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>null</configure></property>
+<property name="userLevelDocumentation" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>&#10;&lt;p&gt;The External Execution actor executes a system command from a workflow. The actor accepts a command, a directory and environment in which to execute the command, and a command input string. Once the command has finished executing, the actor will output the execution results along with any errors. If no results are generated, the actor will output an empty string.&lt;/p&gt;&#10;&#10;&lt;p&gt;The External Execution actor depends on system-specific executables and is operating-system specific.&lt;/p&gt;&#10;&#10;&lt;p&gt;To mimic the effect of executing a command in a shell interpreter, set the command parameter to &quot;cmd&quot; (Windows) or &quot;sh&quot; (Windows with Cygwin or Linux), and then provide commands, as a string, via the input port. Note that each passed command must be terminated with a newline. For example, to open a workflow in vergil and run it, set command to &quot;sh&quot; and use a StringConstant actor to pass the  input port the string: &#10; &quot;vergil -run model.xml\n exit\n&quot;&lt;/p&gt;&#10;</configure></property>
+<property name="port:input" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>An input port that accepts strings to pass to the standard input of the subprocess. Note that a newline is not appended to the string. If you require a newline, add one using the AddSubtract actor. This port is an input port of type String.</configure></property>
+<property name="port:output" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>An output port that broadcasts data generated by the executed command, output as a string after the command has finished executing. If the command generates no data on standard out, then the empty string (a string of length zero) is generated. </configure></property>
+<property name="port:trigger" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>If connected, a token must be available on this port before actor will execute.</configure></property>
+<property name="port:error" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>An output port that broadcasts any errors generated by the command execution. Errors are output as a string after the command has finished executing. If the execution generates no errors, an empty string is output. </configure></property>
+<property name="port:exitCode" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>An output port that broadcasts the command's exit code. A non-zero value signifies an error.</configure></property>
+<property name="prop:environment" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>An array of records that name an environment variable and a value:&#10; &#10;  {{name = &quot;NAME1&quot;, value = &quot;value1&quot;}...}&#10;  &#10;Where NAME1 is the name of the environment variable, and value1 is the value. &#10;For example, {{name = &quot;PTII&quot;, value = &quot;c:/ptII&quot;}} would set the value of the PTII to c:/ptII. &#10;If the parameter is set to {{name=&quot;&quot;, value = &quot;&quot;}}, then the environment from the parent process is used. If environmental variables are set with the parameter, the parent values may not be passed to the process. To view the current environment, use the &quot;env&quot; command.&#10;</configure></property>
+<property name="prop:directory" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>The directory in which to execute the command. The default value of this parameter $CWD, which represents the user's current working or SNS/users directory. </configure></property>
+<property name="prop:throwExceptionOnNonZeroReturn" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>If true, then throw an exception if the subprocess returns non-zero.</configure></property>
+<property name="prop:firingCountLimit" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>If a positive integer, then it is the maximum number of times to execute the actor.</configure></property>
+<property name="prop:prependPlatformDependentShellCommand" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>&#10;If true, then prepend the platform dependent shell command to the&#10;parsed value of the command parameter.  By setting this argument&#10;to true, it is possible to invoke commands in a platform neutral&#10;method.&#10;&lt;p&gt;Under Windows NT or XP, the arguments &quot;cmd.exe&quot; and &quot;/C&quot; are&#10;prepended.  Under Windows 95, the arguments &quot;command.com&quot; and &quot;/C&quot;&#10;are prepended.  Under all other platforms, the arguments &quot;/bin/sh&quot;&#10;and &quot;-c&quot; are prepended. &lt;/p&gt;&#10;&lt;p&gt;The default value of this parameter is a boolean of value false,&#10;which allows the user to arbitrarily invoke /bin/sh scripts on all&#10;platforms. &lt;/p&gt;&#10;&lt;p&gt;&lt;b&gt;NOTE:&lt;/b&gt; This must be true if file redirection is used in &lt;i&gt;command&lt;/i&gt;.&lt;/p&gt;&#10;&lt;p&gt;&lt;b&gt;NOTE:&lt;/b&gt; Under Cygwin, if true, the path environment of the subprocess is not&#10;identical to the path of the calling process. In this case the full path to the program&#10;must be specified.&lt;/p&gt;&#10;</configure></property>
+<property name="prop:waitForProcess" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>If true, then actor will wait until subprocess completes.</configure></property>
+<property name="prop:command" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>The command to be executed (e.g., echo &quot;Hello, world.&quot;). The command can be specified via either the command port or parameter.</configure></property>
+</property>            <property name="entityId" class="org.kepler.moml.NamedObjId" value="urn:lsid:kepler-project.org/ns/:30354:1626:3">
+            </property>
+            <property name="class" class="ptolemy.kernel.util.StringAttribute" value="ptolemy.actor.lib.Exec">
+                <property name="id" class="ptolemy.kernel.util.StringAttribute" value="urn:lsid:kepler-project.org:class:976:1">
+                </property>
+            </property>
+            <property name="semanticType00" class="org.kepler.sms.SemanticType" value="urn:lsid:localhost:onto:1:1#ExternalExecutionEnvironmentActor">
+            </property>
+            <property name="semanticType11" class="org.kepler.sms.SemanticType" value="urn:lsid:localhost:onto:2:1#UnixCommand">
+            </property>
+            <property name="_location" class="ptolemy.kernel.util.Location" value="[710.0, 405.0]">
+            </property>
+            <property name="derivedFrom" class="org.kepler.moml.NamedObjIdReferralList" value="urn:lsid:kepler-project.org:actor:102:1:urn:lsid:kepler-project.org/ns/:30354:1020:198:urn:lsid:kepler-project.org/ns/:40778:123:34">
+            </property>
+            <property name="" class="ptolemy.vergil.basic.DocAttribute">
+                <property name="description" class="ptolemy.kernel.util.StringAttribute" value="&#10;&lt;p&gt;The External Execution actor executes a system command from a workflow. The actor accepts a command, a directory and environment in which to execute the command, and a command input string. Once the command has finished executing, the actor will output the execution results along with any errors. If no results are generated, the actor will output an empty string.&lt;/p&gt;&#10;&#10;&lt;p&gt;The External Execution actor depends on system-specific executables and is operating-system specific.&lt;/p&gt;&#10;&#10;&lt;p&gt;To mimic the effect of executing a command in a shell interpreter, set the command parameter to &quot;cmd&quot; (Windows) or &quot;sh&quot; (Windows with Cygwin or Linux), and then provide commands, as a string, via the input port. Note that each passed command must be terminated with a newline. For example, to open a workflow in vergil and run it, set command to &quot;sh&quot; and use a StringConstant actor to pass the  input port the string: &#10; &quot;vergil -run model.xml\n exit\n&quot;&lt;/p&gt;&#10;">
+                </property>
+                <property name="author" class="ptolemy.kernel.util.StringAttribute" value="Xiaojun Liu, Edward A. Lee, Steve Neuendorffer">
+                </property>
+                <property name="version" class="ptolemy.kernel.util.StringAttribute" value="null">
+                </property>
+                <property name="directory (parameter)" class="ptolemy.data.expr.StringParameter" value="The directory in which to execute the command. The default value of this parameter $CWD, which represents the user's current working or SNS/users directory. ">
+                </property>
+                <property name="environment (parameter)" class="ptolemy.data.expr.StringParameter" value="An array of records that name an environment variable and a value:&#10; &#10;  {{name = &quot;NAME1&quot;, value = &quot;value1&quot;}...}&#10;  &#10;Where NAME1 is the name of the environment variable, and value1 is the value. &#10;For example, {{name = &quot;PTII&quot;, value = &quot;c:/ptII&quot;}} would set the value of the PTII to c:/ptII. &#10;If the parameter is set to {{name=&quot;&quot;, value = &quot;&quot;}}, then the environment from the parent process is used. If environmental variables are set with the parameter, the parent values may not be passed to the process. To view the current environment, use the &quot;env&quot; command.&#10;">
+                </property>
+                <property name="prependPlatformDependentShellCommand (parameter)" class="ptolemy.data.expr.StringParameter" value="&#10;If true, then prepend the platform dependent shell command to the&#10;parsed value of the command parameter.  By setting this argument&#10;to true, it is possible to invoke commands in a platform neutral&#10;method.&#10;&lt;p&gt;Under Windows NT or XP, the arguments &quot;cmd.exe&quot; and &quot;/C&quot; are&#10;prepended.  Under Windows 95, the arguments &quot;command.com&quot; and &quot;/C&quot;&#10;are prepended.  Under all other platforms, the arguments &quot;/bin/sh&quot;&#10;and &quot;-c&quot; are prepended. &lt;/p&gt;&#10;&lt;p&gt;The default value of this parameter is a boolean of value false,&#10;which allows the user to arbitrarily invoke /bin/sh scripts on all&#10;platforms. &lt;/p&gt;&#10;&lt;p&gt;&lt;b&gt;NOTE:&lt;/b&gt; This must be true if file redirection is used in &lt;i&gt;command&lt;/i&gt;.&lt;/p&gt;&#10;&lt;p&gt;&lt;b&gt;NOTE:&lt;/b&gt; Under Cygwin, if true, the path environment of the subprocess is not&#10;identical to the path of the calling process. In this case the full path to the program&#10;must be specified.&lt;/p&gt;&#10;">
+                </property>
+                <property name="throwExceptionOnNonZeroReturn (parameter)" class="ptolemy.data.expr.StringParameter" value="If true, then throw an exception if the subprocess returns non-zero.">
+                </property>
+                <property name="waitForProcess (parameter)" class="ptolemy.data.expr.StringParameter" value="If true, then actor will wait until subprocess completes.">
+                </property>
+                <property name="firingCountLimit (parameter)" class="ptolemy.data.expr.StringParameter" value="If a positive integer, then it is the maximum number of times to execute the actor.">
+                </property>
+                <property name="output (port)" class="ptolemy.kernel.util.StringAttribute" value="An output port that broadcasts data generated by the executed command, output as a string after the command has finished executing. If the command generates no data on standard out, then the empty string (a string of length zero) is generated. ">
+                </property>
+                <property name="trigger (port)" class="ptolemy.kernel.util.StringAttribute" value="If connected, a token must be available on this port before actor will execute.">
+                </property>
+                <property name="error (port)" class="ptolemy.kernel.util.StringAttribute" value="An output port that broadcasts any errors generated by the command execution. Errors are output as a string after the command has finished executing. If the execution generates no errors, an empty string is output. ">
+                </property>
+                <property name="input (port)" class="ptolemy.kernel.util.StringAttribute" value="An input port that accepts strings to pass to the standard input of the subprocess. Note that a newline is not appended to the string. If you require a newline, add one using the AddSubtract actor. This port is an input port of type String.">
+                </property>
+                <property name="exitCode (port)" class="ptolemy.kernel.util.StringAttribute" value="An output port that broadcasts the command's exit code. A non-zero value signifies an error.">
+                </property>
+                <property name="command (parameter)" class="ptolemy.data.expr.StringParameter" value="The command to be executed (e.g., echo &quot;Hello, world.&quot;). The command can be specified via either the command port or parameter.">
+                </property>
+            </property>
+            <port name="output" class="ptolemy.actor.TypedIOPort">
+                <property name="output"/>
+                <property name="_showName" class="ptolemy.data.expr.Parameter" value="true">
+                </property>
+            </port>
+            <port name="trigger" class="ptolemy.actor.TypedIOPort">
+                <property name="input"/>
+                <property name="multiport"/>
+                <property name="_showName" class="ptolemy.data.expr.SingletonParameter" value="true">
+                </property>
+            </port>
+            <port name="command" class="ptolemy.actor.parameters.ParameterPort">
+                <property name="input"/>
+                <property name="_showName" class="ptolemy.data.expr.Parameter" value="true">
+                </property>
+            </port>
+            <port name="error" class="ptolemy.actor.TypedIOPort">
+                <property name="output"/>
+                <property name="_showName" class="ptolemy.data.expr.Parameter" value="true">
+                </property>
+            </port>
+            <port name="input" class="ptolemy.actor.TypedIOPort">
+                <property name="input"/>
+                <property name="_showName" class="ptolemy.data.expr.Parameter" value="true">
+                </property>
+            </port>
+            <port name="exitCode" class="ptolemy.actor.TypedIOPort">
+                <property name="output"/>
+                <property name="_showName" class="ptolemy.data.expr.Parameter" value="true">
+                </property>
+            </port>
+        </entity>
+        <entity name="ParamsReadySignal" class="ptolemy.actor.lib.Expression">
+            <property name="expression" class="ptolemy.kernel.util.StringAttribute" value="&quot;grep Confidence &quot;+LocalWorkingDirectory+&quot;/dakota.log\n&quot;">
+                <property name="_hide" class="ptolemy.data.expr.Parameter" value="true">
+                </property>
+            </property>
+<property name="KeplerDocumentation" class="ptolemy.vergil.basic.KeplerDocumentationAttribute">
+<property name="description" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>null</configure></property>
+<property name="author" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>Xiaojun Liu, Edward A. Lee, Steve Neuendorffer</configure></property>
+<property name="version" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>null</configure></property>
+<property name="userLevelDocumentation" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>&lt;p&gt;The Expression actor evaluates a specified expression (e.g., an addition or multiplication operation), which may reference the values of user-specified input ports, the current time, or the actor's iteration count. The actor outputs the value of the evaluated expression. &lt;/p&gt;&#10;&#10;&lt;p&gt;Expressions are specified in the Ptolemy expression language via the expression parameter. For more information about the expression language, see http://ptolemy.eecs.berkeley.edu/papers/05/ptIIdesign1-intro/ptIIdesign1-intro.pdf. &lt;/p&gt;&#10;&#10;&lt;p&gt;By default, the expression parameter is empty, and attempting to execute the actor without first specifying an expression generates an error. Expressions can refer to the values of inputs by the port name; to the current time by the identifier &quot;time&quot;; and to the current iteration count by the identifier &quot;iteration.&quot; &lt;/p&gt;&#10;&#10;&lt;p&gt;Input ports are created by the user and correspond to variables used in the specified expression. Currently, the Expression actor does not support input multiports. The actor requires all of its inputs to be present. If inputs are not all present, then the actor will generate an error. &lt;/p&gt;&#10;&#10;&lt;p&gt;Note: the Expression actor can be used instead of many of the arithmetic actors, such as AddSubtract, MultiplyDivide, and TrigFunction. However, those actors will be usually be more efficient, and sometimes more convenient to use.&lt;/p&gt;</configure></property>
+<property name="port:output" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>An output port that broadcasts the value of the evaluated expression. The actor automatically determines the type based on the type of the input.</configure></property>
+<property name="prop:expression" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>An expression to evaluate. Expressions are specified in the Ptolemy expression language. For more information about the expression language, see http://ptolemy.eecs.berkeley.edu/papers/05/ptIIdesign1-intro/ptIIdesign1-intro.pdf. By default, the parameter is empty, and attempting to execute the actor without first specifying an expression generates an error. Expressions can refer to the values of inputs by the port name; to the current time by the identifier &quot;time&quot;; and to the current iteration count by the identifier &quot;iteration.&quot;</configure></property>
+</property>            <property name="entityId" class="org.kepler.moml.NamedObjId" value="urn:lsid:kepler-project.org/ns/:47622:200:2">
+            </property>
+            <property name="class" class="ptolemy.kernel.util.StringAttribute" value="ptolemy.actor.lib.Expression">
+                <property name="id" class="ptolemy.kernel.util.StringAttribute" value="urn:lsid:kepler-project.org:class:950:1">
+                </property>
+            </property>
+            <property name="semanticType00" class="org.kepler.sms.SemanticType" value="urn:lsid:localhost:onto:1:1#MathOperationActor">
+            </property>
+            <property name="semanticType11" class="org.kepler.sms.SemanticType" value="urn:lsid:localhost:onto:2:1#GeneralPurpose">
+            </property>
+            <property name="_icon" class="ptolemy.vergil.icon.BoxedValueIcon">
+                <property name="attributeName" class="ptolemy.kernel.util.StringAttribute" value="expression">
+                </property>
+                <property name="displayWidth" class="ptolemy.data.expr.Parameter" value="60">
+                </property>
+            </property>
+            <property name="_location" class="ptolemy.kernel.util.Location" value="[875.0, 320.0]">
+            </property>
+            <property name="derivedFrom" class="org.kepler.moml.NamedObjIdReferralList" value="urn:lsid:kepler-project.org:actor:75:1:urn:lsid:kepler-project.org/ns/:30354:344:8:urn:lsid:kepler-project.org/ns/:40778:124:114">
+            </property>
+            <port name="pid" class="ptolemy.actor.TypedIOPort">
+                <property name="input"/>
+            </port>
+        </entity>
+        <entity name="Display" class="ptolemy.actor.lib.gui.Display">
+            <property name="_windowProperties" class="ptolemy.actor.gui.WindowPropertiesAttribute">
+            </property>
+            <property name="_paneSize" class="ptolemy.actor.gui.SizeAttribute">
+            </property>
+            <property name="rowsDisplayed" class="ptolemy.data.expr.Parameter" value="10">
+            </property>
+            <property name="columnsDisplayed" class="ptolemy.data.expr.Parameter" value="40">
+            </property>
+            <property name="suppressBlankLines" class="ptolemy.data.expr.Parameter" value="false">
+            </property>
+            <property name="title" class="ptolemy.data.expr.StringParameter" value="">
+            </property>
+<property name="KeplerDocumentation" class="ptolemy.vergil.basic.KeplerDocumentationAttribute">
+<property name="description" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>null</configure></property>
+<property name="author" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>Yuhong Xiong, Edward A. Lee</configure></property>
+<property name="version" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>null</configure></property>
+<property name="userLevelDocumentation" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>&lt;p&gt;The Display actor reads tokens of any type via its input multiport, and displays each token on a separate line in a text display window.&lt;/p&gt;&#10;&#10;&lt;p&gt;Specify the size of the text display window with the rowsDisplayed and columnsDisplayed parameters. Simply resizing the window onscreen does not persistently change the size when the workflow is saved, closed, and then re-opened. &lt;/p&gt;&#10;&#10;&lt;p&gt;If the input is a string token, then the actor strips the surrounding quotation marks before displaying the value.&lt;/p&gt; &#10;&#10;&lt;p&gt;Select the suppressBlankLines parameter to specify that the actor not add blank lines to the display. By default, the actor will add blank lines.&lt;/p&gt;&#10;&#10;&lt;p&gt;Note: this actor can consume large amounts of memory. It is not advisable to use it to display large output streams.&lt;/p&gt;</configure></property>
+<property name="port:input" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>A multiport that accepts tokens of any type.</configure></property>
+<property name="prop:suppressBlankLines" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>Specify whether the actor should display blank lines (the default) or suppress them.</configure></property>
+<property name="prop:rowsDisplayed" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>The vertical size of the display, in rows. The value is an integer that defaults to 10.</configure></property>
+<property name="prop:columnsDisplayed" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>The horizontal size of the display, in columns. The value is an integer that defaults to 40.</configure></property>
+<property name="prop:title" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>The title of the text display window. If specified, the value will appear in the title bar of the text display window.</configure></property>
+</property>            <property name="entityId" class="org.kepler.moml.NamedObjId" value="urn:lsid:kepler-project.org:actor:7:1">
+            </property>
+            <property name="class" class="ptolemy.kernel.util.StringAttribute" value="ptolemy.actor.lib.gui.Display">
+                <property name="id" class="ptolemy.kernel.util.StringAttribute" value="urn:lsid:kepler-project.org:class:883:1">
+                </property>
+            </property>
+            <property name="semanticType00" class="org.kepler.sms.SemanticType" value="urn:lsid:localhost:onto:1:1#TextualOutputActor">
+            </property>
+            <property name="semanticType11" class="org.kepler.sms.SemanticType" value="urn:lsid:localhost:onto:2:1#TextualOutput">
+            </property>
+            <property name="_location" class="ptolemy.kernel.util.Location" value="{905, 405}">
+            </property>
+        </entity>
+        <entity name="Sleep2" class="ptolemy.actor.lib.Sleep">
+            <property name="sleepTime" class="ptolemy.actor.parameters.PortParameter" value="7000L">
+            </property>
+<property name="KeplerDocumentation" class="ptolemy.vergil.basic.KeplerDocumentationAttribute">
+<property name="description" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>null</configure></property>
+<property name="author" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>null</configure></property>
+<property name="version" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>null</configure></property>
+<property name="userLevelDocumentation" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>null</configure></property>
+</property>            <property name="entityId" class="org.kepler.moml.NamedObjId" value="urn:lsid:kepler-project.org/ns/:47622:105:2">
+            </property>
+            <property name="class" class="ptolemy.kernel.util.StringAttribute" value="ptolemy.actor.lib.Sleep">
+                <property name="id" class="ptolemy.kernel.util.StringAttribute" value="urn:lsid:kepler-project.org:class:966:1">
+                </property>
+            </property>
+            <property name="semanticType00" class="org.kepler.sms.SemanticType" value="urn:lsid:localhost:onto:1:1#ControlActor">
+            </property>
+            <property name="semanticType01" class="org.kepler.sms.SemanticType" value="urn:lsid:localhost:onto:2:1#WorkflowControl">
+            </property>
+            <property name="_location" class="ptolemy.kernel.util.Location" value="[805.0, 460.0]">
+            </property>
+            <property name="derivedFrom" class="org.kepler.moml.NamedObjIdReferralList" value="urn:lsid:kepler-project.org:actor:92:1:urn:lsid:kepler-project.org/ns/:30354:1044:4:urn:lsid:kepler-project.org/ns/:40778:149:2">
+            </property>
+            <port name="sleepTime" class="ptolemy.actor.parameters.ParameterPort">
+                <property name="input"/>
+                <property name="_cardinal" class="ptolemy.kernel.util.StringAttribute" value="SOUTH">
+                </property>
+            </port>
+        </entity>
         <relation name="relation" class="ptolemy.actor.TypedIORelation">
         </relation>
         <relation name="relation2" class="ptolemy.actor.TypedIORelation">
@@ -1147,8 +1329,6 @@
         </relation>
         <relation name="relation5" class="ptolemy.actor.TypedIORelation">
         </relation>
-        <relation name="relation6" class="ptolemy.actor.TypedIORelation">
-        </relation>
         <relation name="relation7" class="ptolemy.actor.TypedIORelation">
         </relation>
         <relation name="relation8" class="ptolemy.actor.TypedIORelation">
@@ -1156,6 +1336,16 @@
         <relation name="relation9" class="ptolemy.actor.TypedIORelation">
         </relation>
         <relation name="relation10" class="ptolemy.actor.TypedIORelation">
+        </relation>
+        <relation name="relation11" class="ptolemy.actor.TypedIORelation">
+        </relation>
+        <relation name="relation6" class="ptolemy.actor.TypedIORelation">
+        </relation>
+        <relation name="relation13" class="ptolemy.actor.TypedIORelation">
+        </relation>
+        <relation name="relation12" class="ptolemy.actor.TypedIORelation">
+        </relation>
+        <relation name="relation14" class="ptolemy.actor.TypedIORelation">
         </relation>
         <link port="trigger" relation="relation8"/>
         <link port="in" relation="relation10"/>
@@ -1173,15 +1363,23 @@
         <link port="Expression.status" relation="relation4"/>
         <link port="Stop.input" relation="relation5"/>
         <link port="TrueForStop.output" relation="relation5"/>
-        <link port="TrueForStop.pid" relation="relation6"/>
+        <link port="TrueForStop.pid" relation="relation12"/>
         <link port="TrueForContinue.pid" relation="relation7"/>
         <link port="Sleep.input" relation="relation8"/>
         <link port="Sleep.output" relation="relation9"/>
+        <link port="ParamsReadyActiveMQ.output" relation="relation13"/>
+        <link port="ParamsReadyActiveMQ.command" relation="relation11"/>
+        <link port="ParamsReadyActiveMQ.exitCode" relation="relation14"/>
+        <link port="ParamsReadySignal.output" relation="relation11"/>
+        <link port="ParamsReadySignal.pid" relation="relation6"/>
+        <link port="Display.input" relation="relation13"/>
+        <link port="Sleep2.input" relation="relation14"/>
+        <link port="Sleep2.output" relation="relation12"/>
     </entity>
     <entity name="StartDakota" class="ptolemy.actor.lib.Exec">
         <property name="NONE" class="ptolemy.data.expr.Parameter" value="0">
         </property>
-        <property name="command" class="ptolemy.actor.parameters.PortParameter" value="/SNS/users/vel/camm-sns/code/simulation/src/run_camm.sh /scratch/test/dakota.in /SNS/users/vel/camm-sns/code/simulation/src&#10;">
+        <property name="command" class="ptolemy.actor.parameters.PortParameter" value="/SNS/users/vel/camm-sns/code/simulation/src/run_camm.sh /scratch/LiClinit/dakota.in /SNS/users/vel/camm-sns/code/simulation/src&#10;">
         </property>
         <property name="directory" class="ptolemy.data.expr.FileParameter" value="$LocalWorkingDirectory">
             <property name="allowFiles" class="ptolemy.data.expr.Parameter" value="false">
@@ -1397,7 +1595,7 @@
         </port>
     </entity>
     <entity name="RunSimulation" class="org.kepler.moml.CompositeClassEntity">
-        <property name="entityId" class="org.kepler.moml.NamedObjId" value="urn:lsid:kepler-project.org/ns/:47622:103:775">
+        <property name="entityId" class="org.kepler.moml.NamedObjId" value="urn:lsid:kepler-project.org/ns/:47622:103:776">
         </property>
         <property name="class" class="ptolemy.kernel.util.StringAttribute" value="org.kepler.moml.CompositeClassEntity">
             <property name="id" class="ptolemy.kernel.util.StringAttribute" value="null">
@@ -1454,7 +1652,7 @@
         <entity name="ParmsInForceFieldFile" class="ptolemy.actor.lib.Exec">
             <property name="NONE" class="ptolemy.data.expr.Parameter" value="0">
             </property>
-            <property name="command" class="ptolemy.actor.parameters.PortParameter" value="python /SNS/users/vel/camm-sns/code/simulation/src/molmec/ffupdate/ff_update.py --fftpl /SNS/users/vel/camm-sns/code/simulation/src/../test/ce1.xml --ffout Q42_1.psf --dak /scratch/test/params.in.1 --pout output.csv&#10;">
+            <property name="command" class="ptolemy.actor.parameters.PortParameter" value="python /SNS/users/vel/camm-sns/code/simulation/src/molmec/ffupdate/ff_update.py --fftpl /SNS/users/vel/camm-sns/code/simulation/src/../test/ce1.xml --ffout Q42_3.psf --dak /scratch/LiClinit/params.in.3 --pout output.csv&#10;">
             </property>
             <property name="directory" class="ptolemy.data.expr.FileParameter" value="$LocalWorkingDirectory">
                 <property name="allowFiles" class="ptolemy.data.expr.Parameter" value="false">
@@ -2266,7 +2464,7 @@
         <entity name="ParmsInFitFunction" class="ptolemy.actor.lib.Exec">
             <property name="NONE" class="ptolemy.data.expr.Parameter" value="0">
             </property>
-            <property name="command" class="ptolemy.actor.parameters.PortParameter" value="python /SNS/users/vel/camm-sns/code/simulation/src/molmec/ffupdate/ff_update.py --fftp=/SNS/users/vel/camm-sns/code/simulation/src/../test/modelB_freeE_C.xml --ffout=fit_1.txt --dak params.in.1&#10;">
+            <property name="command" class="ptolemy.actor.parameters.PortParameter" value="python /SNS/users/vel/camm-sns/code/simulation/src/molmec/ffupdate/ff_update.py --fftp=/SNS/users/vel/camm-sns/code/simulation/src/../test/modelB_freeE_C.xml --ffout=fit_3.txt --dak params.in.3&#10;">
             </property>
             <property name="directory" class="ptolemy.data.expr.FileParameter" value="$LocalWorkingDirectory">
                 <property name="allowFiles" class="ptolemy.data.expr.Parameter" value="false">
@@ -2384,7 +2582,7 @@
         <entity name="MantidFitting" class="ptolemy.actor.lib.Exec">
             <property name="NONE" class="ptolemy.data.expr.Parameter" value="0">
             </property>
-            <property name="command" class="ptolemy.actor.parameters.PortParameter" value="python /SNS/users/vel/camm-sns/code/simulation/src/beamline/assemblemodel.py  modelB_freeE_C --model fit_2.txt --resolution /SNS/users/vel/camm-sns/code/simulation/src/../test/beamline/resolution.nxs --convolved /scratch/LiClinit/convolved_1.nxs --expdata  /SNS/users/vel/camm-sns/code/simulation/test/beamline/LiCl_290K.nxs --costfile results.out.2 --assembled assembled_2.nxs  --derivdata 1 --derivexclude &quot;FF1 b1&quot; --doshift itp_simple&#10;">
+            <property name="command" class="ptolemy.actor.parameters.PortParameter" value="python /SNS/users/vel/camm-sns/code/simulation/src/beamline/assemblemodel.py  modelB_freeE_C --model fit_3.txt --resolution /SNS/users/vel/camm-sns/code/simulation/src/../test/beamline/resolution.nxs --convolved /scratch/LiClinit/convolved_1.nxs --expdata  /SNS/users/vel/camm-sns/code/simulation/test/beamline/LiCl_290K.nxs --costfile results.out.3 --assembled assembled_3.nxs  --derivdata 1 --derivexclude &quot;FF1&quot; --doshift itp_simple&#10;">
             </property>
             <property name="directory" class="ptolemy.data.expr.FileParameter" value="$LocalWorkingDirectory">
                 <property name="allowFiles" class="ptolemy.data.expr.Parameter" value="false">
@@ -2801,7 +2999,7 @@
             <entity name="VersionScript" class="ptolemy.actor.lib.Exec">
                 <property name="NONE" class="ptolemy.data.expr.Parameter" value="0">
                 </property>
-                <property name="command" class="ptolemy.actor.parameters.PortParameter" value="python /SNS/users/vel/camm-sns/code/simulation/src/scattering/sassenatasks.py SassenaVersion fqt_inc_2b.hd5&#10;">
+                <property name="command" class="ptolemy.actor.parameters.PortParameter" value="python /SNS/users/vel/camm-sns/code/simulation/src/scattering/sassenatasks.py SassenaVersion fqt_inc_2.hd5&#10;">
                 </property>
                 <property name="directory" class="ptolemy.data.expr.FileParameter" value="$LocalWorkingDirectory">
                     <property name="allowFiles" class="ptolemy.data.expr.Parameter" value="false">
@@ -3080,7 +3278,7 @@
                     </property>
                     <property name="workdir" class="ptolemy.actor.parameters.PortParameter" value="$RemoteWorkingDirectory">
                     </property>
-                    <property name="inputfiles" class="ptolemy.actor.parameters.PortParameter" value="{&quot;/scratch/test/Q42_1.psf&quot;}">
+                    <property name="inputfiles" class="ptolemy.actor.parameters.PortParameter" value="{&quot;/scratch/test/Q42_2.psf&quot;}">
                     </property>
                     <property name="remotefiles" class="ptolemy.actor.parameters.PortParameter" value="{}">
                     </property>
@@ -3937,9 +4135,9 @@
                 </port>
             </entity>
             <entity name="SSH File Copier" class="org.kepler.actor.ssh.FileCopier">
-                <property name="source" class="ptolemy.actor.parameters.PortParameter" value="&quot;vlynch@hopper.nersc.gov:/scratch/scratchdirs/vlynch/vel_Sep18_153239EDT_13/fqt_inc.hd5&quot;">
+                <property name="source" class="ptolemy.actor.parameters.PortParameter" value="&quot;vlynch@hopper.nersc.gov:/scratch/scratchdirs/vlynch/vel_Dec31_021701EST_6/fqt_inc.hd5&quot;">
                 </property>
-                <property name="target" class="ptolemy.actor.parameters.PortParameter" value="&quot;/scratch/LiCl_230K/fqt_inc_2b.hd5&quot;">
+                <property name="target" class="ptolemy.actor.parameters.PortParameter" value="&quot;/scratch/test/fqt_inc_2.hd5&quot;">
                 </property>
                 <property name="recursive" class="ptolemy.data.expr.Parameter" value="false">
                 </property>
@@ -4013,9 +4211,9 @@
                 </port>
             </entity>
             <entity name="SSH File Copier2" class="org.kepler.actor.ssh.FileCopier">
-                <property name="source" class="ptolemy.actor.parameters.PortParameter" value="&quot;vlynch@hopper.nersc.gov:/scratch/scratchdirs/vlynch/vel_Sep18_153239EDT_13/fqt_coh.hd5&quot;">
+                <property name="source" class="ptolemy.actor.parameters.PortParameter" value="&quot;vlynch@hopper.nersc.gov:/scratch/scratchdirs/vlynch/vel_Dec31_021701EST_6/fqt_coh.hd5&quot;">
                 </property>
-                <property name="target" class="ptolemy.actor.parameters.PortParameter" value="&quot;/scratch/LiCl_230K/fqt_coh_2b.hd5&quot;">
+                <property name="target" class="ptolemy.actor.parameters.PortParameter" value="&quot;/scratch/test/fqt_coh_2.hd5&quot;">
                 </property>
                 <property name="recursive" class="ptolemy.data.expr.Parameter" value="false">
                 </property>
@@ -4166,7 +4364,7 @@
             <entity name="VersionScript2" class="ptolemy.actor.lib.Exec">
                 <property name="NONE" class="ptolemy.data.expr.Parameter" value="0">
                 </property>
-                <property name="command" class="ptolemy.actor.parameters.PortParameter" value="python /SNS/users/vel/camm-sns/code/simulation/src/scattering/sassenatasks.py SassenaVersion fqt_coh_2b.hd5&#10;">
+                <property name="command" class="ptolemy.actor.parameters.PortParameter" value="python /SNS/users/vel/camm-sns/code/simulation/src/scattering/sassenatasks.py SassenaVersion fqt_coh_2.hd5&#10;">
                 </property>
                 <property name="directory" class="ptolemy.data.expr.FileParameter" value="$LocalWorkingDirectory">
                     <property name="allowFiles" class="ptolemy.data.expr.Parameter" value="false">
@@ -4834,7 +5032,7 @@
                     </port>
                 </entity>
                 <entity name="JobSubmitter" class="org.kepler.actor.job.JobSubmitter">
-                    <property name="jobSubmitOptions" class="ptolemy.actor.parameters.PortParameter" value="-W depend=afterany:6492379.hopque01 -v NAMD_DIR=/scratch/scratchdirs/vlynch/vel_Sep18_153239EDT_14">
+                    <property name="jobSubmitOptions" class="ptolemy.actor.parameters.PortParameter" value="-W depend=afterany:6929871.hopque01 -v NAMD_DIR=/scratch/scratchdirs/vlynch/vel_Dec31_021701EST_7">
                     </property>
 <property name="KeplerDocumentation" class="ptolemy.vergil.basic.KeplerDocumentationAttribute">
 <property name="description" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>null</configure></property>
@@ -5223,7 +5421,7 @@
             <entity name="MantidFitting" class="ptolemy.actor.lib.Exec">
                 <property name="NONE" class="ptolemy.data.expr.Parameter" value="0">
                 </property>
-                <property name="command" class="ptolemy.actor.parameters.PortParameter" value="python /SNS/users/vel/camm-sns/code/simulation/src/beamline/convolve.py  convolution --simulated output_2b.nxs --resolution /SNS/users/vel/camm-sns/code/simulation/src/../test/beamline/resolution.nxs --convolved convolved_2b.nxs --expdata /SNS/users/vel/camm-sns/code/simulation/test/beamline/LiCl_230K.nxs --dak params.in.2b">
+                <property name="command" class="ptolemy.actor.parameters.PortParameter" value="python /SNS/users/vel/camm-sns/code/simulation/src/beamline/convolve.py  convolution --simulated output_2.nxs --resolution /SNS/users/vel/camm-sns/code/simulation/src/../test/beamline/resolution.nxs --convolved convolved_2.nxs --expdata /SNS/users/vel/camm-sns/code/simulation/test/beamline/LiCl_290K.nxs --dak params.in.2">
                 </property>
                 <property name="directory" class="ptolemy.data.expr.FileParameter" value="$LocalWorkingDirectory">
                     <property name="allowFiles" class="ptolemy.data.expr.Parameter" value="false">
@@ -5341,7 +5539,7 @@
             <entity name="MantidScript" class="ptolemy.actor.lib.Exec">
                 <property name="NONE" class="ptolemy.data.expr.Parameter" value="0">
                 </property>
-                <property name="command" class="ptolemy.actor.parameters.PortParameter" value="python /SNS/users/vel/camm-sns/code/simulation/src/scattering/sassenatasks.py genSQE &quot;fqt_inc_2b.hd5 fqt_coh_2b.hd5&quot; output_2b.nxs --wsname simulated --rebinQ &quot;0.4 0.2 1.0&quot; --LoadSassena &quot;TimeUnit:1.0&quot; --SassenaFFT &quot;FFTonlyRealPart:1,DetailedBalance:1,Temp:230&quot; --scale=1.e-12&#10;">
+                <property name="command" class="ptolemy.actor.parameters.PortParameter" value="python /SNS/users/vel/camm-sns/code/simulation/src/scattering/sassenatasks.py genSQE &quot;fqt_inc_2.hd5 fqt_coh_2.hd5&quot; output_2.nxs --wsname simulated --rebinQ &quot;0.4 0.2 1.0&quot; --LoadSassena &quot;TimeUnit:1.0&quot; --SassenaFFT &quot;FFTonlyRealPart:1,DetailedBalance:1,Temp:290&quot; --scale=1.e-12&#10;">
                 </property>
                 <property name="directory" class="ptolemy.data.expr.FileParameter" value="$LocalWorkingDirectory">
                     <property name="allowFiles" class="ptolemy.data.expr.Parameter" value="false">
@@ -5663,9 +5861,9 @@
                 </port>
             </entity>
             <entity name="SSH File Copier3" class="org.kepler.actor.ssh.FileCopier">
-                <property name="source" class="ptolemy.actor.parameters.PortParameter" value="&quot;vlynch@hopper.nersc.gov:/scratch/scratchdirs/vlynch/vel_Sep18_153239EDT_13/production_single.dcd&quot;">
+                <property name="source" class="ptolemy.actor.parameters.PortParameter" value="&quot;vlynch@hopper.nersc.gov:/scratch/scratchdirs/vlynch/vel_Dec31_021701EST_6/production_single.dcd&quot;">
                 </property>
-                <property name="target" class="ptolemy.actor.parameters.PortParameter" value="&quot;/scratch/LiCl_230K/production_2b.dcd&quot;">
+                <property name="target" class="ptolemy.actor.parameters.PortParameter" value="&quot;/scratch/test/production_2.dcd&quot;">
                 </property>
                 <property name="recursive" class="ptolemy.data.expr.Parameter" value="false">
                 </property>
@@ -5982,7 +6180,7 @@
             </property>
             <property name="_createdBy" class="ptolemy.kernel.attributes.VersionAttribute" value="9.1.devel">
             </property>
-            <property name="entityId" class="org.kepler.moml.NamedObjId" value="urn:lsid:kepler-project.org/ns/:47622:156:164">
+            <property name="entityId" class="org.kepler.moml.NamedObjId" value="urn:lsid:kepler-project.org/ns/:47622:156:165">
             </property>
             <property name="class" class="ptolemy.kernel.util.StringAttribute" value="ptolemy.actor.lib.hoc.MultiInstanceComposite">
                 <property name="id" class="ptolemy.kernel.util.StringAttribute" value="urn:lsid:kepler-project.org:class:538:1">
@@ -6124,7 +6322,7 @@
             <entity name="VersionScript" class="ptolemy.actor.lib.Exec">
                 <property name="NONE" class="ptolemy.data.expr.Parameter" value="0">
                 </property>
-                <property name="command" class="ptolemy.actor.parameters.PortParameter" value="python /SNS/users/vel/camm-sns/code/simulation/src/scattering/sassenatasks.py SassenaVersion fqt_inc_1f.hd5&#10;">
+                <property name="command" class="ptolemy.actor.parameters.PortParameter" value="python /SNS/users/vel/camm-sns/code/simulation/src/scattering/sassenatasks.py SassenaVersion fqt_inc_1_0.hd5&#10;">
                 </property>
                 <property name="directory" class="ptolemy.data.expr.FileParameter" value="$LocalWorkingDirectory">
                     <property name="allowFiles" class="ptolemy.data.expr.Parameter" value="false">
@@ -6395,7 +6593,7 @@
                     </property>
                 </port>
                 <entity name="JobCreator" class="org.kepler.actor.job.JobCreator">
-                    <property name="cmdFile" class="ptolemy.actor.parameters.PortParameter" value="/SNS/users/vel/camm-sns/code/simulation/namd_hopper-shorttest.pbs">
+                    <property name="cmdFile" class="ptolemy.actor.parameters.PortParameter" value="/SNS/users/vel/camm-sns/code/simulation/namd_hopper.pbs">
                     </property>
                     <property name="cmdFileLocal" class="ptolemy.data.expr.Parameter" value="true">
                     </property>
@@ -6403,7 +6601,7 @@
                     </property>
                     <property name="workdir" class="ptolemy.actor.parameters.PortParameter" value="$RemoteWorkingDirectory">
                     </property>
-                    <property name="inputfiles" class="ptolemy.actor.parameters.PortParameter" value="{&quot;/scratch/test/Q42_1.psf&quot;}">
+                    <property name="inputfiles" class="ptolemy.actor.parameters.PortParameter" value="{&quot;/scratch/test/Q42_2_0.psf&quot;}">
                     </property>
                     <property name="remotefiles" class="ptolemy.actor.parameters.PortParameter" value="{}">
                     </property>
@@ -7260,9 +7458,9 @@
                 </port>
             </entity>
             <entity name="SSH File Copier" class="org.kepler.actor.ssh.FileCopier">
-                <property name="source" class="ptolemy.actor.parameters.PortParameter" value="&quot;vlynch@hopper.nersc.gov:/scratch/scratchdirs/vlynch/vel_Dec27_114615EST_4/fqt_inc.hd5&quot;">
+                <property name="source" class="ptolemy.actor.parameters.PortParameter" value="&quot;vlynch@hopper.nersc.gov:/scratch/scratchdirs/vlynch/vel_Dec30_165319EST_4/fqt_inc.hd5&quot;">
                 </property>
-                <property name="target" class="ptolemy.actor.parameters.PortParameter" value="&quot;/scratch/test/fqt_inc_1f.hd5&quot;">
+                <property name="target" class="ptolemy.actor.parameters.PortParameter" value="&quot;/scratch/test/fqt_inc_1_0.hd5&quot;">
                 </property>
                 <property name="recursive" class="ptolemy.data.expr.Parameter" value="false">
                 </property>
@@ -7336,9 +7534,9 @@
                 </port>
             </entity>
             <entity name="SSH File Copier2" class="org.kepler.actor.ssh.FileCopier">
-                <property name="source" class="ptolemy.actor.parameters.PortParameter" value="&quot;vlynch@hopper.nersc.gov:/scratch/scratchdirs/vlynch/vel_Dec27_114615EST_4/fqt_coh.hd5&quot;">
+                <property name="source" class="ptolemy.actor.parameters.PortParameter" value="&quot;vlynch@hopper.nersc.gov:/scratch/scratchdirs/vlynch/vel_Dec30_165319EST_4/fqt_coh.hd5&quot;">
                 </property>
-                <property name="target" class="ptolemy.actor.parameters.PortParameter" value="&quot;/scratch/test/fqt_coh_1f.hd5&quot;">
+                <property name="target" class="ptolemy.actor.parameters.PortParameter" value="&quot;/scratch/test/fqt_coh_1_0.hd5&quot;">
                 </property>
                 <property name="recursive" class="ptolemy.data.expr.Parameter" value="false">
                 </property>
@@ -7489,7 +7687,7 @@
             <entity name="VersionScript2" class="ptolemy.actor.lib.Exec">
                 <property name="NONE" class="ptolemy.data.expr.Parameter" value="0">
                 </property>
-                <property name="command" class="ptolemy.actor.parameters.PortParameter" value="python /SNS/users/vel/camm-sns/code/simulation/src/scattering/sassenatasks.py SassenaVersion fqt_coh_1f.hd5&#10;">
+                <property name="command" class="ptolemy.actor.parameters.PortParameter" value="python /SNS/users/vel/camm-sns/code/simulation/src/scattering/sassenatasks.py SassenaVersion fqt_coh_1_0.hd5&#10;">
                 </property>
                 <property name="directory" class="ptolemy.data.expr.FileParameter" value="$LocalWorkingDirectory">
                     <property name="allowFiles" class="ptolemy.data.expr.Parameter" value="false">
@@ -7883,7 +8081,7 @@
                     </property>
                 </port>
                 <entity name="JobCreator" class="org.kepler.actor.job.JobCreator">
-                    <property name="cmdFile" class="ptolemy.actor.parameters.PortParameter" value="/SNS/users/vel/camm-sns/code/simulation/sassena_hopper-shorttest.pbs">
+                    <property name="cmdFile" class="ptolemy.actor.parameters.PortParameter" value="/SNS/users/vel/camm-sns/code/simulation/sassena_hopper.pbs">
                     </property>
                     <property name="cmdFileLocal" class="ptolemy.data.expr.Parameter" value="true">
                     </property>
@@ -8157,7 +8355,7 @@
                     </port>
                 </entity>
                 <entity name="JobSubmitter" class="org.kepler.actor.job.JobSubmitter">
-                    <property name="jobSubmitOptions" class="ptolemy.actor.parameters.PortParameter" value="-W depend=afterany:6914908.hopque01 -v NAMD_DIR=/scratch/scratchdirs/vlynch/vel_Dec27_115412EST_5">
+                    <property name="jobSubmitOptions" class="ptolemy.actor.parameters.PortParameter" value="-W depend=afterany:6929873.hopque01 -v NAMD_DIR=/scratch/scratchdirs/vlynch/vel_Dec31_021701EST_8">
                     </property>
 <property name="KeplerDocumentation" class="ptolemy.vergil.basic.KeplerDocumentationAttribute">
 <property name="description" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>null</configure></property>
@@ -8546,7 +8744,7 @@
             <entity name="MantidFitting" class="ptolemy.actor.lib.Exec">
                 <property name="NONE" class="ptolemy.data.expr.Parameter" value="0">
                 </property>
-                <property name="command" class="ptolemy.actor.parameters.PortParameter" value="python /SNS/users/vel/camm-sns/code/simulation/src/beamline/convolve.py  convolution --simulated output_1f.nxs --resolution /SNS/users/vel/camm-sns/code/simulation/src/../test/beamline/resolution.nxs --convolved convolved_1f.nxs --expdata /SNS/users/vel/camm-sns/code/simulation/test/beamline/LiCl_290K.nxs --dak params.in.1f">
+                <property name="command" class="ptolemy.actor.parameters.PortParameter" value="python /SNS/users/vel/camm-sns/code/simulation/src/beamline/convolve.py  convolution --simulated output_1_0.nxs --resolution /SNS/users/vel/camm-sns/code/simulation/src/../test/beamline/resolution.nxs --convolved convolved_1_0.nxs --expdata /SNS/users/vel/camm-sns/code/simulation/test/beamline/LiCl_290K.nxs --dak params.in.1_0">
                 </property>
                 <property name="directory" class="ptolemy.data.expr.FileParameter" value="$LocalWorkingDirectory">
                     <property name="allowFiles" class="ptolemy.data.expr.Parameter" value="false">
@@ -8664,7 +8862,7 @@
             <entity name="MantidScript" class="ptolemy.actor.lib.Exec">
                 <property name="NONE" class="ptolemy.data.expr.Parameter" value="0">
                 </property>
-                <property name="command" class="ptolemy.actor.parameters.PortParameter" value="python /SNS/users/vel/camm-sns/code/simulation/src/scattering/sassenatasks.py genSQE &quot;fqt_inc_1f.hd5 fqt_coh_1f.hd5&quot; output_1f.nxs --wsname simulated --rebinQ &quot;0.4 0.2 1.0&quot; --LoadSassena &quot;TimeUnit:1.0&quot; --SassenaFFT &quot;FFTonlyRealPart:1,DetailedBalance:1,Temp:290&quot; --scale=1.e-12&#10;">
+                <property name="command" class="ptolemy.actor.parameters.PortParameter" value="python /SNS/users/vel/camm-sns/code/simulation/src/scattering/sassenatasks.py genSQE &quot;fqt_inc_1_0.hd5 fqt_coh_1_0.hd5&quot; output_1_0.nxs --wsname simulated --rebinQ &quot;0.4 0.2 1.0&quot; --LoadSassena &quot;TimeUnit:1.0&quot; --SassenaFFT &quot;FFTonlyRealPart:1,DetailedBalance:1,Temp:290&quot; --scale=1.e-12&#10;">
                 </property>
                 <property name="directory" class="ptolemy.data.expr.FileParameter" value="$LocalWorkingDirectory">
                     <property name="allowFiles" class="ptolemy.data.expr.Parameter" value="false">
@@ -8986,9 +9184,9 @@
                 </port>
             </entity>
             <entity name="SSH File Copier3" class="org.kepler.actor.ssh.FileCopier">
-                <property name="source" class="ptolemy.actor.parameters.PortParameter" value="&quot;vlynch@hopper.nersc.gov:/scratch/scratchdirs/vlynch/vel_Dec27_114615EST_4/production_single.dcd&quot;">
+                <property name="source" class="ptolemy.actor.parameters.PortParameter" value="&quot;vlynch@hopper.nersc.gov:/scratch/scratchdirs/vlynch/vel_Dec30_165319EST_4/production_single.dcd&quot;">
                 </property>
-                <property name="target" class="ptolemy.actor.parameters.PortParameter" value="&quot;/scratch/test/production_1f.dcd&quot;">
+                <property name="target" class="ptolemy.actor.parameters.PortParameter" value="&quot;/scratch/test/production_1_0.dcd&quot;">
                 </property>
                 <property name="recursive" class="ptolemy.data.expr.Parameter" value="false">
                 </property>
@@ -9124,42 +9322,6 @@
                 <port name="in" class="ptolemy.actor.TypedIOPort">
                     <property name="input"/>
                 </port>
-            </entity>
-            <entity name="Display" class="ptolemy.actor.lib.gui.Display">
-                <property name="_windowProperties" class="ptolemy.actor.gui.WindowPropertiesAttribute">
-                </property>
-                <property name="_paneSize" class="ptolemy.actor.gui.SizeAttribute">
-                </property>
-                <property name="rowsDisplayed" class="ptolemy.data.expr.Parameter" value="10">
-                </property>
-                <property name="columnsDisplayed" class="ptolemy.data.expr.Parameter" value="40">
-                </property>
-                <property name="suppressBlankLines" class="ptolemy.data.expr.Parameter" value="false">
-                </property>
-                <property name="title" class="ptolemy.data.expr.StringParameter" value="">
-                </property>
-<property name="KeplerDocumentation" class="ptolemy.vergil.basic.KeplerDocumentationAttribute">
-<property name="description" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>null</configure></property>
-<property name="author" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>Yuhong Xiong, Edward A. Lee</configure></property>
-<property name="version" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>null</configure></property>
-<property name="userLevelDocumentation" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>&lt;p&gt;The Display actor reads tokens of any type via its input multiport, and displays each token on a separate line in a text display window.&lt;/p&gt;&#10;&#10;&lt;p&gt;Specify the size of the text display window with the rowsDisplayed and columnsDisplayed parameters. Simply resizing the window onscreen does not persistently change the size when the workflow is saved, closed, and then re-opened. &lt;/p&gt;&#10;&#10;&lt;p&gt;If the input is a string token, then the actor strips the surrounding quotation marks before displaying the value.&lt;/p&gt; &#10;&#10;&lt;p&gt;Select the suppressBlankLines parameter to specify that the actor not add blank lines to the display. By default, the actor will add blank lines.&lt;/p&gt;&#10;&#10;&lt;p&gt;Note: this actor can consume large amounts of memory. It is not advisable to use it to display large output streams.&lt;/p&gt;</configure></property>
-<property name="port:input" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>A multiport that accepts tokens of any type.</configure></property>
-<property name="prop:suppressBlankLines" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>Specify whether the actor should display blank lines (the default) or suppress them.</configure></property>
-<property name="prop:rowsDisplayed" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>The vertical size of the display, in rows. The value is an integer that defaults to 10.</configure></property>
-<property name="prop:columnsDisplayed" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>The horizontal size of the display, in columns. The value is an integer that defaults to 40.</configure></property>
-<property name="prop:title" class="ptolemy.kernel.util.ConfigurableAttribute"><configure>The title of the text display window. If specified, the value will appear in the title bar of the text display window.</configure></property>
-</property>                <property name="entityId" class="org.kepler.moml.NamedObjId" value="urn:lsid:kepler-project.org:actor:7:1">
-                </property>
-                <property name="class" class="ptolemy.kernel.util.StringAttribute" value="ptolemy.actor.lib.gui.Display">
-                    <property name="id" class="ptolemy.kernel.util.StringAttribute" value="urn:lsid:kepler-project.org:class:883:1">
-                    </property>
-                </property>
-                <property name="semanticType00" class="org.kepler.sms.SemanticType" value="urn:lsid:localhost:onto:1:1#TextualOutputActor">
-                </property>
-                <property name="semanticType11" class="org.kepler.sms.SemanticType" value="urn:lsid:localhost:onto:2:1#TextualOutput">
-                </property>
-                <property name="_location" class="ptolemy.kernel.util.Location" value="{-25, 20}">
-                </property>
             </entity>
             <entity name="DakotaOutputFile4" class="ptolemy.actor.lib.Expression">
                 <property name="expression" class="ptolemy.kernel.util.StringAttribute" value="in+&quot;_&quot;+instance">
@@ -9369,7 +9531,6 @@
             <link port="Logger11.text" relation="relation35"/>
             <link port="DakotaOutputFile3.output" relation="relation37"/>
             <link port="DakotaOutputFile3.in" relation="relation9"/>
-            <link port="Display.input" relation="relation9"/>
             <link port="DakotaOutputFile4.output" relation="relation9"/>
             <link port="DakotaOutputFile4.in" relation="relation38"/>
         </entity>
@@ -9995,7 +10156,7 @@
     <entity name="RemoveOldDakotaInput" class="ptolemy.actor.lib.Exec">
         <property name="NONE" class="ptolemy.data.expr.Parameter" value="0">
         </property>
-        <property name="command" class="ptolemy.actor.parameters.PortParameter" value="rm /scratch/test/dakota.in&#10;">
+        <property name="command" class="ptolemy.actor.parameters.PortParameter" value="rm /scratch/LiClinit/dakota.in&#10;">
         </property>
         <property name="directory" class="ptolemy.data.expr.FileParameter" value="$LocalWorkingDirectory">
             <property name="allowFiles" class="ptolemy.data.expr.Parameter" value="false">
@@ -10149,7 +10310,7 @@
     <entity name="WriteDakotaInput" class="ptolemy.actor.lib.Exec">
         <property name="NONE" class="ptolemy.data.expr.Parameter" value="0">
         </property>
-        <property name="command" class="ptolemy.actor.parameters.PortParameter" value="python /SNS/users/vel/camm-sns/code/simulation/src/molmec/dakota/initfile.py --fftpl /SNS/users/vel/camm-sns/code/simulation/src/../test/modelB_freeE_C.xml --paramexclude &quot;b1&quot; --outf /scratch/test/dakota.in&#10;">
+        <property name="command" class="ptolemy.actor.parameters.PortParameter" value="python /SNS/users/vel/camm-sns/code/simulation/src/molmec/dakota/initfile.py --fftpl /SNS/users/vel/camm-sns/code/simulation/src/../test/modelB_freeE_C.xml --paramexclude &quot;FF1&quot; --outf /scratch/LiClinit/dakota.in&#10;">
         </property>
         <property name="directory" class="ptolemy.data.expr.FileParameter" value="$LocalWorkingDirectory">
             <property name="allowFiles" class="ptolemy.data.expr.Parameter" value="false">
