@@ -3,7 +3,7 @@
 #PBS -N namdTest
 #PBS -j oe
 #PBS -l walltime=2:00:00,nodes=3
-#PBS -l gres=widow2%widow3
+#PBS -l gres=atlas1%atlas2
 
 cd $PBS_O_WORKDIR
 
@@ -248,16 +248,16 @@ outputTiming        1000
 #minimize            1000 ;# perform 1000 minimization steps
 
 firsttimestep         0            ;# reset frame counter
-run 3000000  ;# 4ns
+run 2750000  ;# 4ns
 @PRODEOF
 sed -i -e 's/TEMP/'"$TEMP"'/g' equilibrate.conf
 sed -i -e 's/TEMP/'"$TEMP"'/g' production_single.conf
 mkdir -p toppar
 mv Q42_*.psf toppar/Q42.psf
 #equilibrium run
-cp /tmp/work/vel/camm/crd.md18_vmd_autopsf.pdb  toppar
-cp /tmp/work/vel/camm/par_all27_prot_lipid.inp toppar
-cp /tmp/work/vel/camm/equilibrate/init.xsc . 
+cp /lustre/atlas/scratch/vel/mat049/camm/Q42/toppar/crd.md18_vmd_autopsf.pdb  toppar
+cp /lustre/atlas/scratch/vel/mat049/camm/Q42/toppar/par_all27_prot_lipid.inp toppar
+cp /lustre/atlas/scratch/vel/mat049/camm/Q42/T290/equilibrate/init.xsc . 
 source /opt/modules/3.2.6.6/init/tcsh
 module swap PrgEnv-pgi PrgEnv-gnu
 module load craype-hugepages8M

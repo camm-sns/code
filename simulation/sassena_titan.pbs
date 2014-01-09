@@ -1,0 +1,31 @@
+#!/bin/bash
+#PBS -A MAT049
+#PBS -N sassenaTest
+#PBS -j oe
+#PBS -l walltime=2:00:00,nodes=4
+#PBS -l gres=atlas1%atlas2
+
+cd $PBS_O_WORKDIR
+
+SASSINA=/ccs/home/vel/sassena-v1.4.1/sassena
+MPIRUN="aprun"
+
+#Run 2 jobs simultaneously, each with one sixth cores
+NCPU=`wc -l < $PBS_NODEFILE`
+let num_jobs=2
+let tasks_per_job=$NCPU/$num_jobs
+
+mkdir -p toppar
+cp production.dcd  production_single.dcd
+
+cp /lustre/atlas/scratch/vel/mat049/camm/crd.md18_vmd_autopsf.pdb  toppar
+cp $NAMD_DIR/production.dcd  production_single.dcd
+cp /lustre/atlas/scratch/vel/mat049/camm/Q42/T290/production/db*.xml .
+cp -R /lustre/atlas/scratch/vel/mat049/camm/Q42/T290/production/database .
+cp /lustre/atlas/scratch/vel/mat049/camm/sassenaInc.xml .
+cp /lustre/atlas/scratch/vel/mat049/camm/sassenaCoh.xml .
+$MPIRUN -n $tasks_per_job $SASSINA --config=sassenaInc.xml > sassina_inc.log &
+$MPIRUN -n $tasks_per_job $SASSINA --config=sassenaCoh.xml > sassina_coh.log &
+
+wait
+
