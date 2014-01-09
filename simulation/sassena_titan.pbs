@@ -2,7 +2,7 @@
 #PBS -A MAT049
 #PBS -N sassenaTest
 #PBS -j oe
-#PBS -l walltime=2:00:00,nodes=4
+#PBS -l walltime=2:00:00,nodes=8
 #PBS -l gres=atlas1%atlas2
 
 cd $PBS_O_WORKDIR
