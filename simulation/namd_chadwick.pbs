@@ -21,7 +21,7 @@ cat > equilibrate.conf <<'@EQEOF'
 #############################################################
 ## ADJUSTABLE PARAMETERS                                   ##
 #############################################################
-set temperature     290 ;# initial temperature, in Kelvin
+set temperature     TSUB ;# initial temperature, in Kelvin
 set charge        42 ;# hydrogen charge
 set pressure      1.01325  ;#  in bar -> 1 atm
 set inputname          init ;# prefix for input files
@@ -86,7 +86,7 @@ langevinDamping     1.0   ;# damping coefficient (gamma) of 1/ps
 langevinHydrogen    off   ;# don't couple langevin bath to hydrogens
   # Control parameters for annealing
   #reassignFreq       3000   ;# number of timesteps between temperature reassignment
-  #reassignTemp        290   ;# new temperature when reassignment happens
+  #reassignTemp        TSUB   ;# new temperature when reassignment happens
   #reassignIncr       -1.0   ;# temperature increment when reassignment happens
   #reassignHold       10.0   ;# target or limit temperature
 
@@ -143,7 +143,7 @@ cat > production_single.conf <<'@PRODEOF'
 #############################################################
 ## ADJUSTABLE PARAMETERS                                   ##
 #############################################################
-set temperature     290 ;# initial temperature, in Kelvin
+set temperature     TSUB ;# initial temperature, in Kelvin
 set charge        42 ;# hydrogen charge
 set pressure      1.01325  ;#  in bar -> 1 atm
 set inputname  production00 ;# prefix for input files
@@ -208,7 +208,7 @@ langevinDamping     1.0   ;# damping coefficient (gamma) of 1/ps
 langevinHydrogen    off   ;# don't couple langevin bath to hydrogens
   # Control parameters for annealing
   #reassignFreq       3000   ;# number of timesteps between temperature reassignment
-  #reassignTemp        290   ;# new temperature when reassignment happens
+  #reassignTemp        TSUB   ;# new temperature when reassignment happens
   #reassignIncr       -1.0   ;# temperature increment when reassignment happens
   #reassignHold       10.0   ;# target or limit temperature
 
@@ -251,6 +251,8 @@ outputTiming        1000
 firsttimestep         0            ;# reset frame counter
 run 4000000  ;# 4ns
 @PRODEOF
+sed -i -e 's/TSUB/'"$TVAR"'/g' equilibrate.conf
+sed -i -e 's/TSUB/'"$TVAR"'/g' production_single.conf
 mkdir -p toppar
 mv Q42_*.psf toppar/Q42.psf
 #equilibrium run
@@ -259,16 +261,10 @@ cp /data/jbq/projects/research/LiCl/watBox30/Hq.II/Q42/toppar/crd.md18_vmd_autop
 cp /data/jbq/projects/research/LiCl/watBox30/Hq.II/Q42/toppar/par_all27_prot_lipid.inp toppar
 cp /data/jbq/projects/research/LiCl/watBox30/Hq.II/Q42/T290/equilibrate/init.xsc . 
 $MPIRUN -machinefile $PBS_NODEFILE -np 64 $NAMD equilibrate.conf > equilibrate_64cores.log
-while [ $? -ne 0 ] ; do
-    $MPIRUN -machinefile $PBS_NODEFILE -np 64 $NAMD equilibrate.conf > equilibrate_64cores.log
-done
 #production run
 #cp /data/jbq/projects/research/LiCl/watBox30/Hq.II/Q42/T290/production/production_single.conf .
 mv equilibrate.restart.coor production00.restart.coor
 mv equilibrate.restart.vel production00.restart.vel
 mv equilibrate.restart.xsc production00.restart.xsc
 $MPIRUN -machinefile $PBS_NODEFILE -np 64 $NAMD production_single.conf > production_single_64cores.log
-while [ $? -ne 0 ] ; do
-    $MPIRUN -machinefile $PBS_NODEFILE -np 64 $NAMD production_single.conf > production_single_64cores.log
-done
 

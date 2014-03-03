@@ -8,12 +8,10 @@ Generate the initial Dakota input file
 def populate_variables(template,free_params):
   """Use the list of free parameters to substitute in the
   'variables' section of the init file
-  Order alphabetically
   """
   names=[param._name for param in free_params]
   template=template.replace('_NVAR_',str(len(names)))
-  template=template.replace( '_DESCRIPTORS_', "\t\'" + "\'\t\'".join(sorted(names)) + "\'" )
-  order=sorted(range(len(names)), key = names.__getitem__) #python magic :)
+  template=template.replace( '_DESCRIPTORS_', "\t\'" + "\'\t\'".join(names) + "\'" )
   fields={'_init':'_INITIAL_POINT_',
           '_minimum':'_LOWER_BOUNDS_',
           '_maximum':'_UPPER_BOUNDS_',
@@ -21,27 +19,25 @@ def populate_variables(template,free_params):
           }
   for attribute,field in fields.items():
     values=[param.__getattribute__(attribute) for param in free_params]
-    template=template.replace(field, "\t"+"\t".join([str(values[i]) for i in order]))
+    template=template.replace(field, "\t"+"\t".join([str(values[i]) for i in range(len(values))]))
   return template
 
 def populate_fixed(template,free_params):
   """Use the list of free parameters to substitute in the
   'variables' section of the init file
-  Order alphabetically
   """
   names=[param._name for param in free_params]
   template=template.replace('_NFIX_',str(len(names)))
   if len(names) > 0:
-    template=template.replace( '_FIXDESCRIPTORS_', "\t\t\'" + "\'\t\'".join(sorted(names)) + "\'" )
+    template=template.replace( '_FIXDESCRIPTORS_', "\t\t\'" + "\'\t\'".join(names) + "\'" )
   else:
     template=template.replace( '_FIXDESCRIPTORS_', "" )
-  order=sorted(range(len(names)), key = names.__getitem__) #python magic :)
   fields={'_init':'_FIXINITIAL_POINT_',
           '_tolerance':'_MAX_STEP_',
           }
   for attribute,field in fields.items():
     values=[param.__getattribute__(attribute) for param in free_params]
-    template=template.replace(field, "\t"+"\t".join([str(values[i]) for i in order]))
+    template=template.replace(field, "\t"+"\t".join([str(values[i]) for i in range(len(values))]))
   return template
 
 if __name__ == '__main__':

@@ -87,10 +87,10 @@ def convolution(simulated, resolution, expdata, convolved, dak=None, norm2one=Fa
     wsc=NormaliseToUnity(InputWorkspace='convolved', OutputWorkspace='convolved')
   AddSampleLog(Workspace='convolved',LogName='NormaliseToUnity',LogText=str(float(norm2one)),LogType='Number')
   if dak:
-    if convolved.endswith('b.nxs'):
+    if convolved.endswith('_0.nxs'):
       deriv=0.99
       dakota_vals = getParams(dak.rstrip('b')) # read in Dakota params file
-    elif convolved.endswith('f.nxs'):
+    elif convolved.endswith('_1.nxs'):
       deriv=1.01
       dakota_vals = getParams(dak.rstrip('f')) # read in Dakota params file
     else:

@@ -2,14 +2,14 @@
 <root>
   <!-- model b0+b1*E  +  e0*exp(-e1*Q^2)*Elastic(E)  +  c0*Resolution(E)xSimulated(Q,E) -->
   <FFParams>
-    <FFParam init="1.e-4" maximum="1.e-3" minimum="0.0" name="b0" tolerance="0.01"/>
+    <FFParam init="7.261128286320040e-01" maximum="2.0" minimum="0.25" name="c0" tolerance="0.01"/>
+    <FFParam init="1.000000000000000e-08" maximum="2.e-4" minimum="1.e-8" name="b0" tolerance="0.01"/>
     <FFParam init="0.0" maximum="1.e-3" minimum="0.0" name="b1" tolerance="0.01"/>
-    <FFParam init="0.05" maximum="0.1" minimum="0.0" name="e0.0" tolerance="0.01"/>
-    <FFParam init="0.05" maximum="0.1" minimum="0.0" name="e0.1" tolerance="0.01"/>
-    <FFParam init="0.05" maximum="0.1" minimum="0.0" name="e0.2" tolerance="0.01"/>
-    <FFParam init="1.0" maximum="2.0" minimum="0.0" name="c0" tolerance="0.01"/>
-    <FFParam init="0.0" maximum="0.0004" minimum="-0.0004" name="eshift" tolerance="0.01"/>
-    <FFParam init="0.417" maximum="0.6" minimum="0.3" name="FF1" tolerance="0.01"/>
+    <FFParam init="5.509589221505974e-02" maximum="0.1" minimum="0.0" name="e0.0" tolerance="0.01"/>
+    <FFParam init="4.438857367328487e-02" maximum="0.1" minimum="0.0" name="e0.1" tolerance="0.01"/>
+    <FFParam init="3.659833517176896e-02" maximum="0.1" minimum="0.0" name="e0.2" tolerance="0.01"/>
+    <FFParam init="2.206616918284543e-04" maximum="0.0004" minimum="-0.0004" name="eshift" tolerance="0.01"/>
+    <FFParam init="0.417" maximum="0.5" minimum="0.3" name="FF1" tolerance="0.01"/>
   </FFParams>
   <FFTemplate> c0=_c0_(%-14.6e); b0=_b0_(%-14.6e); e0.0=_e0.0_(%-14.6e); e0.1=_e0.1_(%-14.6e); e0.2=_e0.2_(%-14.6e); b1=_b1_(%-14.6e); eshift=_eshift_(%-8.6f)</FFTemplate>
 </root>
