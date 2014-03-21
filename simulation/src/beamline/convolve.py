@@ -87,16 +87,8 @@ def convolution(simulated, resolution, expdata, convolved, dak=None, norm2one=Fa
     wsc=NormaliseToUnity(InputWorkspace='convolved', OutputWorkspace='convolved')
   AddSampleLog(Workspace='convolved',LogName='NormaliseToUnity',LogText=str(float(norm2one)),LogType='Number')
   if dak:
-    if convolved.endswith('_0.nxs'):
-      deriv=0.99
-      dakota_vals = getParams(dak.rstrip('b')) # read in Dakota params file
-    elif convolved.endswith('_1.nxs'):
-      deriv=1.01
-      dakota_vals = getParams(dak.rstrip('f')) # read in Dakota params file
-    else:
-      deriv=1.0
-      dakota_vals = getParams(dak) # read in Dakota params file
-    AddSampleLog(Workspace='convolved',LogName='FF1',LogText=str(deriv*dakota_vals["FF1"]),LogType='Number')
+    dakota_vals = getParams(dak) # read in Dakota params file
+    AddSampleLog(Workspace='convolved',LogName='FF1',LogText=str(dakota_vals["FF1"]),LogType='Number')
   from mantid.simpleapi import mtd
   SaveNexus(InputWorkspace='convolved', Filename=convolved)
   return
