@@ -263,6 +263,8 @@ mv Q42_*.psf toppar/Q42.psf
 cp /global/project/projectdirs/m1503/camm/Q42/toppar/crd.md18_vmd_autopsf.pdb  toppar
 cp /global/project/projectdirs/m1503/camm/Q42/toppar/par_all27_prot_lipid.inp toppar
 cp /global/project/projectdirs/m1503/camm/Q42/T290/equilibrate/init.xsc . 
+cp /global/project/projectdirs/m1503/camm/Q42/T290/rms2first.ptraj .
+cp /global/project/projectdirs/m1503/camm/Q42/T290/b30.top .
 $MPIRUN $NAMD equilibrate.conf > equilibrate.log
 
 #production run
@@ -270,3 +272,6 @@ mv equilibrate.restart.coor production00.restart.coor
 mv equilibrate.restart.vel production00.restart.vel 
 mv equilibrate.restart.xsc production00.restart.xsc 
 $MPIRUN $NAMD production_single.conf > production.log
+/global/common/hopper2/usg/amber/11/bin/ptraj  b30.top < rms2first.ptraj
+mv rms2first.dcd production.dcd
+

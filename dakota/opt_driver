@@ -1,2 +1,8 @@
 #!/bin/sh
-python optimization_driver.py $1 $2 $PPID
+#python optimization_driver.py $1 $2 $PPID
+while [ ! -s $2 ]
+ do
+ sleep 1
+ printf "."
+done
+

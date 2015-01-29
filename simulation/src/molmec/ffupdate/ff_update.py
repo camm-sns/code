@@ -7,7 +7,7 @@ import csv
 import os.path
 import shutil
 
-from simulation.src.molmec.fftpl.psf import FFParam
+from molmec.fftpl.psf import FFParam
 
 def loadFFtpl(fftpl_file):
   """From the XML file containing the list of FFParam objects
