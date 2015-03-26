@@ -1,5 +1,5 @@
 #!/bin/bash
-#PBS -l nodes=4:ppn=16
+#PBS -l nodes=1:ppn=16
 #PBS -l walltime=50:00:00
 #PBS -N namdTest
 
@@ -261,9 +261,9 @@ mv Q42_*.psf toppar/Q42.psf
 cp /data/jbq/projects/research/LiCl/watBox30/Hq.II/Q42/toppar/crd.md18_vmd_autopsf.pdb  toppar
 cp /data/jbq/projects/research/LiCl/watBox30/Hq.II/Q42/toppar/par_all27_prot_lipid.inp toppar
 cp /data/jbq/projects/research/LiCl/watBox30/Hq.II/Q42/T290/equilibrate/init.xsc . 
-$MPIRUN -machinefile $PBS_NODEFILE -np 64 $NAMD equilibrate.conf > equilibrate_64cores.log
+$MPIRUN -machinefile $PBS_NODEFILE -np 16 $NAMD equilibrate.conf > equilibrate_16cores.log
 while [ $? -ne 0 ] ; do
-    $MPIRUN -machinefile $PBS_NODEFILE -np 64 $NAMD equilibrate.conf > equilibrate_64cores.log
+    $MPIRUN -machinefile $PBS_NODEFILE -np 16 $NAMD equilibrate.conf > equilibrate_16cores.log
 done
 
 #production run
@@ -271,8 +271,8 @@ done
 mv equilibrate.restart.coor production00.restart.coor
 mv equilibrate.restart.vel production00.restart.vel
 mv equilibrate.restart.xsc production00.restart.xsc
-$MPIRUN -machinefile $PBS_NODEFILE -np 64 $NAMD production_single.conf > production_single_64cores.log
+$MPIRUN -machinefile $PBS_NODEFILE -np 16 $NAMD production_single.conf > production_single_16cores.log
 while [ $? -ne 0 ] ; do
-    $MPIRUN -machinefile $PBS_NODEFILE -np 64 $NAMD production_single.conf > production_single_64cores.log
+    $MPIRUN -machinefile $PBS_NODEFILE -np 16 $NAMD production_single.conf > production_single_16cores.log
 done
 
