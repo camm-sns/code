@@ -2,7 +2,7 @@ This directory is meant to contain Kepler-specific code and configuration for CA
 
 ## Pre-requisites
 - Install ActiveMQ ([http://activemq.apache.org/](http://activemq.apache.org/))
-- `stomp.py` (version 3.3.1 or higher) should be installed to enable ActiveMQ communication ([http://code.google.com/p/stomppy/](http://code.google.com/p/stomppy/))
+- `stomp.py` (version 3.1.3 or higher) should be installed to enable ActiveMQ communication ([http://code.google.com/p/stomppy/](http://code.google.com/p/stomppy/))
 - `sns_utilities` is a package that contains base classes and utilities for ActiveMQ applications ([https://github.com/neutrons/sns_utilities](https://github.com/neutrons/sns_utilities))
      
 ## ActiveMQ Configuration

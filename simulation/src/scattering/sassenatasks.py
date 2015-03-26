@@ -146,7 +146,7 @@ def sortQvectors(hdfile, args):
     ws = mti.LoadSassena( Filename=hdfile, **args )
     mti.SortByQVectors(ws)
   else:
-    if not isOrderedByQmodulus(hdfile): orderByQmodulus(hdf)
+    if not isOrderedByQmodulus(hdfile): orderByQmodulus(hdfile)
     ws = mti.LoadSassena( Filename=hdfile, **args )
   return ws
 

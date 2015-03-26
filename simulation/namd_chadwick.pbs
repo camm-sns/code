@@ -3,7 +3,8 @@
 #PBS -l walltime=50:00:00
 #PBS -N namdTest
 
-MPIRUN=/shared/openmpi/gcc/bin/mpirun
+module load openmpi-x86_64
+MPIRUN=mpirun
 NAMD=/shared/local/namd/NAMD_2.9_Linux-x86_64-mpi_shared/Linux-x86_64-g++/namd2
 
 cd $PBS_O_WORKDIR
