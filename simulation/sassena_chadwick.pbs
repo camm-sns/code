@@ -6,6 +6,7 @@
 #PBS -V
 
 cd $PBS_O_WORKDIR
+source $MODULESHOME/init/bash
 module load openmpi-x86_64
 mkdir toppar
 cp /data/jbq/projects/research/LiCl/watBox30/Hq.II/Q42/toppar/crd.md18_vmd_autopsf.pdb  toppar
@@ -14,8 +15,8 @@ cp /data/jbq/projects/research/LiCl/watBox30/Hq.II/Q42/T290/production/db*.xml .
 cp -R /data/jbq/projects/research/LiCl/watBox30/Hq.II/Q42/T290/production/database .
 cp /data/jbq/sassena_test/sassenaInc.xml ./sassenaInc.xml
 cp /data/jbq/sassena_test/sassenaCoh.xml ./sassenaCoh.xml
-mpirun -machinefile $PBS_NODEFILE -np 32 /shared/local/sassena/sassena-v1.4.1/builds/shared/sassena --config=sassenaInc.xml &
-mpirun -machinefile $PBS_NODEFILE -np 32 /shared/local/sassena/sassena-v1.4.1/builds/shared/sassena --config=sassenaCoh.xml &
+/usr/lib64/openmpi/bin/mpirun -machinefile $PBS_NODEFILE -np 32 /shared/local/sassena/sassena-v1.4.1/builds/shared/sassena --config=sassenaInc.xml &
+/usr/lib64/openmpi/bin/mpirun -machinefile $PBS_NODEFILE -np 32 /shared/local/sassena/sassena-v1.4.1/builds/shared/sassena --config=sassenaCoh.xml &
 
 wait
 
